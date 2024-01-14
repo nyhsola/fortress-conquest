@@ -1,0 +1,316 @@
+﻿STRING 1
+{
+Player 1
+}
+
+STRING 2
+{
+Player 2
+}
+
+STRING 3
+{
+Player 3
+}
+
+STRING 4
+{
+Player 4
+}
+
+STRING 5
+{
+Player 5
+}
+
+STRING 6
+{
+Player 6
+}
+
+STRING 7
+{
+Force 1
+}
+
+STRING 8
+{
+Force 2
+}
+
+STRING 9
+{
+fortress-conquest
+}
+
+STRING 10
+{
+Any
+}
+
+STRING 11
+{
+116 x 116
+}
+
+STRING 12
+{
+Unknown
+}
+
+STRING 13
+{
+Prepare for an engaging clash of armies, where alliances are forged and broken, and the fate of the fortress hangs in the balance. Do you have what it takes to emerge victorious and etch your name into the annals of conquest? Find out on the battlefields of "Fortress Conquest."
+}
+
+STRING 14
+{
+Player 13
+}
+
+STRING 15
+{
+Player 14
+}
+
+STRING 16
+{
+Player 15
+}
+
+STRING 17
+{
+Player 16
+}
+
+STRING 18
+{
+Player 17
+}
+
+STRING 19
+{
+Player 18
+}
+
+STRING 20
+{
+Force 3
+}
+
+STRING 21
+{
+Force 4
+}
+
+STRING 22
+{
+Force 5
+}
+
+STRING 23
+{
+Force 6
+}
+
+STRING 24
+// Abilities: A000 (Random position), Name (Name)
+{
+Random position
+}
+
+STRING 25
+// Units: h001 (Castle), Name (Name)
+{
+Castle
+}
+
+STRING 26
+// Units: h001 (Castle), Tip (Tooltip - Basic)
+{
+Build Castle
+}
+
+STRING 27
+// Units: h001 (Castle), Ubertip (Tooltip - Extended)
+{
+Primary structure
+}
+
+STRING 28
+// Units: h001 (Castle), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 29
+// Abilities: A000 (Random position), Tip (Tooltip - Normal)
+{
+Random position
+}
+
+STRING 30
+// Abilities: A001 (Blink), Ubertip (Tooltip - Normal - Extended)
+{
+Teleports to any position on map
+}
+
+STRING 31
+// Abilities: A000 (Random position), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 34
+// Abilities: A001 (Blink), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 35
+{
+Can't place castle around 2000 range of another
+}
+
+STRING 36
+// Abilities: A002 (Income), Name (Name)
+{
+Income
+}
+
+STRING 41
+{
+Pick mode
+}
+
+STRING 43
+{
+Standard
+}
+
+STRING 44
+{
+Test
+}
+
+STRING 45
+{
+Mode: Standard
+}
+
+STRING 46
+{
+Mode: Test
+}
+
+STRING 47
+{
+Waiting host to pick mode...
+}
+
+STRING 57
+// Units: h000 (Choose location for Castle), Name (Name)
+{
+Choose location for Castle
+}
+
+STRING 61
+// Abilities: A004 (Progress points), Name (Name)
+{
+Progress points
+}
+
+STRING 62
+// Abilities: A004 (Progress points), Tip (Tooltip - Normal)
+{
+You have 0/0 points
+}
+
+STRING 65
+{
+|cffffff00+1|r
+}
+
+STRING 68
+// Units: h002 (Worker), Name (Name)
+{
+Worker
+}
+
+STRING 69
+// Abilities: A003 (Workers), Name (Name)
+{
+Workers
+}
+
+STRING 72
+// Abilities: A002 (Income), Tip (Tooltip - Normal)
+{
+Gold
+}
+
+STRING 73
+// Abilities: A002 (Income), Ubertip (Tooltip - Normal - Extended)
+{
+GPM: X
+}
+
+STRING 74
+// Abilities: A003 (Workers), Tip (Tooltip - Normal)
+{
+Workers
+}
+
+STRING 76
+{
+Red
+}
+
+STRING 77
+{
+Blue
+}
+
+STRING 78
+{
+Teal
+}
+
+STRING 79
+{
+Purple
+}
+
+STRING 80
+{
+Yellow
+}
+
+STRING 81
+{
+Orange
+}
+
+STRING 82
+{
+Game starts in
+}
+
+STRING 83
+// Units: h004 (Stock), Tip (Tooltip - Basic)
+{
+Stock
+}
+
+STRING 84
+// Units: h004 (Stock), Name (Name)
+{
+Stock
+}
+
+STRING 85
+// Abilities: A003 (Workers), Ubertip (Tooltip - Normal - Extended)
+{
+DYNAMIC TEXT
+}
+
