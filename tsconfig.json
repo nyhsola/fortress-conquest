@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "allowJs": true,
-    "outDir": ".",
     "baseUrl": "./src",
+    "allowJs": true,
+    "strict": true,
+    "outDir": ".",
     "forceConsistentCasingInFileNames": true,
     "target": "ESNext",
     "lib": [

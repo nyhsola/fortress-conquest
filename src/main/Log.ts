@@ -1,5 +1,5 @@
 export class Log {
-  static Error(...msg) {
+  static Error(...msg: any[]) {
     print(...msg)
   }
 }
