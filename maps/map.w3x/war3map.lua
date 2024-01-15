@@ -45,6 +45,7 @@ gg_trg_random_position = nil
 gg_trg_workers_loop = nil
 gg_trg_income_loop = nil
 gg_dest_LTbr_0412 = nil
+gg_trg_Untitled_Trigger_001 = nil
 function InitGlobals()
 local i = 0
 
@@ -92,6 +93,19 @@ gg_rct_LeftBottom = Rect(-6720.0, -7232.0, -160.0, -384.0)
 gg_rct_LeftTop = Rect(-6720.0, -160.0, -160.0, 6688.0)
 gg_rct_RightTop = Rect(96.0, -160.0, 6656.0, 6688.0)
 gg_rct_RightBottom = Rect(96.0, -7232.0, 6656.0, -384.0)
+end
+
+function Trig_Untitled_Trigger_001_Actions()
+UnitApplyTimedLifeBJ(60, FourCC("BTLF"), GetLastCreatedUnit())
+end
+
+function InitTrig_Untitled_Trigger_001()
+gg_trg_Untitled_Trigger_001 = CreateTrigger()
+TriggerAddAction(gg_trg_Untitled_Trigger_001, Trig_Untitled_Trigger_001_Actions)
+end
+
+function InitCustomTriggers()
+InitTrig_Untitled_Trigger_001()
 end
 
 function InitCustomPlayerSlots()
@@ -301,6 +315,7 @@ SetMapMusic("Music", true, 0)
 CreateRegions()
 InitBlizzard()
 InitGlobals()
+InitCustomTriggers()
 end
 
 function config()

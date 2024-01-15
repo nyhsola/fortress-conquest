@@ -1,16 +1,16 @@
-import { Rectangle, Unit } from "w3ts"
-import { Players } from "w3ts/globals"
-
-import { Config, UNIT } from "main/Config"
-
-const PLAYER_NUMBER = 6
+import { PlayerManager } from "./PlayerManager"
+import { BuildingEventSystem } from "system/BuildEventSystem"
+import { Config } from "util/Config"
 
 export class GameManager {
+  private readonly config: Config
+
   constructor(config: Config) {
-    for (let i = 0; i < PLAYER_NUMBER; i++) {
-      let zone = config.zone[i]
-      let area = Rectangle.fromHandle(zone)
-      let unit = area && Unit.create(Players[i], UNIT.WORKER, area.centerX, area.centerY)
-    }
+    this.config = config
+  }
+
+  public init() {
+    let buildEventSystem = new BuildingEventSystem()
+    let playerManager = new PlayerManager(this.config, buildEventSystem)
   }
 }
