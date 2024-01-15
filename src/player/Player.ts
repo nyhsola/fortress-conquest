@@ -1,29 +1,45 @@
-import { Rectangle, Unit } from "w3ts"
+import { Point, Rectangle, Unit } from "w3ts"
 import { Players } from "w3ts/globals"
 
-import { BuildEventType } from "build/Build"
-import { BuildingEventSystem } from "system/BuildEventSystem"
+import { BuildEventType, BuildingEventSystem } from "system/BuildEventSystem"
 import { Config, TEXT, UNIT } from "util/Config"
 
 export class Player {
   private playerNumber: number
+  private config: Config
+  private unit: Unit | undefined
+  private mine: Unit | undefined
 
   constructor(config: Config, buildEventSystem: BuildingEventSystem, playerNumber: number) {
+    this.config = config
     this.playerNumber = playerNumber
-
-    let zone = config.zone[playerNumber]
-    let area = Rectangle.fromHandle(zone)
-    let unit = area && Unit.create(Players[playerNumber], UNIT.WORKER, area.centerX, area.centerY)
-    unit?.applyTimedLife(TEXT.TIMED_LIFE, 60)
+    this.unit = this.spawnStart()
 
     buildEventSystem.subscribe(BuildEventType.FINISHED, playerNumber, (building: unit | undefined) => this.onCastlePlaced(building))
+  }
+
+  private spawnStart(): Unit | undefined {
+    let zone = this.config.zone[this.playerNumber]
+    let area = Rectangle.fromHandle(zone)
+    let unit = area && Unit.create(Players[this.playerNumber], UNIT.WORKER, area.centerX, area.centerY)
+    unit?.applyTimedLife(TEXT.TIMED_LIFE, 60)
+    return unit
+  }
+
+  private spawnMine(unit: Unit | undefined): Unit | undefined {
+    let point = unit?.getPoint()
+    let location = Location(point?.x ?? 0, point?.y ?? 0)
+    let angle = GetRandomDirectionDeg()
+    let locationMine = PolarProjectionBJ(location, 1400, angle)
+    let pointMine = Point.fromHandle(locationMine)
+    return locationMine && Unit.create(Players[PLAYER_NEUTRAL_PASSIVE], UNIT.MINE, pointMine?.x ?? 0, pointMine?.y ?? 0)
   }
 
   private onCastlePlaced(unit: unit | undefined) {
     let castle = Unit.fromHandle(unit)
     let owner = castle?.getOwner()
     if (owner?.id == this.playerNumber) {
-      print("onCastlePlaced")
+      this.mine = this.spawnMine(castle)
     }
   }
 }

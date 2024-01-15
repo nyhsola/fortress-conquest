@@ -1,5 +1,6 @@
 export const UNIT = {
   WORKER: FourCC("h000"),
+  MINE: FourCC("n000"),
 }
 
 export const TEXT = {
