@@ -1,46 +1,39 @@
-import { Point, Rectangle, Unit } from "w3ts"
-import { Players } from "w3ts/globals"
+import { Unit } from "w3ts"
 
 import { EventSystem, EventType } from "system/EventSystem"
-import { Config, TEXT, UNIT } from "util/Config"
+import { Config, UNIT } from "util/Config"
+import { Task } from "util/Task"
+import { createTask, createUnitAtCenter, createUnitAtPolar, withTimedLife } from "util/Util"
 
 export class Player {
   private playerNumber: number
   private config: Config
   private unit: Unit | undefined
   private mine: Unit | undefined
+  private task: Task
 
   constructor(config: Config, eventSystem: EventSystem, playerNumber: number) {
     this.config = config
     this.playerNumber = playerNumber
     this.unit = this.spawnStart()
+    this.task = createTask(() => print("every 10"), 10)
 
-    eventSystem.subscribe(EventType.BUILDING_FINISHED, (building: unit) => this.onCastlePlaced(building))
-    eventSystem.subscribe(EventType.PER_SECOND, () => print("1 sec"))
+    eventSystem.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onCastlePlaced(building))
+    eventSystem.subscribe(EventType.PER_SECOND, () => this.task.update(1))
   }
 
   private spawnStart(): Unit | undefined {
-    let zone = this.config.zone[this.playerNumber]
-    let area = Rectangle.fromHandle(zone)
-    let unit = area && Unit.create(Players[this.playerNumber], UNIT.WORKER, area.centerX, area.centerY)
-    unit?.applyTimedLife(TEXT.TIMED_LIFE, 60)
-    return unit
+    return withTimedLife(createUnitAtCenter(this.config.zone[this.playerNumber], this.playerNumber, UNIT.WORKER), 60)
   }
 
   private spawnMine(unit: Unit | undefined): Unit | undefined {
-    let point = unit?.getPoint()
-    let location = Location(point?.x ?? 0, point?.y ?? 0)
-    let angle = GetRandomDirectionDeg()
-    let locationMine = PolarProjectionBJ(location, 1400, angle)
-    let pointMine = Point.fromHandle(locationMine)
-    return locationMine && Unit.create(Players[PLAYER_NEUTRAL_PASSIVE], UNIT.MINE, pointMine?.x ?? 0, pointMine?.y ?? 0)
+    return createUnitAtPolar(unit?.getPoint(), GetRandomDirectionDeg(), 1400, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
   }
 
-  private onCastlePlaced(unit: unit) {
-    let castle = Unit.fromHandle(unit)
-    let owner = castle?.getOwner()
+  private onCastlePlaced(unit: Unit) {
+    let owner = unit?.getOwner()
     if (owner?.id == this.playerNumber) {
-      this.mine = this.spawnMine(castle)
+      this.mine = this.spawnMine(unit)
     }
   }
 }

@@ -1,4 +1,4 @@
-abstract class Task {
+export abstract class Task {
   private accumulate: number = 0.0
 
   constructor(private interval: number) {}

@@ -1,4 +1,5 @@
 import { Trigger } from "w3ts"
+import { Unit } from "w3ts"
 
 export const enum EventType {
   PER_SECOND,
@@ -7,17 +8,17 @@ export const enum EventType {
 
 export class EventSystem {
   private handlers: Record<EventType, EventHandler<(e: any) => any>> = {
-    [EventType.BUILDING_FINISHED]: new EventHandler<(building: unit) => void>(),
+    [EventType.BUILDING_FINISHED]: new EventHandler<(building: Unit | undefined) => void>(),
     [EventType.PER_SECOND]: new EventHandler<() => void>(),
   }
 
   constructor() {
     let buildingFinishedTrigger = Trigger.create()
     buildingFinishedTrigger.registerAnyUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH)
-    buildingFinishedTrigger.addAction(() => this.handlers[EventType.BUILDING_FINISHED].fire(GetConstructedStructure()))
+    buildingFinishedTrigger.addAction(() => this.handlers[EventType.BUILDING_FINISHED].fire(Unit.fromHandle(GetConstructedStructure())))
 
     let perSecondTrigger = Trigger.create()
-    perSecondTrigger.registerTimerEvent(1, true)
+    perSecondTrigger.registerTimerEvent(1.0, true)
     perSecondTrigger.addAction(() => this.handlers[EventType.PER_SECOND].fire({}))
   }
 
