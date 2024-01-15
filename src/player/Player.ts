@@ -16,6 +16,7 @@ export class Player {
     this.unit = this.spawnStart()
 
     eventSystem.subscribe(EventType.BUILDING_FINISHED, (building: unit) => this.onCastlePlaced(building))
+    eventSystem.subscribe(EventType.PER_SECOND, () => print("1 sec"))
   }
 
   private spawnStart(): Unit | undefined {
