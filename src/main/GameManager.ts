@@ -1,5 +1,5 @@
 import { PlayerManager } from "./PlayerManager"
-import { BuildingEventSystem } from "system/BuildEventSystem"
+import { EventSystem } from "system/EventSystem"
 import { Config } from "util/Config"
 
 export class GameManager {
@@ -10,7 +10,7 @@ export class GameManager {
   }
 
   public init() {
-    let buildEventSystem = new BuildingEventSystem()
-    let playerManager = new PlayerManager(this.config, buildEventSystem)
+    let eventSystem = new EventSystem()
+    let playerManager = new PlayerManager(this.config, eventSystem)
   }
 }
