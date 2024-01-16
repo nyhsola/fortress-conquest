@@ -14,6 +14,21 @@ export function forEachPlayer(action: (id: number) => void) {
     })
 }
 
+export function forEachUnitOfPlayerAndType(playerId: number, unit: number, action: (unit: Unit) => void) {
+  let player = Player(playerId)
+  let group = player && GetUnitsOfPlayerAndTypeId(player, unit)
+  group &&
+    ForGroupBJ(group, () => {
+      let unitl = Unit.fromHandle(GetEnumUnit())
+      unitl && action(unitl)
+    })
+}
+
+export function createUnitNear(unit: Unit, forPlayer: number, unitType: number): Unit | undefined {
+  let point = unit.getPoint()
+  return point && Unit.create(Players[forPlayer], unitType, point.x, point.y)
+}
+
 export function createUnitAtCenter(zone: rect, forPlayer: number, unit: number): Unit | undefined {
   let area = Rectangle.fromHandle(zone)
   return area && Unit.create(Players[forPlayer], unit, area.centerX, area.centerY)

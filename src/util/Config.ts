@@ -1,5 +1,11 @@
+export const ABILITY = {
+  WORKERS: FourCC("A003"),
+}
+
 export const UNIT = {
-  WORKER: FourCC("h000"),
+  START_WORKER: FourCC("h000"),
+  CASTLE: FourCC("h001"),
+  WORKER: FourCC("h002"),
   MINE: FourCC("n000"),
 }
 

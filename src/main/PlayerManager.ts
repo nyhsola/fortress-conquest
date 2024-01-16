@@ -3,6 +3,8 @@ import { EventSystem } from "system/EventSystem"
 import { Config } from "util/Config"
 import { forEachPlayer } from "util/Util"
 
+const ALLY_SHIFT = 12
+
 export class PlayerManager {
   private readonly config: Config
   private readonly eventSystem: EventSystem
@@ -16,6 +18,6 @@ export class PlayerManager {
   }
 
   private createPlayer(id: number): Player {
-    return new Player(this.config, this.eventSystem, id)
+    return new Player(this.config, this.eventSystem, id, ALLY_SHIFT + id)
   }
 }
