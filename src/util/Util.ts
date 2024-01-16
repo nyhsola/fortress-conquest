@@ -1,16 +1,15 @@
-import { MapPlayer, Point, Rectangle, Unit } from "w3ts"
+import { Color, MapPlayer, Point, Rectangle, Unit } from "w3ts"
 import { Players } from "w3ts/globals"
 
 import { TEXT } from "util/Config"
 import { Task } from "util/Task"
 
-export function forEachPlayer(action: (id: number) => void) {
+export function forEachPlayer(action: (player: MapPlayer) => void) {
   let players = GetPlayersAll()
   players &&
     ForForce(players, () => {
       let player = MapPlayer.fromEnum()
-      let playerId = player?.id
-      playerId && action(playerId)
+      player && action(player)
     })
 }
 
@@ -39,6 +38,12 @@ export function createUnitAtPolar(point: Point | undefined, angle: number, dista
   let locationMine = PolarProjectionBJ(location, distance, angle)
   let pointMine = Point.fromHandle(locationMine)
   return locationMine && Unit.create(Players[forPlayer], unit, pointMine?.x ?? 0, pointMine?.y ?? 0)
+}
+
+export function issueOrder(unit: Unit, order: string, place: Unit) {
+  let unitHandle = unit.handle
+  let placeHandle = place.handle
+  unit && placeHandle && IssueTargetOrderBJ(unitHandle, order, placeHandle)
 }
 
 export function withTimedLife(unit: Unit | undefined, seconds: number): Unit | undefined {

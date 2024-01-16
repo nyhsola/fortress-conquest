@@ -1,3 +1,5 @@
+import { MapPlayer } from "w3ts"
+
 import { Player } from "player/Player"
 import { EventSystem } from "system/EventSystem"
 import { Config } from "util/Config"
@@ -14,7 +16,10 @@ export class PlayerManager {
     this.config = config
     this.eventSystem = eventSystem
 
-    forEachPlayer((id: number) => (this.players[id] = this.createPlayer(id)))
+    forEachPlayer((player: MapPlayer) => {
+      let id = player.id
+      this.players[id] = this.createPlayer(id)
+    })
   }
 
   private createPlayer(id: number): Player {

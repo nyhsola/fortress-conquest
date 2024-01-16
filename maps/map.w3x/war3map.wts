@@ -308,9 +308,9 @@ STRING 84
 Stock
 }
 
-STRING 85
+STRING 86
 // Abilities: A003 (Workers), Ubertip (Tooltip - Normal - Extended)
 {
-DYNAMIC TEXT
+INITIALIZING
 }
 
