@@ -32,21 +32,20 @@ export class Player {
     })
   }
 
+  private onCastleBuild(unit: Unit) {
+    this.buildBaseAroundCastle(unit)
+  }
+
   private tickPer10Seconds() {
-    this.abilityWorker()
-    this.goldIncome()
+    this.checkAbilityWorkerAndSpawn()
+    this.transferGoldAndPlaceText()
   }
 
   private tickPer5Seconds() {
-    forEachPlayer((player: MapPlayer) => {
-      let template = "Worker count: " + this.workerCount + " |n" + "Worker limit: " + this.workerCountLimit
-      if (player.id == this.playerId && GetLocalPlayer() == player.handle) {
-        BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, template, 0)
-      }
-    })
+    this.updateStats()
   }
 
-  private abilityWorker() {
+  private checkAbilityWorkerAndSpawn() {
     forEachUnitOfPlayerAndType(this.playerId, UNIT.CASTLE, (unit: Unit) => {
       if (this.castle != undefined && unit.getAbilityLevel(ABILITY.WORKERS) == 1 && this.workerCount < this.workerCountLimit) {
         let worker = createUnitNear(unit, this.allyId, UNIT.WORKER)
@@ -56,7 +55,18 @@ export class Player {
     })
   }
 
-  private goldIncome() {
+  private buildBaseAroundCastle(unit: Unit) {
+    if (unit?.getOwner()?.id == this.playerId) {
+      let point = unit.getPoint()
+      let deg = GetRandomDirectionDeg()
+      this.taskPer10Seconds.reset()
+      this.castle = unit
+      this.mine = createUnitAtPolar(point, deg, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
+      this.stock = createUnitAtPolar(point, deg + 90, 800, this.allyId, UNIT.STOCK)
+    }
+  }
+
+  private transferGoldAndPlaceText() {
     let allyPlayer = MapPlayer.fromIndex(this.allyId)
     let allyGold = allyPlayer?.getState(PLAYER_STATE_RESOURCE_GOLD) ?? 0
     if (allyGold > 0) {
@@ -68,16 +78,12 @@ export class Player {
     }
   }
 
-  private onCastleBuild(unit: Unit) {
-    if (unit?.getOwner()?.id == this.playerId) {
-      let point = unit.getPoint()
-      let deg = GetRandomDirectionDeg()
-
-      this.taskPer10Seconds.reset()
-      this.castle = unit
-
-      this.mine = createUnitAtPolar(point, deg, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
-      this.stock = createUnitAtPolar(point, deg + 90, 800, this.allyId, UNIT.STOCK)
-    }
+  private updateStats() {
+    forEachPlayer((player: MapPlayer) => {
+      let template = "Worker count: " + this.workerCount + " |n" + "Worker limit: " + this.workerCountLimit
+      if (player.id == this.playerId && GetLocalPlayer() == player.handle) {
+        BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, template, 0)
+      }
+    })
   }
 }

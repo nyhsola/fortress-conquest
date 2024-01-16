@@ -13,11 +13,11 @@ export class EventSystem {
   }
 
   constructor() {
-    let buildingFinishedTrigger = Trigger.create()
+    const buildingFinishedTrigger = Trigger.create()
     buildingFinishedTrigger.registerAnyUnitEvent(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH)
     buildingFinishedTrigger.addAction(() => this.handlers[EventType.BUILDING_FINISHED].fire(Unit.fromHandle(GetConstructedStructure())))
 
-    let perSecondTrigger = Trigger.create()
+    const perSecondTrigger = Trigger.create()
     perSecondTrigger.registerTimerEvent(1.0, true)
     perSecondTrigger.addAction(() => this.handlers[EventType.PER_SECOND].fire({}))
   }
@@ -28,7 +28,7 @@ export class EventSystem {
 }
 
 class EventHandler<EventCallback extends (...args: any[]) => void> {
-  public readonly subscriptions: Array<EventCallback> = []
+  private subscriptions: Array<EventCallback> = []
 
   public subscribe(action: EventCallback) {
     this.subscriptions.push(action)
