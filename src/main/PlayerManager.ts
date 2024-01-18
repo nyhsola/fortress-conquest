@@ -1,6 +1,6 @@
 import { MapPlayer, Unit } from "w3ts"
 
-import { Player } from "player/Player"
+import { Player } from "main/Player"
 import { Config, UNIT } from "util/Config"
 import { forEachPlayer } from "util/Util"
 
