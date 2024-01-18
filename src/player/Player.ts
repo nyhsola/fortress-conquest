@@ -6,43 +6,44 @@ import { createFloatingText } from "util/FTextUtil"
 import { Task } from "util/Task"
 import { createTask, createUnitAtCenter, createUnitAtPolar, createUnitNear, forEachPlayer, forEachUnitOfPlayerAndType, issueOrder, withTimedLife } from "util/Util"
 
+const ALLY_SHIFT = 12
+
 export class Player {
-  private playerId: number
-  private allyId: number
-  private config: Config
+  private readonly config: Config
+  private readonly playerId: number
+  private readonly allyId: number
   private castle: Unit | undefined
   private mine: Unit | undefined
   private stock: Unit | undefined
-  private taskPer10Seconds: Task
-  private taskPer5Seconds: Task
+  private taskPer10Seconds: Task = createTask(() => this.checkAbilities(), 10)
+  private taskPer5Seconds: Task = createTask(() => this.updateStats(), 5)
   private workerCountLimit = 3
   private workerCount = 0
 
-  constructor(config: Config, eventSystem: EventSystem, playerId: number, allyId: number) {
+  constructor(config: Config, playerId: number) {
     this.config = config
     this.playerId = playerId
-    this.allyId = allyId
-    this.taskPer10Seconds = createTask(() => this.tickPer10Seconds(), 10)
-    this.taskPer5Seconds = createTask(() => this.tickPer5Seconds(), 5)
+    this.allyId = this.playerId + ALLY_SHIFT
     withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
-    eventSystem.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onCastleBuild(building))
-    eventSystem.subscribe(EventType.PER_SECOND, () => {
-      this.taskPer10Seconds.update(1)
-      this.taskPer5Seconds.update(1)
-    })
   }
 
-  private onCastleBuild(unit: Unit) {
-    this.buildBaseAroundCastle(unit)
+  public onCastleBuild(castle: Unit) {
+    this.castle = castle
+    const point = castle.getPoint()
+    const direction = GetRandomDirectionDeg()
+    this.taskPer10Seconds.reset()
+    this.mine = createUnitAtPolar(point, direction, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
+    this.stock = createUnitAtPolar(point, direction + 80, 800, this.allyId, UNIT.STOCK)
   }
 
-  private tickPer10Seconds() {
+  public tick(delta: number) {
+    this.taskPer10Seconds.update(delta)
+    this.taskPer5Seconds.update(delta)
+  }
+
+  private checkAbilities() {
     this.checkAbilityWorkerAndSpawn()
     this.transferGoldAndPlaceText()
-  }
-
-  private tickPer5Seconds() {
-    this.updateStats()
   }
 
   private checkAbilityWorkerAndSpawn() {
@@ -53,17 +54,6 @@ export class Player {
         this.workerCount = this.workerCount + 1
       }
     })
-  }
-
-  private buildBaseAroundCastle(unit: Unit) {
-    if (unit?.getOwner()?.id == this.playerId) {
-      let point = unit.getPoint()
-      let deg = GetRandomDirectionDeg()
-      this.taskPer10Seconds.reset()
-      this.castle = unit
-      this.mine = createUnitAtPolar(point, deg, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
-      this.stock = createUnitAtPolar(point, deg + 90, 800, this.allyId, UNIT.STOCK)
-    }
   }
 
   private transferGoldAndPlaceText() {

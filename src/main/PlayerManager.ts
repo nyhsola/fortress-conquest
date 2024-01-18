@@ -1,28 +1,37 @@
-import { MapPlayer } from "w3ts"
+import { MapPlayer, Unit } from "w3ts"
 
 import { Player } from "player/Player"
-import { EventSystem } from "system/EventSystem"
+import { EventSystem, EventType } from "system/EventSystem"
 import { Config } from "util/Config"
 import { forEachPlayer } from "util/Util"
 
-const ALLY_SHIFT = 12
-
 export class PlayerManager {
   private readonly config: Config
-  private readonly eventSystem: EventSystem
   private players: Record<number, Player> = {}
 
   constructor(config: Config, eventSystem: EventSystem) {
     this.config = config
-    this.eventSystem = eventSystem
 
     forEachPlayer((player: MapPlayer) => {
       let id = player.id
       this.players[id] = this.createPlayer(id)
     })
+
+    eventSystem.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onCastleBuild(building))
+    eventSystem.subscribe(EventType.PER_SECOND, () => this.tick(1))
+  }
+
+  private onCastleBuild(unit: Unit) {
+    this.players[unit.owner.id].onCastleBuild(unit)
+  }
+
+  private tick(delta: number) {
+    for (const player in this.players) {
+      this.players[player].tick(delta)
+    }
   }
 
   private createPlayer(id: number): Player {
-    return new Player(this.config, this.eventSystem, id, ALLY_SHIFT + id)
+    return new Player(this.config, id)
   }
 }
