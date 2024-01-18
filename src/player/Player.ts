@@ -2,7 +2,8 @@ import { MapPlayer, Unit } from "w3ts"
 
 import { ABILITY, Config, UNIT } from "util/Config"
 import { createFloatingText } from "util/FTextUtil"
-import { createUnitAtCenter, createUnitAtPolar, createUnitNear, doForLocalPlayer, forEachUnitOfPlayerAndType, issueOrder, withTimedLife } from "util/Util"
+import { Task } from "util/Task"
+import { createTask, createUnitAtCenter, createUnitAtPolar, createUnitNear, doForLocalPlayer, forEachUnitOfPlayerAndType, issueOrder, withTimedLife } from "util/Util"
 
 const ALLY_SHIFT = 12
 
@@ -16,6 +17,8 @@ export class Player {
   private workerCountLimit = 3
   private workerCount = 0
 
+  private task: Task = createTask(() => this.castAbilities(), 5)
+
   constructor(config: Config, playerId: number) {
     this.config = config
     this.playerId = playerId
@@ -24,14 +27,25 @@ export class Player {
   }
 
   public onCastleBuild(castle: Unit) {
-    this.castle = castle
     const point = castle.getPoint()
     const direction = GetRandomDirectionDeg()
+    this.task.reset()
+    this.castle = castle
     this.mine = createUnitAtPolar(point, direction, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
     this.stock = createUnitAtPolar(point, direction + 80, 800, this.allyId, UNIT.STOCK)
   }
 
-  public onWorkerCast(unit: Unit) {
+  public tick(delta: number) {
+    this.task.update(delta)
+  }
+
+  private castAbilities() {
+    forEachUnitOfPlayerAndType(this.playerId, UNIT.CASTLE, (unit: Unit) => this.onWorkerCast(unit))
+    this.onIncome()
+  }
+
+  private onWorkerCast(unit: Unit) {
+    if (this.castle == undefined || unit.getAbilityLevel(ABILITY.WORKERS) != 1 || this.workerCount >= this.workerCountLimit) return
     const worker = createUnitNear(unit, this.allyId, UNIT.WORKER)
     worker && this.mine && issueOrder(worker, "harvest", this.mine)
     this.workerCount = this.workerCount + 1
@@ -39,10 +53,10 @@ export class Player {
   }
 
   private workerTemplate(): string {
-    return "Worker count: " + this.workerCount + " |n" + "Worker limit: " + this.workerCountLimit
+    return "Worker count: " + this.workerCount + "|n" + "Worker limit: " + this.workerCountLimit + "|n" + "Every 5 sec"
   }
 
-  private transferGoldAndPlaceText() {
+  private onIncome() {
     let allyPlayer = MapPlayer.fromIndex(this.allyId)
     let allyGold = allyPlayer?.getState(PLAYER_STATE_RESOURCE_GOLD) ?? 0
     if (allyGold > 0) {

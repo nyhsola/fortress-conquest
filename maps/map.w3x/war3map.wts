@@ -23,11 +23,6 @@ STRING 5
 Player 5
 }
 
-STRING 6
-{
-Player 6
-}
-
 STRING 7
 {
 Force 1
@@ -86,11 +81,6 @@ Player 16
 STRING 18
 {
 Player 17
-}
-
-STRING 19
-{
-Player 18
 }
 
 STRING 20
@@ -167,45 +157,10 @@ STRING 34
 Q
 }
 
-STRING 35
-{
-Can't place castle around 2000 range of another
-}
-
 STRING 36
 // Abilities: A002 (Income), Name (Name)
 {
 Income
-}
-
-STRING 41
-{
-Pick mode
-}
-
-STRING 43
-{
-Standard
-}
-
-STRING 44
-{
-Test
-}
-
-STRING 45
-{
-Mode: Standard
-}
-
-STRING 46
-{
-Mode: Test
-}
-
-STRING 47
-{
-Waiting host to pick mode...
 }
 
 STRING 57
@@ -224,11 +179,6 @@ STRING 62
 // Abilities: A004 (Progress points), Tip (Tooltip - Normal)
 {
 You have 0/0 points
-}
-
-STRING 65
-{
-|cffffff00+1|r
 }
 
 STRING 68
@@ -261,41 +211,6 @@ STRING 74
 Workers
 }
 
-STRING 76
-{
-Red
-}
-
-STRING 77
-{
-Blue
-}
-
-STRING 78
-{
-Teal
-}
-
-STRING 79
-{
-Purple
-}
-
-STRING 80
-{
-Yellow
-}
-
-STRING 81
-{
-Orange
-}
-
-STRING 82
-{
-Game starts in
-}
-
 STRING 83
 // Units: h004 (Stock), Tip (Tooltip - Basic)
 {
@@ -308,9 +223,14 @@ STRING 84
 Stock
 }
 
-STRING 86
+STRING 87
+{
+Zombie
+}
+
+STRING 88
 // Abilities: A003 (Workers), Ubertip (Tooltip - Normal - Extended)
 {
-INITIALIZING
+Wait...
 }
 

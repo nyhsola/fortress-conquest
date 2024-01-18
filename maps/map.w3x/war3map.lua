@@ -1,24 +1,3 @@
-udg_TmpBoolean = false
-udg_StartTimer = nil
-udg_StartPositionRegions = {}
-udg_StartModDialogue = nil
-udg_CurrentMod = 0
-udg_StartModButtonStandard = nil
-udg_StartModButtonTest = nil
-udg_TmpInteger = 0
-udg_Mines = {}
-udg_StartTimeWindow = nil
-udg_MapRegions = {}
-udg_BuildUnitGroup = nil
-udg_AllyPlayers = {}
-udg_StartCastle = {}
-udg_TmpAngle = 0.0
-udg_PlayersCount = 0
-udg_StartPeasant = {}
-udg_WorkerLimit = __jarray(0)
-udg_TmpString2 = ""
-udg_TmpString1 = ""
-udg_WorkerCount = __jarray(0)
 gg_rct_Playable_area = nil
 gg_rct_start_1 = nil
 gg_rct_start_2 = nil
@@ -30,53 +9,8 @@ gg_rct_LeftBottom = nil
 gg_rct_LeftTop = nil
 gg_rct_RightTop = nil
 gg_rct_RightBottom = nil
-gg_trg_init_map = nil
-gg_trg_init_dialogue = nil
-gg_trg_init_mod = nil
-gg_trg_init_game = nil
-gg_trg_init_castles = nil
-gg_trg_update_stats = nil
-gg_trg_build_group_finishes = nil
-gg_trg_build_group_cancel = nil
-gg_trg_build_group_dies = nil
-gg_trg_build_range_check = nil
-gg_trg_Untitled_Trigger_001 = nil
-gg_trg_init_abilities = nil
-gg_trg_random_position = nil
-gg_trg_workers_loop = nil
-gg_trg_income_loop = nil
 gg_dest_LTbr_0412 = nil
 function InitGlobals()
-local i = 0
-
-udg_TmpBoolean = false
-udg_StartTimer = CreateTimer()
-i = 0
-while (true) do
-if ((i > 6)) then break end
-udg_StartPositionRegions[i] = nil
-i = i + 1
-end
-udg_StartModDialogue = DialogCreate()
-udg_CurrentMod = 0
-udg_TmpInteger = 0
-udg_BuildUnitGroup = CreateGroup()
-udg_TmpAngle = 0.0
-udg_PlayersCount = 6
-i = 0
-while (true) do
-if ((i > 0)) then break end
-udg_WorkerLimit[i] = 0
-i = i + 1
-end
-udg_TmpString2 = ""
-udg_TmpString1 = ""
-i = 0
-while (true) do
-if ((i > 0)) then break end
-udg_WorkerCount[i] = 0
-i = i + 1
-end
 end
 
 function CreateRegions()
@@ -93,18 +27,6 @@ gg_rct_LeftBottom = Rect(-6720.0, -7232.0, -160.0, -384.0)
 gg_rct_LeftTop = Rect(-6720.0, -160.0, -160.0, 6688.0)
 gg_rct_RightTop = Rect(96.0, -160.0, 6656.0, 6688.0)
 gg_rct_RightBottom = Rect(96.0, -7232.0, 6656.0, -384.0)
-end
-
-function Trig_Untitled_Trigger_001_Actions()
-end
-
-function InitTrig_Untitled_Trigger_001()
-gg_trg_Untitled_Trigger_001 = CreateTrigger()
-TriggerAddAction(gg_trg_Untitled_Trigger_001, Trig_Untitled_Trigger_001_Actions)
-end
-
-function InitCustomTriggers()
-InitTrig_Untitled_Trigger_001()
 end
 
 function InitCustomPlayerSlots()
@@ -138,48 +60,42 @@ SetPlayerColor(Player(4), ConvertPlayerColor(4))
 SetPlayerRacePreference(Player(4), RACE_PREF_HUMAN)
 SetPlayerRaceSelectable(Player(4), true)
 SetPlayerController(Player(4), MAP_CONTROL_USER)
-SetPlayerStartLocation(Player(5), 5)
-ForcePlayerStartLocation(Player(5), 5)
-SetPlayerColor(Player(5), ConvertPlayerColor(5))
-SetPlayerRacePreference(Player(5), RACE_PREF_HUMAN)
-SetPlayerRaceSelectable(Player(5), true)
-SetPlayerController(Player(5), MAP_CONTROL_USER)
-SetPlayerStartLocation(Player(12), 6)
-ForcePlayerStartLocation(Player(12), 6)
+SetPlayerStartLocation(Player(12), 5)
+ForcePlayerStartLocation(Player(12), 5)
 SetPlayerColor(Player(12), ConvertPlayerColor(12))
 SetPlayerRacePreference(Player(12), RACE_PREF_NIGHTELF)
 SetPlayerRaceSelectable(Player(12), true)
 SetPlayerController(Player(12), MAP_CONTROL_COMPUTER)
-SetPlayerStartLocation(Player(13), 7)
-ForcePlayerStartLocation(Player(13), 7)
+SetPlayerStartLocation(Player(13), 6)
+ForcePlayerStartLocation(Player(13), 6)
 SetPlayerColor(Player(13), ConvertPlayerColor(13))
 SetPlayerRacePreference(Player(13), RACE_PREF_NIGHTELF)
 SetPlayerRaceSelectable(Player(13), true)
 SetPlayerController(Player(13), MAP_CONTROL_COMPUTER)
-SetPlayerStartLocation(Player(14), 8)
-ForcePlayerStartLocation(Player(14), 8)
+SetPlayerStartLocation(Player(14), 7)
+ForcePlayerStartLocation(Player(14), 7)
 SetPlayerColor(Player(14), ConvertPlayerColor(14))
 SetPlayerRacePreference(Player(14), RACE_PREF_NIGHTELF)
 SetPlayerRaceSelectable(Player(14), true)
 SetPlayerController(Player(14), MAP_CONTROL_COMPUTER)
-SetPlayerStartLocation(Player(15), 9)
-ForcePlayerStartLocation(Player(15), 9)
+SetPlayerStartLocation(Player(15), 8)
+ForcePlayerStartLocation(Player(15), 8)
 SetPlayerColor(Player(15), ConvertPlayerColor(15))
 SetPlayerRacePreference(Player(15), RACE_PREF_NIGHTELF)
 SetPlayerRaceSelectable(Player(15), true)
 SetPlayerController(Player(15), MAP_CONTROL_COMPUTER)
-SetPlayerStartLocation(Player(16), 10)
-ForcePlayerStartLocation(Player(16), 10)
+SetPlayerStartLocation(Player(16), 9)
+ForcePlayerStartLocation(Player(16), 9)
 SetPlayerColor(Player(16), ConvertPlayerColor(16))
 SetPlayerRacePreference(Player(16), RACE_PREF_NIGHTELF)
 SetPlayerRaceSelectable(Player(16), true)
 SetPlayerController(Player(16), MAP_CONTROL_COMPUTER)
-SetPlayerStartLocation(Player(17), 11)
-ForcePlayerStartLocation(Player(17), 11)
-SetPlayerColor(Player(17), ConvertPlayerColor(17))
-SetPlayerRacePreference(Player(17), RACE_PREF_NIGHTELF)
-SetPlayerRaceSelectable(Player(17), true)
-SetPlayerController(Player(17), MAP_CONTROL_COMPUTER)
+SetPlayerStartLocation(Player(23), 10)
+ForcePlayerStartLocation(Player(23), 10)
+SetPlayerColor(Player(23), ConvertPlayerColor(23))
+SetPlayerRacePreference(Player(23), RACE_PREF_UNDEAD)
+SetPlayerRaceSelectable(Player(23), true)
+SetPlayerController(Player(23), MAP_CONTROL_COMPUTER)
 end
 
 function InitCustomTeams()
@@ -213,12 +129,7 @@ SetPlayerAllianceStateAllyBJ(Player(4), Player(16), true)
 SetPlayerAllianceStateAllyBJ(Player(16), Player(4), true)
 SetPlayerAllianceStateVisionBJ(Player(4), Player(16), true)
 SetPlayerAllianceStateVisionBJ(Player(16), Player(4), true)
-SetPlayerTeam(Player(5), 5)
-SetPlayerTeam(Player(17), 5)
-SetPlayerAllianceStateAllyBJ(Player(5), Player(17), true)
-SetPlayerAllianceStateAllyBJ(Player(17), Player(5), true)
-SetPlayerAllianceStateVisionBJ(Player(5), Player(17), true)
-SetPlayerAllianceStateVisionBJ(Player(17), Player(5), true)
+SetPlayerTeam(Player(23), 5)
 end
 
 function InitAllyPriorities()
@@ -233,75 +144,78 @@ SetStartLocPrio(2, 1, 3, MAP_LOC_PRIO_HIGH)
 SetStartLocPrioCount(3, 2)
 SetStartLocPrio(3, 0, 2, MAP_LOC_PRIO_HIGH)
 SetStartLocPrio(3, 1, 4, MAP_LOC_PRIO_HIGH)
-SetStartLocPrioCount(4, 2)
+SetStartLocPrioCount(4, 1)
 SetStartLocPrio(4, 0, 3, MAP_LOC_PRIO_HIGH)
-SetStartLocPrio(4, 1, 5, MAP_LOC_PRIO_HIGH)
-SetStartLocPrioCount(5, 1)
-SetStartLocPrio(5, 0, 4, MAP_LOC_PRIO_HIGH)
-SetStartLocPrioCount(6, 10)
-SetStartLocPrio(6, 0, 0, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 1, 1, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 2, 2, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 3, 4, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 4, 5, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 5, 7, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 6, 8, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 7, 10, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(6, 8, 11, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrioCount(6, 3)
-SetEnemyStartLocPrio(6, 0, 0, MAP_LOC_PRIO_HIGH)
+SetStartLocPrioCount(5, 9)
+SetStartLocPrio(5, 0, 0, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 1, 1, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 2, 2, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 3, 4, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 4, 6, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 5, 7, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 6, 9, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(5, 7, 10, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrioCount(5, 2)
+SetEnemyStartLocPrio(5, 0, 0, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrio(5, 1, 9, MAP_LOC_PRIO_LOW)
+SetStartLocPrioCount(6, 1)
+SetStartLocPrio(6, 0, 10, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrioCount(6, 2)
+SetEnemyStartLocPrio(6, 0, 1, MAP_LOC_PRIO_LOW)
 SetEnemyStartLocPrio(6, 1, 10, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(6, 2, 11, MAP_LOC_PRIO_LOW)
 SetStartLocPrioCount(7, 1)
-SetStartLocPrio(7, 0, 5, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrioCount(7, 2)
-SetEnemyStartLocPrio(7, 0, 1, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(7, 1, 5, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrioCount(8, 5)
-SetEnemyStartLocPrio(8, 0, 0, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(8, 1, 1, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(7, 0, 10, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrioCount(7, 5)
+SetEnemyStartLocPrio(7, 0, 0, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(7, 1, 1, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(7, 2, 3, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(7, 3, 4, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(7, 4, 10, MAP_LOC_PRIO_LOW)
+SetStartLocPrioCount(8, 6)
+SetStartLocPrio(8, 0, 2, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(8, 1, 3, MAP_LOC_PRIO_HIGH)
+SetStartLocPrio(8, 2, 4, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(8, 3, 7, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(8, 4, 9, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(8, 5, 10, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrioCount(8, 7)
+SetEnemyStartLocPrio(8, 0, 1, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(8, 1, 2, MAP_LOC_PRIO_HIGH)
 SetEnemyStartLocPrio(8, 2, 3, MAP_LOC_PRIO_LOW)
 SetEnemyStartLocPrio(8, 3, 4, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(8, 4, 5, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(8, 4, 7, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(8, 5, 9, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(8, 6, 10, MAP_LOC_PRIO_LOW)
 SetStartLocPrioCount(9, 7)
-SetStartLocPrio(9, 0, 2, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(9, 1, 3, MAP_LOC_PRIO_HIGH)
-SetStartLocPrio(9, 2, 4, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(9, 3, 5, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(9, 4, 8, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(9, 5, 10, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(9, 6, 11, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrioCount(9, 8)
-SetEnemyStartLocPrio(9, 0, 1, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(9, 1, 2, MAP_LOC_PRIO_HIGH)
-SetEnemyStartLocPrio(9, 2, 3, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(9, 3, 4, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(9, 4, 5, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(9, 5, 8, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(9, 6, 10, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(9, 7, 11, MAP_LOC_PRIO_LOW)
-SetStartLocPrioCount(10, 9)
+SetStartLocPrio(9, 0, 1, MAP_LOC_PRIO_HIGH)
+SetStartLocPrio(9, 1, 2, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(9, 2, 3, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(9, 3, 4, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(9, 4, 5, MAP_LOC_PRIO_HIGH)
+SetStartLocPrio(9, 5, 7, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrioCount(9, 7)
+SetEnemyStartLocPrio(9, 0, 2, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(9, 1, 3, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(9, 2, 4, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(9, 3, 5, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrio(9, 4, 7, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrio(9, 5, 10, MAP_LOC_PRIO_HIGH)
+SetStartLocPrioCount(10, 5)
 SetStartLocPrio(10, 0, 1, MAP_LOC_PRIO_HIGH)
-SetStartLocPrio(10, 1, 2, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(10, 2, 3, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(10, 3, 4, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(10, 4, 5, MAP_LOC_PRIO_LOW)
-SetStartLocPrio(10, 5, 6, MAP_LOC_PRIO_HIGH)
-SetStartLocPrio(10, 6, 8, MAP_LOC_PRIO_HIGH)
-SetStartLocPrio(10, 7, 11, MAP_LOC_PRIO_HIGH)
-SetEnemyStartLocPrioCount(10, 8)
-SetEnemyStartLocPrio(10, 0, 2, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(10, 1, 3, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(10, 2, 4, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(10, 3, 5, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(10, 4, 6, MAP_LOC_PRIO_HIGH)
-SetEnemyStartLocPrio(10, 5, 8, MAP_LOC_PRIO_HIGH)
-SetEnemyStartLocPrio(10, 6, 11, MAP_LOC_PRIO_HIGH)
-SetStartLocPrioCount(11, 1)
-SetStartLocPrio(11, 0, 4, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrioCount(11, 2)
-SetEnemyStartLocPrio(11, 0, 1, MAP_LOC_PRIO_LOW)
-SetEnemyStartLocPrio(11, 1, 4, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(10, 1, 4, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(10, 2, 7, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(10, 3, 8, MAP_LOC_PRIO_LOW)
+SetStartLocPrio(10, 4, 9, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrioCount(10, 9)
+SetEnemyStartLocPrio(10, 0, 0, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrio(10, 1, 1, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(10, 2, 2, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(10, 3, 3, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrio(10, 4, 4, MAP_LOC_PRIO_HIGH)
+SetEnemyStartLocPrio(10, 5, 5, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(10, 6, 7, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(10, 7, 8, MAP_LOC_PRIO_LOW)
+SetEnemyStartLocPrio(10, 8, 9, MAP_LOC_PRIO_LOW)
 end
 
 function main()
@@ -314,27 +228,25 @@ SetMapMusic("Music", true, 0)
 CreateRegions()
 InitBlizzard()
 InitGlobals()
-InitCustomTriggers()
 end
 
 function config()
 SetMapName("TRIGSTR_009")
 SetMapDescription("TRIGSTR_011")
-SetPlayers(12)
-SetTeams(12)
+SetPlayers(11)
+SetTeams(11)
 SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
 DefineStartLocation(0, -7424.0, -7232.0)
 DefineStartLocation(1, -7424.0, -6784.0)
 DefineStartLocation(2, -7424.0, -6336.0)
 DefineStartLocation(3, -7424.0, -5888.0)
 DefineStartLocation(4, -7424.0, -5440.0)
-DefineStartLocation(5, -7424.0, -4992.0)
-DefineStartLocation(6, -6976.0, -7232.0)
-DefineStartLocation(7, -6976.0, -6784.0)
-DefineStartLocation(8, -6976.0, -6336.0)
-DefineStartLocation(9, -6976.0, -5888.0)
-DefineStartLocation(10, -6976.0, -5440.0)
-DefineStartLocation(11, -6976.0, -4992.0)
+DefineStartLocation(5, -6976.0, -7232.0)
+DefineStartLocation(6, -6976.0, -6784.0)
+DefineStartLocation(7, -6976.0, -6336.0)
+DefineStartLocation(8, -6976.0, -5888.0)
+DefineStartLocation(9, -6976.0, -5440.0)
+DefineStartLocation(10, -6464.0, -7232.0)
 InitCustomPlayerSlots()
 InitCustomTeams()
 InitAllyPriorities()
