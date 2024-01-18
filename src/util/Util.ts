@@ -23,6 +23,15 @@ export function forEachUnitOfPlayerAndType(playerId: number, unit: number, actio
     })
 }
 
+export function forEachUnitOfType(unit: number, action: (unit: Unit) => void) {
+  let group = GetUnitsOfTypeIdAll(unit)
+  group &&
+    ForGroupBJ(group, () => {
+      let unitl = Unit.fromHandle(GetEnumUnit())
+      unitl && action(unitl)
+    })
+}
+
 export function createUnitNear(unit: Unit, forPlayer: number, unitType: number): Unit | undefined {
   let point = unit.getPoint()
   return point && Unit.create(Players[forPlayer], unitType, point.x, point.y)
@@ -49,6 +58,14 @@ export function issueOrder(unit: Unit, order: string, place: Unit) {
 export function withTimedLife(unit: Unit | undefined, seconds: number): Unit | undefined {
   unit?.applyTimedLife(TEXT.TIMED_LIFE, seconds)
   return unit
+}
+
+export function doForLocalPlayer(action: () => void, playerId: number) {
+  forEachPlayer((player: MapPlayer) => {
+    if (player.id == playerId && GetLocalPlayer() == player.handle) {
+      action()
+    }
+  })
 }
 
 export function createTask(customAction: () => void, interval: number): Task {

@@ -1,4 +1,5 @@
 import { PlayerManager } from "./PlayerManager"
+import { AbilitySystem } from "system/AbilitySystem"
 import { EventSystem } from "system/EventSystem"
 import { Config } from "util/Config"
 
@@ -10,7 +11,9 @@ export class GameManager {
   }
 
   public init() {
-    let eventSystem = new EventSystem()
-    let playerManager = new PlayerManager(this.config, eventSystem)
+    const eventSystem = new EventSystem()
+    const abilitySystem = new AbilitySystem(eventSystem)
+
+    const playerManager = new PlayerManager(this.config, eventSystem, abilitySystem)
   }
 }

@@ -1,5 +1,6 @@
 export const ABILITY = {
   WORKERS: FourCC("A003"),
+  WORKERS_NEW: FourCC("A005"),
 } as const
 
 export const UNIT = {

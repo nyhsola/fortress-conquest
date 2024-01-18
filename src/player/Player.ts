@@ -1,10 +1,8 @@
-import { MapPlayer, Point, Unit } from "w3ts"
+import { MapPlayer, Unit } from "w3ts"
 
-import { EventSystem, EventType } from "system/EventSystem"
 import { ABILITY, Config, UNIT } from "util/Config"
 import { createFloatingText } from "util/FTextUtil"
-import { Task } from "util/Task"
-import { createTask, createUnitAtCenter, createUnitAtPolar, createUnitNear, forEachPlayer, forEachUnitOfPlayerAndType, issueOrder, withTimedLife } from "util/Util"
+import { createUnitAtCenter, createUnitAtPolar, createUnitNear, doForLocalPlayer, forEachUnitOfPlayerAndType, issueOrder, withTimedLife } from "util/Util"
 
 const ALLY_SHIFT = 12
 
@@ -15,8 +13,6 @@ export class Player {
   private castle: Unit | undefined
   private mine: Unit | undefined
   private stock: Unit | undefined
-  private taskPer10Seconds: Task = createTask(() => this.checkAbilities(), 10)
-  private taskPer5Seconds: Task = createTask(() => this.updateStats(), 5)
   private workerCountLimit = 3
   private workerCount = 0
 
@@ -31,29 +27,19 @@ export class Player {
     this.castle = castle
     const point = castle.getPoint()
     const direction = GetRandomDirectionDeg()
-    this.taskPer10Seconds.reset()
     this.mine = createUnitAtPolar(point, direction, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
     this.stock = createUnitAtPolar(point, direction + 80, 800, this.allyId, UNIT.STOCK)
   }
 
-  public tick(delta: number) {
-    this.taskPer10Seconds.update(delta)
-    this.taskPer5Seconds.update(delta)
+  public onWorkerCast(unit: Unit) {
+    const worker = createUnitNear(unit, this.allyId, UNIT.WORKER)
+    worker && this.mine && issueOrder(worker, "harvest", this.mine)
+    this.workerCount = this.workerCount + 1
+    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, this.workerTemplate(), 0), this.playerId)
   }
 
-  private checkAbilities() {
-    this.checkAbilityWorkerAndSpawn()
-    this.transferGoldAndPlaceText()
-  }
-
-  private checkAbilityWorkerAndSpawn() {
-    forEachUnitOfPlayerAndType(this.playerId, UNIT.CASTLE, (unit: Unit) => {
-      if (this.castle != undefined && unit.getAbilityLevel(ABILITY.WORKERS) == 1 && this.workerCount < this.workerCountLimit) {
-        let worker = createUnitNear(unit, this.allyId, UNIT.WORKER)
-        worker && this.mine && issueOrder(worker, "harvest", this.mine)
-        this.workerCount = this.workerCount + 1
-      }
-    })
+  private workerTemplate(): string {
+    return "Worker count: " + this.workerCount + " |n" + "Worker limit: " + this.workerCountLimit
   }
 
   private transferGoldAndPlaceText() {
@@ -66,14 +52,5 @@ export class Player {
       player?.setState(PLAYER_STATE_RESOURCE_GOLD, playerGold + allyGold)
       this.castle && player && createFloatingText("+" + allyGold, this.castle, player)
     }
-  }
-
-  private updateStats() {
-    forEachPlayer((player: MapPlayer) => {
-      let template = "Worker count: " + this.workerCount + " |n" + "Worker limit: " + this.workerCountLimit
-      if (player.id == this.playerId && GetLocalPlayer() == player.handle) {
-        BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, template, 0)
-      }
-    })
   }
 }
