@@ -23,6 +23,7 @@ export class Player {
     this.config = config
     this.playerId = playerId
     this.allyId = this.playerId + ALLY_SHIFT
+
     withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
   }
 
@@ -31,8 +32,8 @@ export class Player {
     const direction = GetRandomDirectionDeg()
     this.task.reset()
     this.castle = castle
-    this.mine = createUnitAtPolar(point, direction, 1600, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
-    this.stock = createUnitAtPolar(point, direction + 80, 800, this.allyId, UNIT.STOCK)
+    this.mine = createUnitAtPolar(point, direction, 1500, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
+    this.stock = createUnitAtPolar(point, direction + 70, 800, this.allyId, UNIT.STOCK)
   }
 
   public tick(delta: number) {
