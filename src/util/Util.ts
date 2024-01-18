@@ -49,10 +49,22 @@ export function createUnitAtPolar(point: Point | undefined, angle: number, dista
   return locationMine && Unit.create(Players[forPlayer], unit, pointMine?.x ?? 0, pointMine?.y ?? 0)
 }
 
+export function getPolarPoint(point: Point | undefined, angle: number, distance: number): Point | undefined {
+  let location = Location(point?.x ?? 0, point?.y ?? 0)
+  let locationMine = PolarProjectionBJ(location, distance, angle)
+  let pointMine = Point.fromHandle(locationMine)
+  return pointMine
+}
+
 export function issueOrder(unit: Unit, order: string, place: Unit) {
   let unitHandle = unit.handle
   let placeHandle = place.handle
   unit && placeHandle && IssueTargetOrderBJ(unitHandle, order, placeHandle)
+}
+
+export function issueBuildOrder(unit: Unit, toBuild: number, place: location) {
+  const unitHandle = unit.handle
+  unitHandle && IssueBuildOrderByIdLocBJ(unitHandle, toBuild, place)
 }
 
 export function withTimedLife(unit: Unit | undefined, seconds: number): Unit | undefined {

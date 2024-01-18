@@ -9,7 +9,6 @@ gg_rct_LeftBottom = nil
 gg_rct_LeftTop = nil
 gg_rct_RightTop = nil
 gg_rct_RightBottom = nil
-gg_dest_LTbr_0412 = nil
 function InitGlobals()
 end
 

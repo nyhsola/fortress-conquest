@@ -1,5 +1,6 @@
 import { MapPlayer, Unit } from "w3ts"
 
+import { WorkerGroup } from "./WorkerGroup"
 import { ABILITY, Config, UNIT } from "util/Config"
 import { createFloatingText } from "util/FTextUtil"
 import { Task } from "util/Task"
@@ -11,11 +12,8 @@ export class Player {
   private readonly config: Config
   private readonly playerId: number
   private readonly allyId: number
+  private workerGroup: WorkerGroup | undefined
   private castle: Unit | undefined
-  private mine: Unit | undefined
-  private stock: Unit | undefined
-  private workerCountLimit = 3
-  private workerCount = 0
 
   private task: Task = createTask(() => this.castAbilities(), 5)
 
@@ -23,17 +21,13 @@ export class Player {
     this.config = config
     this.playerId = playerId
     this.allyId = this.playerId + ALLY_SHIFT
-
     withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
   }
 
   public onCastleBuild(castle: Unit) {
-    const point = castle.getPoint()
-    const direction = GetRandomDirectionDeg()
     this.task.reset()
     this.castle = castle
-    this.mine = createUnitAtPolar(point, direction, 1500, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
-    this.stock = createUnitAtPolar(point, direction + 70, 800, this.allyId, UNIT.STOCK)
+    this.workerGroup = new WorkerGroup(this.castle, this.allyId)
   }
 
   public tick(delta: number) {
@@ -46,15 +40,14 @@ export class Player {
   }
 
   private onWorkerCast(unit: Unit) {
-    if (this.castle == undefined || unit.getAbilityLevel(ABILITY.WORKERS) != 1 || this.workerCount >= this.workerCountLimit) return
-    const worker = createUnitNear(unit, this.allyId, UNIT.WORKER)
-    worker && this.mine && issueOrder(worker, "harvest", this.mine)
-    this.workerCount = this.workerCount + 1
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, this.workerTemplate(), 0), this.playerId)
+    if (unit.getAbilityLevel(ABILITY.WORKERS) != 1) return
+    this.workerGroup?.spawnWorker()
+    const workerTemplate = this.workerTemplate(this.workerGroup?.getWorkerCount() ?? 0, this.workerGroup?.getWorkerLimit() ?? 0)
+    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, workerTemplate, 0), this.playerId)
   }
 
-  private workerTemplate(): string {
-    return "Worker count: " + this.workerCount + "|n" + "Worker limit: " + this.workerCountLimit + "|n" + "Every 5 sec"
+  private workerTemplate(workerCount: number, workerLimit: number): string {
+    return "Worker count: " + workerCount + "|n" + "Worker limit: " + workerLimit + "|n" + "Every 5 sec"
   }
 
   private onIncome() {
