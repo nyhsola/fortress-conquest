@@ -1,45 +1,69 @@
 import { Point, Unit } from "w3ts"
 
-import { UNIT } from "util/Config"
-import { createUnitNear, getPolarPoint, issueBuildOrder, issueOrder } from "util/Util"
+import { BuildManager } from "./BuildManager"
+import { STATE, Worker } from "game/Worker"
+import { ABILITY, UNIT } from "util/Config"
+import { Task } from "util/Task"
+import { createTask, createUnitNear, doForLocalPlayer, getPolarPoint, issueBuildOrder, issueOrder } from "util/Util"
+
+const workerTemplate = (workerCount: number, workerLimit: number): string => "Worker count: " + workerCount + "|n" + "Worker limit: " + workerLimit + "|n" + "Every 5 sec"
 
 export class WorkerManager {
+  private readonly playerId: number
   private readonly allyId: number
+  private castle: Unit | undefined
   private mine: Unit | undefined
   private point: Point | undefined
   private direction: number | undefined
-
   private workerLimit = 3
-  private workerCount = 0
+  private behaviour: Task = createTask(() => this.onBehaviourUpdate(), 3)
+  private workerAbility: Task = createTask(() => this.onWorkerCast(this.castle), 5)
+  private workers: Array<Worker> = []
 
-  private isFirstUnit = true
-
-  constructor(allyId: number) {
+  constructor(playerId: number, allyId: number) {
+    this.playerId = playerId
     this.allyId = allyId
   }
 
-  public spawnWorker() {
-    if (this.workerCount >= this.workerLimit || !this.point || !this.direction) return
-    const worker = createUnitNear(this.point, this.allyId, UNIT.WORKER)
-    if (this.isFirstUnit) {
-      const point = getPolarPoint(this.point, this.direction + 70, 800)
-      const location = Location(point?.x ?? 0, point?.y ?? 0)
-      worker && issueBuildOrder(worker, UNIT.STOCK, location)
-      this.isFirstUnit = false
-    } else {
-      worker && this.mine && issueOrder(worker, "harvest", this.mine)
+  public update(delta: number) {
+    this.behaviour.update(delta)
+    this.workerAbility.update(delta)
+  }
+
+  public onCastleBuild(buildManager: BuildManager) {
+    this.workerAbility.reset()
+    this.point = buildManager.getPoint()
+    this.direction = buildManager.getDirection()
+    this.castle = buildManager.getCastle()
+    this.mine = buildManager.getMine()
+  }
+
+  public onBuild(building: Unit) {}
+
+  private onBehaviourUpdate() {
+    for (const worker of this.workers) {
+      switch (worker.getState()) {
+        case STATE.FREE:
+          this.mine && worker.orderHarvest(this.mine)
+          break
+      }
     }
-    this.workerCount = this.workerCount + 1
   }
 
-  public setPointAndDirection(point: Point | undefined, direction: number | undefined) {
-    this.point = point
-    this.direction = direction
+  private onWorkerCast(castle: Unit | undefined) {
+    if (!castle || castle.getAbilityLevel(ABILITY.WORKERS) != 1) return
+    this.spawnWorker()
+    this.updateWorkerAbility()
   }
 
-  public setMine = (mine: Unit | undefined) => (this.mine = mine)
+  private spawnWorker() {
+    if (this.workers.length >= this.workerLimit || !this.point || !this.direction) return
+    const worker = new Worker(this.point, this.allyId)
+    this.workers.push(worker)
+  }
 
-  public getWorkerCount = () => this.workerCount
-
-  public getWorkerLimit = () => this.workerLimit
+  private updateWorkerAbility() {
+    const text = workerTemplate(this.workers.length ?? 0, this.workerLimit ?? 0)
+    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, text, 0), this.playerId)
+  }
 }

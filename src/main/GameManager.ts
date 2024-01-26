@@ -21,11 +21,11 @@ export class GameManager {
 
     this.playersManager = new PlayersManager(this.config)
 
-    eventService.subscribe(EventType.PER_SECOND, () => this.tick(1))
+    eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
     eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.playersManager?.onBuild(building))
   }
 
-  private tick(delta: number) {
-    this.playersManager?.tick(delta)
+  private update(delta: number) {
+    this.playersManager?.update(delta)
   }
 }

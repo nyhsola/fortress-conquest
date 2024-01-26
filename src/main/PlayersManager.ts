@@ -19,13 +19,12 @@ export class PlayersManager {
   }
 
   public onBuild(building: Unit) {
-    if (building.typeId != UNIT.CASTLE) return
-    this.players[building.owner.id].onCastleBuild(building)
+    this.players[building.owner.id].onBuild(building)
   }
 
-  public tick(delta: number) {
+  public update(delta: number) {
     for (const player in this.players) {
-      this.players[player].tick(delta)
+      this.players[player].update(delta)
     }
   }
 }
