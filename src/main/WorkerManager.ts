@@ -2,11 +2,10 @@ import { Point, Unit } from "w3ts"
 
 import { Player } from "game/Player"
 import { STATE, Worker } from "game/Worker"
+import { TooltipService } from "service/TooltipService"
 import { ABILITY, UNIT } from "util/Config"
 import { Task } from "util/Task"
-import { createTask, createUnitAtPolar, doForLocalPlayer } from "util/Util"
-
-const workerTemplate = (workerCount: number, workerLimit: number): string => "Worker count: " + workerCount + "|n" + "Worker limit: " + workerLimit + "|n" + "Every 5 sec"
+import { createTask, createUnitAtPolar } from "util/Util"
 
 export class WorkerManager {
   private readonly player: Player
@@ -16,8 +15,8 @@ export class WorkerManager {
   private point: Point | undefined
   private direction: number | undefined
 
-  private behaviour: Task = createTask(() => this.onBehaviourUpdate(), 3)
-  private workerAbility: Task = createTask(() => this.onWorkerCast(this.castle), 5)
+  private behaviour: Task = createTask(() => this.updateWorker(), 3)
+  private workerAbility: Task = createTask(() => this.onWorkerCast(), 5)
   private workerLimit = 3
   private workers: Array<Worker> = []
 
@@ -38,7 +37,7 @@ export class WorkerManager {
     this.workerAbility.update(delta)
   }
 
-  private onBehaviourUpdate() {
+  private updateWorker() {
     for (const worker of this.workers) {
       switch (worker.getState()) {
         case STATE.FREE:
@@ -48,22 +47,12 @@ export class WorkerManager {
     }
   }
 
-  private onWorkerCast(castle: Unit | undefined) {
-    if (!castle || castle.getAbilityLevel(ABILITY.WORKERS) != 1) return
-    this.spawnWorker()
-    this.updateWorkerAbility()
-  }
+  private onWorkerCast() {
+    if (!this.castle || this.castle.getAbilityLevel(ABILITY.WORKERS) != 1) return
 
-  private spawnWorker() {
     if (this.workers.length >= this.workerLimit || !this.point || !this.direction) return
-    const worker = new Worker(this.point, this.player.allyId)
-    this.workers.push(worker)
-  }
+    this.workers.push(new Worker(this.point, this.player.allyId))
 
-  private updateWorkerAbility() {
-    const text = workerTemplate(this.workers.length ?? 0, this.workerLimit ?? 0)
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, text, 0), this.player.playerId)
+    TooltipService.updateWorker(this.player.playerId, this.workers.length, this.workerLimit)
   }
-
-  public getCastle = () => this.castle
 }

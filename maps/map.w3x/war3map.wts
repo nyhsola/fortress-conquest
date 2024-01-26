@@ -193,18 +193,6 @@ STRING 69
 Workers
 }
 
-STRING 72
-// Abilities: A002 (Income), Tip (Tooltip - Normal)
-{
-Gold
-}
-
-STRING 73
-// Abilities: A002 (Income), Ubertip (Tooltip - Normal - Extended)
-{
-GPM: X
-}
-
 STRING 74
 // Abilities: A003 (Workers), Tip (Tooltip - Normal)
 {
@@ -232,5 +220,17 @@ STRING 88
 // Abilities: A003 (Workers), Ubertip (Tooltip - Normal - Extended)
 {
 Wait...
+}
+
+STRING 89
+// Abilities: A002 (Income), Tip (Tooltip - Normal)
+{
+Income
+}
+
+STRING 90
+// Abilities: A002 (Income), Ubertip (Tooltip - Normal - Extended)
+{
+Every 10 sec
 }
 
