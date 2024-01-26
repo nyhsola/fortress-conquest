@@ -21,7 +21,7 @@ export class PlayerManager {
 
   public onBuild(building: Unit) {
     if (building.typeId === UNIT.CASTLE) {
-      this.player.setCastle(building)
+      this.player.init(building)
       this.workerManager.init()
     }
   }
