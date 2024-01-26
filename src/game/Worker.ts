@@ -9,7 +9,7 @@ export enum STATE {
 }
 
 export class Worker {
-  private worker: Unit | undefined
+  private readonly worker: Unit | undefined
   private state: STATE
 
   constructor(point: Point, allyId: number) {

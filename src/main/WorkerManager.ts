@@ -1,15 +1,15 @@
 import { Point, Unit } from "w3ts"
 
+import { Player } from "game/Player"
 import { STATE, Worker } from "game/Worker"
 import { ABILITY, UNIT } from "util/Config"
 import { Task } from "util/Task"
-import { createTask, createUnitAtPolar, createUnitNear, doForLocalPlayer, getPolarPoint, issueBuildOrder, issueOrder } from "util/Util"
+import { createTask, createUnitAtPolar, doForLocalPlayer } from "util/Util"
 
 const workerTemplate = (workerCount: number, workerLimit: number): string => "Worker count: " + workerCount + "|n" + "Worker limit: " + workerLimit + "|n" + "Every 5 sec"
 
 export class WorkerManager {
-  private readonly playerId: number
-  private readonly allyId: number
+  private readonly player: Player
 
   private castle: Unit | undefined
   private mine: Unit | undefined
@@ -21,24 +21,21 @@ export class WorkerManager {
   private workerLimit = 3
   private workers: Array<Worker> = []
 
-  constructor(playerId: number, allyId: number) {
-    this.playerId = playerId
-    this.allyId = allyId
+  constructor(player: Player) {
+    this.player = player
+  }
+
+  public init() {
+    this.workerAbility.reset()
+    this.castle = this.player.getCastle()
+    this.point = this.castle && this.castle.getPoint()
+    this.direction = GetRandomDirectionDeg()
+    this.mine = createUnitAtPolar(this.point, this.direction, 1500, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
   }
 
   public update(delta: number) {
     this.behaviour.update(delta)
     this.workerAbility.update(delta)
-  }
-
-  public onBuild(building: Unit) {
-    if (building.typeId == UNIT.CASTLE) {
-      this.workerAbility.reset()
-      this.castle = building
-      this.point = building.getPoint()
-      this.direction = GetRandomDirectionDeg()
-      this.mine = createUnitAtPolar(this.point, this.direction, 1500, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
-    }
   }
 
   private onBehaviourUpdate() {
@@ -59,13 +56,13 @@ export class WorkerManager {
 
   private spawnWorker() {
     if (this.workers.length >= this.workerLimit || !this.point || !this.direction) return
-    const worker = new Worker(this.point, this.allyId)
+    const worker = new Worker(this.point, this.player.allyId)
     this.workers.push(worker)
   }
 
   private updateWorkerAbility() {
     const text = workerTemplate(this.workers.length ?? 0, this.workerLimit ?? 0)
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, text, 0), this.playerId)
+    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, text, 0), this.player.playerId)
   }
 
   public getCastle = () => this.castle
