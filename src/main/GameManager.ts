@@ -1,31 +1,37 @@
-import { Unit } from "w3ts"
+import { MapPlayer, Unit } from "w3ts"
 
-import { PlayersManager } from "./PlayersManager"
-import { EventQueue } from "event/EventQueue"
-import { Signal } from "event/Signal"
+import { PlayerManager } from "./PlayerManager"
 import { EventService, EventType } from "event/TriggerSystem"
 import { Config } from "util/Config"
+import { forEachPlayer } from "util/Util"
 
 export class GameManager {
   private readonly config: Config
-  private playersManager: PlayersManager | undefined
+  private players: Record<number, PlayerManager> = {}
 
   constructor(config: Config) {
     this.config = config
   }
 
   public init() {
-    const eventQueue = new EventQueue()
     const eventService = new EventService()
-    const signal = new Signal()
 
-    this.playersManager = new PlayersManager(this.config)
+    forEachPlayer((player: MapPlayer) => {
+      const id = player.id
+      this.players[id] = new PlayerManager(this.config, id)
+    })
 
     eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
-    eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.playersManager?.onBuild(building))
+    eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onBuild(building))
+  }
+
+  public onBuild(building: Unit) {
+    this.players[building.owner.id].onBuild(building)
   }
 
   private update(delta: number) {
-    this.playersManager?.update(delta)
+    for (const player in this.players) {
+      this.players[player].update(delta)
+    }
   }
 }

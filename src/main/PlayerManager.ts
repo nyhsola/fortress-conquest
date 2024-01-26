@@ -1,21 +1,19 @@
 import { MapPlayer, Unit } from "w3ts"
 
-import { BuildManager } from "./BuildManager"
 import { WorkerManager } from "./WorkerManager"
-import { ABILITY, Config, UNIT } from "util/Config"
+import { Config, UNIT } from "util/Config"
 import { createFloatingText } from "util/FTextUtil"
 import { ALLY_SHIFT } from "util/Globals"
 import { Task } from "util/Task"
-import { createTask, createUnitAtCenter, doForLocalPlayer, withTimedLife } from "util/Util"
+import { createTask, createUnitAtCenter, withTimedLife } from "util/Util"
 
 export class PlayerManager {
   private readonly config: Config
   private readonly playerId: number
   private readonly allyId: number
 
-  private income: Task = createTask(() => this.onIncome(this.buildManager.getCastle()), 10)
+  private income: Task = createTask(() => this.onIncome(this.workerManager.getCastle()), 10)
 
-  private buildManager: BuildManager
   private workerManager: WorkerManager
 
   constructor(config: Config, playerId: number) {
@@ -23,18 +21,12 @@ export class PlayerManager {
     this.playerId = playerId
     this.allyId = this.playerId + ALLY_SHIFT
 
-    this.buildManager = new BuildManager()
     this.workerManager = new WorkerManager(this.playerId, this.allyId)
 
     withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
   }
 
   public onBuild(building: Unit) {
-    if (building.typeId == UNIT.CASTLE) {
-      this.buildManager.onCastleBuild(building)
-      this.workerManager.onCastleBuild(this.buildManager)
-    }
-
     this.workerManager.onBuild(building)
   }
 
