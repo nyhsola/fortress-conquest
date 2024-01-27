@@ -1,7 +1,7 @@
 import { Point, Unit } from "w3ts"
 
 import { UNIT } from "util/Config"
-import { createUnitNear, issueBuildOrder, issueOrder } from "util/Util"
+import { createUnitNear, issueBuildOrder, issueOrder, issuePointOrder } from "util/Util"
 
 export enum WORKER_STATE {
   FREE,
@@ -15,6 +15,11 @@ export class Worker {
 
   constructor(point: Point, allyId: number) {
     this.worker = createUnitNear(point, allyId, UNIT.WORKER)
+    this.state = WORKER_STATE.FREE
+  }
+
+  public orderPoint(location: location) {
+    this.worker && issuePointOrder(this.worker, location)
     this.state = WORKER_STATE.FREE
   }
 

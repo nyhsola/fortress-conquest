@@ -234,3 +234,21 @@ STRING 90
 Every 10 sec
 }
 
+STRING 91
+// Abilities: A005 (Ability 1), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 92
+// Abilities: A005 (Ability 1), Name (Name)
+{
+Ability 1
+}
+
+STRING 93
+// Abilities: A005 (Ability 1), Tip (Tooltip - Normal)
+{
+Ability 1
+}
+

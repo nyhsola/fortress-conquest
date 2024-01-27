@@ -1,9 +1,10 @@
 import { MapPlayer, Unit } from "w3ts"
 
 import { WorkerManager } from "./WorkerManager"
+import { WORKER_ORDER } from "behaviour/WorkerBehaviour"
 import { Player } from "game/Player"
 import { IncomeService } from "service/IncomeService"
-import { Config, UNIT } from "util/Config"
+import { ABILITY, Config, UNIT } from "util/Config"
 import { ALLY_SHIFT } from "util/Globals"
 import { Task } from "util/Task"
 import { createTask } from "util/Util"
@@ -23,6 +24,12 @@ export class PlayerManager {
     if (building.typeId === UNIT.CASTLE) {
       this.player.init(building)
       this.workerManager.init()
+    }
+  }
+
+  public onCast(castingUnit: Unit, spellId: number) {
+    if (spellId == ABILITY.ABILITY_1) {
+      this.workerManager.addOrder(WORKER_ORDER.BUILD_TOWERS)
     }
   }
 

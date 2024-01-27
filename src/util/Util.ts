@@ -64,6 +64,11 @@ export function issueBuildOrder(unit: Unit, toBuild: number, place: location) {
   unitHandle && IssueBuildOrderByIdLocBJ(unitHandle, toBuild, place)
 }
 
+export function issuePointOrder(unit: Unit, place: location) {
+  const unitHandle = unit.handle
+  unitHandle && IssuePointOrderLocBJ(unitHandle, "move", place)
+}
+
 export function withTimedLife(unit: Unit | undefined, seconds: number): Unit | undefined {
   unit?.applyTimedLife(TEXT.TIMED_LIFE, seconds)
   return unit

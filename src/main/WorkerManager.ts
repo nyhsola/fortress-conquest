@@ -1,4 +1,4 @@
-import { WorkerBehaviour } from "behaviour/WorkerBehaviour"
+import { WORKER_ORDER, WorkerBehaviour } from "behaviour/WorkerBehaviour"
 import { Player } from "game/Player"
 import { Worker } from "game/Worker"
 import { TooltipService } from "service/TooltipService"
@@ -29,10 +29,12 @@ export class WorkerManager {
     this.workerAbility.update(delta)
   }
 
+  public addOrder(order: WORKER_ORDER) {
+    this.workerBehaviour.addOrder(order)
+  }
+
   private updateWorker() {
-    for (const worker of this.workers) {
-      this.workerBehaviour.updateState(worker)
-    }
+    this.workerBehaviour.updateState(this.workers)
   }
 
   private onWorkerCast() {
