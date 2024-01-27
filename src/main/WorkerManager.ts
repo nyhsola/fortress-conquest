@@ -1,5 +1,3 @@
-import { Point, Unit } from "w3ts"
-
 import { WorkerBehaviour } from "behaviour/WorkerBehaviour"
 import { Player } from "game/Player"
 import { Worker } from "game/Worker"
@@ -10,14 +8,16 @@ import { createTask } from "util/Util"
 
 export class WorkerManager {
   private readonly player: Player
+  private readonly workers: Array<Worker> = []
+  private readonly workerBehaviour: WorkerBehaviour
+  private readonly behaviour: Task = createTask(() => this.updateWorker(), 3)
+  private readonly workerAbility: Task = createTask(() => this.onWorkerCast(), 5)
 
-  private behaviour: Task = createTask(() => this.updateWorker(), 3)
-  private workerAbility: Task = createTask(() => this.onWorkerCast(), 5)
   private workerLimit = 3
-  private workers: Array<Worker> = []
 
   constructor(player: Player) {
     this.player = player
+    this.workerBehaviour = new WorkerBehaviour(this.player)
   }
 
   public init() {
@@ -31,7 +31,7 @@ export class WorkerManager {
 
   private updateWorker() {
     for (const worker of this.workers) {
-      WorkerBehaviour.updateState(worker, this.player)
+      this.workerBehaviour.updateState(worker)
     }
   }
 

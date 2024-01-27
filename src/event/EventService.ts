@@ -8,7 +8,7 @@ export const enum EventType {
 }
 
 export class EventService {
-  private handlers: Record<EventType, EventHandler<(e: any) => any>> = {
+  private readonly handlers: Record<EventType, EventHandler<(e: any) => any>> = {
     [EventType.PER_SECOND]: new EventHandler<() => void>(),
     [EventType.BUILDING_FINISHED]: new EventHandler<(building: Unit | undefined) => void>(),
     [EventType.CASTING_STARTED]: new EventHandler<() => void>(),
@@ -34,7 +34,7 @@ export class EventService {
 }
 
 class EventHandler<EventCallback extends (...args: any[]) => void> {
-  private subscriptions: Array<EventCallback> = []
+  private readonly subscriptions: Array<EventCallback> = []
 
   public subscribe(action: EventCallback) {
     this.subscriptions.push(action)

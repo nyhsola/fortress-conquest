@@ -12,6 +12,7 @@ export class Player {
 
   private castle: Unit | undefined
   private mine: Unit | undefined
+  private stock: Unit | undefined
   private point: Point | undefined
   private direction: number | undefined
 
@@ -29,6 +30,10 @@ export class Player {
     this.direction = GetRandomDirectionDeg()
     this.mine = createUnitAtPolar(this.point, this.direction, 1500, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
   }
+
+  public getStock = () => this.stock
+
+  public setStock = (stock: Unit) => (this.stock = stock)
 
   public getCastle = () => this.castle
 
