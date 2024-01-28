@@ -29,7 +29,7 @@ export class PlayerManager {
 
   public onCast(castingUnit: Unit, spellId: number) {
     if (spellId == ABILITY.ABILITY_1) {
-      this.workerManager.addOrder(WORKER_ORDER.BUILD_TOWERS)
+      this.workerManager.addOrder(WORKER_ORDER.BUILD_TOWER_1)
     }
   }
 
