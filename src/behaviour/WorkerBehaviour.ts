@@ -1,7 +1,7 @@
+import { BaseFormation } from "game/BaseFormation"
 import { Player } from "game/Player"
 import { Worker, WORKER_STATE } from "game/Worker"
 import { UNIT } from "util/Config"
-import { getPolarPoint } from "util/Util"
 
 export enum WORKER_ORDER {
   HARVEST,
@@ -15,7 +15,7 @@ export class WorkerBehaviour {
 
   constructor(player: Player) {
     this.player = player
-    this.orders.push(WORKER_ORDER.BUILD_STOCK)
+    this.addOrder(WORKER_ORDER.BUILD_STOCK)
   }
 
   public addOrder(order: WORKER_ORDER) {
@@ -26,18 +26,18 @@ export class WorkerBehaviour {
     for (const worker of workers) {
       switch (worker.getState()) {
         case WORKER_STATE.FREE:
-          let defaultOrder = true
-          if (this.orders.length > 0) defaultOrder = !this.proceedOrder(worker)
-          if (defaultOrder) this.defaultOrder(worker)
+          this.harvestOrder(worker)
+          break
+        case WORKER_STATE.LOCKED:
+          !this.proceedOrder(worker) ? this.harvestOrder(worker) : undefined
           break
         case WORKER_STATE.BUILD:
-          this.defaultOrder(worker)
+          !worker.isBusy() ? this.harvestOrder(worker) : undefined
           break
       }
     }
-
     const anyWorker = workers.find((worker, index) => worker.getState() == WORKER_STATE.HARVEST)
-    if (anyWorker && this.orders.length > 0) this.freeWorker(anyWorker)
+    if (anyWorker && this.orders.length > 0) this.onPointOrder(anyWorker)
   }
 
   private proceedOrder(worker: Worker): boolean {
@@ -45,24 +45,37 @@ export class WorkerBehaviour {
     let isDone = false
     switch (order) {
       case WORKER_ORDER.BUILD_STOCK:
-        isDone = true
-        const point = this.player.getPoint()
-        const direction = this.player.getDirection()
-        const polar = point && direction && getPolarPoint(point, direction + 40, 800)
-        const location = polar && Location(polar.x, polar.y)
-        location && worker.orderBuild(location, UNIT.STOCK)
+        {
+          isDone = true
+          const point = this.player.getPoint()
+          const direction = this.player.getDirection()
+          const polar = point && direction && BaseFormation.STOCK(point, direction)
+          const location = polar && Location(polar.x, polar.y)
+          location && worker.orderBuild(location, UNIT.STOCK)
+        }
+        break
+
+      case WORKER_ORDER.BUILD_TOWERS:
+        {
+          isDone = true
+          const point = this.player.getPoint()
+          const direction = this.player.getDirection()
+          const polar = point && direction && BaseFormation.TOWER(point, direction)
+          const location = polar && Location(polar.x, polar.y)
+          location && worker.orderBuild(location, UNIT.TOWER)
+        }
         break
     }
     if (isDone) this.orders.shift()
     return isDone
   }
 
-  private defaultOrder(worker: Worker) {
+  private harvestOrder(worker: Worker) {
     const mine = this.player.getMine()
     mine && worker.orderHarvest(mine)
   }
 
-  private freeWorker(worker: Worker) {
+  private onPointOrder(worker: Worker) {
     const point = this.player.getCastle()?.getPoint()
     const location = point && Location(point?.x, point?.y)
     location && worker.orderPoint(location)

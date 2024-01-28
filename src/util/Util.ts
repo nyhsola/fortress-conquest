@@ -32,18 +32,13 @@ export function forEachUnitOfType(unit: number, action: (unit: Unit) => void) {
     })
 }
 
-export function createUnitNear(point: Point, forPlayer: number, unitType: number): Unit | undefined {
+export function createUnitAtPoint(point: Point, forPlayer: number, unitType: number): Unit | undefined {
   return Unit.create(Players[forPlayer], unitType, point.x, point.y)
 }
 
 export function createUnitAtCenter(zone: rect, forPlayer: number, unit: number): Unit | undefined {
   let area = Rectangle.fromHandle(zone)
   return area && Unit.create(Players[forPlayer], unit, area.centerX, area.centerY)
-}
-
-export function createUnitAtPolar(point: Point | undefined, angle: number, distance: number, forPlayer: number, unit: number): Unit | undefined {
-  let pointMine = getPolarPoint(point, angle, distance)
-  return pointMine && Unit.create(Players[forPlayer], unit, pointMine?.x ?? 0, pointMine?.y ?? 0)
 }
 
 export function getPolarPoint(point: Point | undefined, angle: number, distance: number): Point | undefined {

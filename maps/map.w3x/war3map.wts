@@ -252,3 +252,9 @@ STRING 93
 Ability 1
 }
 
+STRING 94
+// Units: h003 (Guard Tower), Tip (Tooltip - Basic)
+{
+Guard Tower
+}
+

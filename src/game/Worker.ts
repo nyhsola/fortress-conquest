@@ -1,10 +1,11 @@
 import { Point, Unit } from "w3ts"
 
 import { UNIT } from "util/Config"
-import { createUnitNear, issueBuildOrder, issueOrder, issuePointOrder } from "util/Util"
+import { createUnitAtPoint, issueBuildOrder, issueOrder, issuePointOrder } from "util/Util"
 
 export enum WORKER_STATE {
   FREE,
+  LOCKED,
   HARVEST,
   BUILD,
 }
@@ -14,13 +15,13 @@ export class Worker {
   private state: WORKER_STATE
 
   constructor(point: Point, allyId: number) {
-    this.worker = createUnitNear(point, allyId, UNIT.WORKER)
+    this.worker = createUnitAtPoint(point, allyId, UNIT.WORKER)
     this.state = WORKER_STATE.FREE
   }
 
   public orderPoint(location: location) {
     this.worker && issuePointOrder(this.worker, location)
-    this.state = WORKER_STATE.FREE
+    this.state = WORKER_STATE.LOCKED
   }
 
   public orderBuild(location: location, unit: number) {
@@ -34,4 +35,6 @@ export class Worker {
   }
 
   public getState = () => this.state
+
+  public isBusy = () => this.worker?.currentOrder != 0
 }

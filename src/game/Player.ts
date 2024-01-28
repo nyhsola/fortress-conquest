@@ -1,7 +1,8 @@
 import { Point, Unit } from "w3ts"
 
+import { BaseFormation } from "./BaseFormation"
 import { Config, UNIT } from "util/Config"
-import { createUnitAtCenter, createUnitAtPolar, withTimedLife } from "util/Util"
+import { createUnitAtCenter, createUnitAtPoint, withTimedLife } from "util/Util"
 
 export class Player {
   private readonly config: Config
@@ -28,7 +29,8 @@ export class Player {
     this.castle = castle
     this.point = this.castle && this.castle.getPoint()
     this.direction = GetRandomDirectionDeg()
-    this.mine = createUnitAtPolar(this.point, this.direction, 1500, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
+    const minePoint = this.point && BaseFormation.MINE(this.point, this.direction)
+    this.mine = minePoint && createUnitAtPoint(minePoint, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
   }
 
   public getStock = () => this.stock
