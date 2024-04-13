@@ -19,9 +19,9 @@
     "plugins": [
       {
         "transform": "war3-transformer",
-        "mapDir": "C:/Users/nyhso/Desktop/war3/maps/map.w3x",
-        "entryFile": "C:/Users/nyhso/Desktop/war3/src/main.ts",
-        "outputDir": "C:/Users/nyhso/Desktop/war3/dist/map.w3x"
+        "mapDir": "D:/projects/fortress-conquest/maps/map.w3x",
+        "entryFile": "D:/projects/fortress-conquest/src/main.ts",
+        "outputDir": "D:/projects/fortress-conquest/dist/map.w3x"
       }
     ],
     "types": [

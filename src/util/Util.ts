@@ -77,6 +77,7 @@ export function doForLocalPlayer(action: () => void, playerId: number) {
   })
 }
 
+// interval in sec
 export function createTask(customAction: () => void, interval: number): Task {
   return new (class extends Task {
     action() {

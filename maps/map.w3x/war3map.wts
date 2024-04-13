@@ -140,7 +140,7 @@ Random position
 }
 
 STRING 30
-// Abilities: A001 (Blink), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A001 (Скачок), Ubertip (Tooltip - Normal - Extended)
 {
 Teleports to any position on map
 }
@@ -152,7 +152,7 @@ Q
 }
 
 STRING 34
-// Abilities: A001 (Blink), Hotkey (Hotkey - Normal)
+// Abilities: A001 (Скачок), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -217,7 +217,7 @@ Zombie
 }
 
 STRING 88
-// Abilities: A003 (Workers), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A002 (Income), Ubertip (Tooltip - Normal - Extended)
 {
 Wait...
 }
@@ -226,12 +226,6 @@ STRING 89
 // Abilities: A002 (Income), Tip (Tooltip - Normal)
 {
 Income
-}
-
-STRING 90
-// Abilities: A002 (Income), Ubertip (Tooltip - Normal - Extended)
-{
-Every 10 sec
 }
 
 STRING 91
@@ -253,8 +247,14 @@ Ability 1
 }
 
 STRING 94
-// Units: h003 (Guard Tower), Tip (Tooltip - Basic)
+// Units: h003 (Сторожевая башня), Tip (Tooltip - Basic)
 {
 Guard Tower
+}
+
+STRING 95
+// Abilities: A003 (Workers), Ubertip (Tooltip - Normal - Extended)
+{
+Wait...
 }
 

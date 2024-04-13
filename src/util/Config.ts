@@ -1,5 +1,6 @@
 export const ABILITY = {
   WORKERS: FourCC("A003"),
+  INCOME: FourCC("A002"),
   ABILITY_1: FourCC("A005"),
 } as const
 

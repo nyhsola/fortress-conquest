@@ -1,23 +1,21 @@
-import { MapPlayer, Unit } from "w3ts"
+import { Unit } from "w3ts"
 
+import { IncomeManager } from "./IncomeManager"
 import { WorkerManager } from "./WorkerManager"
 import { WORKER_ORDER } from "behaviour/WorkerBehaviour"
 import { Player } from "game/Player"
-import { IncomeService } from "service/IncomeService"
 import { ABILITY, Config, UNIT } from "util/Config"
 import { ALLY_SHIFT } from "util/Globals"
-import { Task } from "util/Task"
-import { createTask } from "util/Util"
 
 export class PlayerManager {
   private readonly player: Player
-  private readonly income: Task
   private readonly workerManager: WorkerManager
+  private readonly incomeManager: IncomeManager
 
   constructor(config: Config, playerId: number) {
     this.player = new Player(config, playerId, playerId + ALLY_SHIFT)
-    this.income = createTask(() => IncomeService.onIncome(this.player), 10)
     this.workerManager = new WorkerManager(this.player)
+    this.incomeManager = new IncomeManager(this.player)
   }
 
   public onBuild(building: Unit) {
@@ -34,7 +32,7 @@ export class PlayerManager {
   }
 
   public update(delta: number) {
-    this.income.update(delta)
     this.workerManager.update(delta)
+    this.incomeManager.update(delta)
   }
 }
