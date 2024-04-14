@@ -6,7 +6,6 @@ import { createUnitAtCenter, createUnitAtPoint, withTimedLife } from "util/Util"
 
 export class Player {
   private readonly config: Config
-  private readonly startWorker: Unit | undefined
 
   public readonly playerId: number
   public readonly allyId: number
@@ -22,7 +21,7 @@ export class Player {
     this.playerId = playerId
     this.allyId = allyId
 
-    this.startWorker = withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
+    withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
   }
 
   public init(castle: Unit | undefined) {

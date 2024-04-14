@@ -4,17 +4,15 @@ import { IncomeManager } from "./IncomeManager"
 import { WorkerManager } from "./WorkerManager"
 import { WORKER_ORDER } from "behaviour/WorkerBehaviour"
 import { Player } from "game/Player"
-import { ABILITY, Config, UNIT } from "util/Config"
-import { ALLY_SHIFT } from "util/Globals"
-import { createUnitAtPoint } from "util/Util"
+import { ABILITY, UNIT } from "util/Config"
 
 export class PlayerManager {
-  private readonly player: Player
+  public readonly player: Player
   private readonly workerManager: WorkerManager
   private readonly incomeManager: IncomeManager
 
-  constructor(config: Config, playerId: number) {
-    this.player = new Player(config, playerId, playerId + ALLY_SHIFT)
+  constructor(player: Player) {
+    this.player = player
     this.workerManager = new WorkerManager(this.player)
     this.incomeManager = new IncomeManager(this.player)
   }

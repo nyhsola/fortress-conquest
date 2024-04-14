@@ -1,0 +1,33 @@
+import { BaseFormation } from "game/BaseFormation"
+import { Player } from "game/Player"
+import { UNIT } from "util/Config"
+import { ENEMY_PLAYER } from "util/Globals"
+import { Task } from "util/Task"
+import { createTask, createUnitAtPoint } from "util/Util"
+
+export class EnemyManager {
+  private readonly players: Array<Player>
+  private started = false
+  private readonly spawn: Task
+
+  constructor(players: Array<Player>) {
+    this.players = players
+    this.spawn = createTask(() => this.spawnZombie(), 5)
+  }
+
+  public onStartTimerExpired() {
+    this.started = true
+  }
+
+  public update(delta: number) {
+    this.started && this.spawn.update(delta)
+  }
+
+  private spawnZombie() {
+    this.players.forEach((it) => {
+      const point = it.getPoint()
+      const zPoint = point && BaseFormation.ZOMBIE_POINT(point)
+      zPoint && createUnitAtPoint(zPoint, ENEMY_PLAYER, UNIT.ZOMBIE)
+    })
+  }
+}

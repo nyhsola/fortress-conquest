@@ -3,6 +3,8 @@ import { Point } from "w3ts"
 import { getPolarPoint } from "util/Util"
 
 export class BaseFormation {
+  static ZOMBIE_POINT = (point: Point) => getPolarPoint(point, GetRandomDirectionDeg(), 1800)
+
   static MINE = (point: Point, direction: number) => getPolarPoint(point, direction + 20, 800)
   static STOCK = (point: Point, direction: number) => getPolarPoint(point, direction + 90, 800)
   static TOWER_1 = (point: Point, direction: number) => getPolarPoint(point, direction + 60, 1200)
