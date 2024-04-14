@@ -1,7 +1,7 @@
 import { Trigger } from "w3ts"
 import { Unit } from "w3ts"
 
-const UNTIL_START = 60
+const UNTIL_START = 30
 const DIALOG_TITLE = "ZOMBIESSS"
 
 export const enum EventType {

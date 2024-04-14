@@ -12,6 +12,7 @@ export const UNIT = {
   STOCK: FourCC("h004"),
   TOWER: FourCC("h003"),
   MINE: FourCC("n000"),
+  BANNER: FourCC("B001"),
 } as const
 
 export const TEXT = {

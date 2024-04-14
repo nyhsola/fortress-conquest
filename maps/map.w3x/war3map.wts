@@ -258,3 +258,9 @@ STRING 95
 Wait...
 }
 
+STRING 96
+// Destructibles: B001 (Banner), Name (Name)
+{
+Banner
+}
+

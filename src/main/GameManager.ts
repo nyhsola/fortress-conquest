@@ -4,12 +4,14 @@ import { EnemyManager } from "./EnemyManager"
 import { PlayerManager } from "./PlayerManager"
 import { EventService, EventType } from "event/EventService"
 import { Player } from "game/Player"
+import { WarService } from "service/WarService"
 import { Config } from "util/Config"
 import { ALLY_SHIFT } from "util/Globals"
 import { forEachPlayer } from "util/Util"
 
 export class GameManager {
   private readonly players: Record<number, PlayerManager> = {}
+  private readonly playersArr: Array<Player>
   private readonly eventService: EventService
   private readonly enemyManager: EnemyManager
 
@@ -20,8 +22,10 @@ export class GameManager {
       this.players[playerId] = new PlayerManager(player)
     })
 
+    this.playersArr = Object.entries(this.players).map((it) => it[1].player)
+
     this.eventService = new EventService()
-    this.enemyManager = new EnemyManager(Object.entries(this.players).map((it) => it[1].player))
+    this.enemyManager = new EnemyManager(this.playersArr)
 
     this.eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
     this.eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onBuild(building))
@@ -39,6 +43,7 @@ export class GameManager {
 
   private onStartTimerExpired() {
     this.enemyManager.onStartTimerExpired()
+    WarService.initializeWarPlace(this.playersArr)
   }
 
   private update(delta: number) {

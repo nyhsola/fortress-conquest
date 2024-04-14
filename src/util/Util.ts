@@ -1,8 +1,9 @@
-import { Color, MapPlayer, Point, Rectangle, Unit } from "w3ts"
+import { Color, Destructable, MapPlayer, Point, Rectangle, Unit } from "w3ts"
 import { Players } from "w3ts/globals"
 
 import { TEXT } from "util/Config"
 import { Task } from "util/Task"
+import { Doodads } from "war3-objectdata-th"
 
 export function forEachPlayer(action: (player: MapPlayer) => void) {
   let players = GetPlayersAll()
@@ -30,6 +31,10 @@ export function forEachUnitOfType(unit: number, action: (unit: Unit) => void) {
       let unitl = Unit.fromHandle(GetEnumUnit())
       unitl && action(unitl)
     })
+}
+
+export function createDestructableAtPoint(point: Point, scale: number, unitType: number): destructable | undefined {
+  return CreateDestructable(unitType, point.x, point.y, -90, scale, 0)
 }
 
 export function createUnitAtPoint(point: Point, forPlayer: number, unitType: number): Unit | undefined {

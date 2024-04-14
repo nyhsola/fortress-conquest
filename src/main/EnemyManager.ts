@@ -7,12 +7,12 @@ import { createTask, createUnitAtPoint } from "util/Util"
 
 export class EnemyManager {
   private readonly players: Array<Player>
-  private started = false
   private readonly spawn: Task
+  private started = false
 
   constructor(players: Array<Player>) {
     this.players = players
-    this.spawn = createTask(() => this.spawnZombie(), 5)
+    this.spawn = createTask(() => this.spawnZombie(), 10)
   }
 
   public onStartTimerExpired() {
