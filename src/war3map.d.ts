@@ -9,4 +9,3 @@ declare var gg_rct_LeftBottom: rect;
 declare var gg_rct_LeftTop: rect;
 declare var gg_rct_RightTop: rect;
 declare var gg_rct_RightBottom: rect;
-declare var gg_dest_LTbr_0412: destructable;

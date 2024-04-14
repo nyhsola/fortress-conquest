@@ -1,10 +1,7 @@
 import { MapPlayer } from "w3ts"
 
-import { WORKER_ORDER, WorkerBehaviour } from "behaviour/WorkerBehaviour"
 import { Player } from "game/Player"
-import { Worker } from "game/Worker"
 import { TooltipService } from "service/TooltipService"
-import { ABILITY } from "util/Config"
 import { createFloatingText } from "util/FTextUtil"
 import { Task } from "util/Task"
 import { createTask } from "util/Util"

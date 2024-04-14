@@ -8,6 +8,7 @@ export const UNIT = {
   START_WORKER: FourCC("h000"),
   CASTLE: FourCC("h001"),
   WORKER: FourCC("h002"),
+  ZOMBIE: FourCC("n001"),
   STOCK: FourCC("h004"),
   TOWER: FourCC("h003"),
   MINE: FourCC("n000"),
