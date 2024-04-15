@@ -1,5 +1,3 @@
-import { Point } from "w3ts"
-
 import { BaseFormation } from "game/BaseFormation"
 import { Footman, FOOTMAN_STATE } from "game/Footman"
 import { Player } from "game/Player"

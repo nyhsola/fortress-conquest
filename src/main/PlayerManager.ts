@@ -5,6 +5,7 @@ import { IncomeManager } from "./IncomeManager"
 import { WorkerManager } from "./WorkerManager"
 import { Player } from "game/Player"
 import { ABILITY, UNIT } from "util/Config"
+import { removeAbility } from "util/Util"
 
 export class PlayerManager {
   public readonly player: Player
@@ -28,8 +29,8 @@ export class PlayerManager {
   }
 
   public onCast(castingUnit: Unit, spellId: number) {
-    if (spellId == ABILITY.ABILITY_1) {
-      // this.workerManager.addOrder(WORKER_ORDER.BUILD_TOWER_1)
+    if (spellId === ABILITY.ABILITY_2) {
+      removeAbility(castingUnit, ABILITY.ABILITY_2)
     }
   }
 

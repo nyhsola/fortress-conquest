@@ -258,3 +258,21 @@ STRING 100
 Footman
 }
 
+STRING 101
+// Abilities: A004 (Ability 2), Name (Name)
+{
+Ability 2
+}
+
+STRING 106
+// Abilities: A004 (Ability 2), Tip (Tooltip - Normal)
+{
+Ability 2
+}
+
+STRING 108
+// Abilities: A004 (Ability 2), Hotkey (Hotkey - Normal)
+{
+W
+}
+

@@ -1,9 +1,8 @@
-import { Color, Destructable, MapPlayer, Point, Rectangle, Unit } from "w3ts"
+import { MapPlayer, Point, Rectangle, Unit } from "w3ts"
 import { Players } from "w3ts/globals"
 
 import { TEXT } from "util/Config"
 import { Task } from "util/Task"
-import { Doodads } from "war3-objectdata-th"
 
 export function forEachPlayer(action: (player: MapPlayer) => void) {
   let players = GetPlayersAll()
@@ -80,6 +79,15 @@ export function doForLocalPlayer(action: () => void, playerId: number) {
       action()
     }
   })
+}
+
+export function removeAbility(unit: Unit | undefined, ability: number) {
+  const unitHandle = unit?.handle
+  const playerId = unit?.owner.id
+  playerId &&
+    doForLocalPlayer(() => {
+      unitHandle && UnitRemoveAbility(unitHandle, ability)
+    }, playerId)
 }
 
 // interval in sec
