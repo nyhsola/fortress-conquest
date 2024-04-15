@@ -10,7 +10,7 @@ export class WorkerManager {
   private readonly player: Player
   private readonly workers: Array<Worker> = []
   private readonly workerBehaviour: WorkerBehaviour
-  private readonly behaviour: Task = createTask(() => this.updateWorker(), 3)
+  private readonly behaviourTask: Task = createTask(() => this.updateWorker(), 3)
   private readonly workerAbility: Task = createTask(() => this.onWorkerCast(), 5)
 
   private workerLimit = 3
@@ -25,7 +25,7 @@ export class WorkerManager {
   }
 
   public update(delta: number) {
-    this.behaviour.update(delta)
+    this.behaviourTask.update(delta)
     this.workerAbility.update(delta)
   }
 

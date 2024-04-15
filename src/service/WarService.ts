@@ -4,33 +4,27 @@ import { Player } from "game/Player"
 import { UNIT } from "util/Config"
 import { createDestructableAtPoint, forEachPlayer } from "util/Util"
 
-const STEP_X = 100
-const STEP_Y = 100
-
-const FOG_WIDTH = 600
-const FOG_HEIGHT = 600
+const STEP_X = 300
+const STEP_Y = 300
+const FOG_RADIUS = 1200
 
 export class WarService {
   static initializeWarPlace(players: Array<Player>) {
-    print("initializeWarPlace")
-
-    // const map = GetPlayableMapRect()
-    // const points = new Array<Point>()
-    // players.forEach((it) => {
-    //   const point = it.getPoint()
-    //   point && points.push(point)
-    // })
-    // print("count player ", players.length)
-    // print("count points ", points.length)
-    // const freeRect = map && this.findFreeRect(map, 2, points)
-    // print(freeRect?.minX, freeRect?.maxX, freeRect?.minY, freeRect?.maxY)
-    // print(points[0]?.x, points[0]?.y)
-    // const centerX = freeRect?.centerX
-    // const centerY = freeRect?.centerY
-    // const center = centerX && centerY && Point.create(centerX, centerY)
-    // center && createDestructableAtPoint(center, 2, UNIT.BANNER)
-    // const rect = centerX && centerY && Rectangle.create(centerX - FOG_WIDTH, centerY - FOG_HEIGHT, centerX + FOG_WIDTH, centerY + FOG_HEIGHT)
-    // forEachPlayer((mapPlayer) => rect && CreateFogModifierRectBJ(true, mapPlayer.handle, FOG_OF_WAR_VISIBLE, rect.handle))
+    const map = GetPlayableMapRect()
+    const points: Array<Point> = []
+    players.forEach((it) => {
+      const point = it.getPoint()
+      point && points.push(point)
+    })
+    const freeRect = map && this.findFreeRect(map, 2, points)
+    print(freeRect?.minX, freeRect?.maxX, freeRect?.minY, freeRect?.maxY)
+    print(points[0]?.x, points[0]?.y)
+    const centerX = freeRect?.centerX
+    const centerY = freeRect?.centerY
+    const center = centerX && centerY && Point.create(centerX, centerY)
+    center && createDestructableAtPoint(center, 2, UNIT.BANNER)
+    const location = centerX && centerY && Location(centerX, centerY)
+    forEachPlayer((mapPlayer) => location && CreateFogModifierRadiusLocBJ(true, mapPlayer.handle, FOG_OF_WAR_VISIBLE, location, FOG_RADIUS))
   }
 
   private static findFreeRect(mainRectHandle: rect, times: number, points: Array<Point | undefined>): Rectangle | undefined {

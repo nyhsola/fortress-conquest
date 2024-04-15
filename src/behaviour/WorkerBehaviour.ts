@@ -52,6 +52,7 @@ export class WorkerBehaviour {
     switch (this.orders.shift()) {
       case WORKER_ORDER.BUILD_STOCK:
         this.onBuildOrder(worker, UNIT.STOCK, (point: Point, direction: number) => BaseFormation.STOCK(point, direction))
+        this.addOrder(WORKER_ORDER.BUILD_TOWER_1)
         break
 
       case WORKER_ORDER.BUILD_TOWER_1:

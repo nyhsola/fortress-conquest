@@ -1,5 +1,6 @@
 export const ABILITY = {
   WORKERS: FourCC("A003"),
+  FOOTMAN: FourCC("A000"),
   INCOME: FourCC("A002"),
   ABILITY_1: FourCC("A005"),
 } as const
@@ -8,6 +9,7 @@ export const UNIT = {
   START_WORKER: FourCC("h000"),
   CASTLE: FourCC("h001"),
   WORKER: FourCC("h002"),
+  FOOTMAN: FourCC("h005"),
   ZOMBIE: FourCC("n001"),
   STOCK: FourCC("h004"),
   TOWER: FourCC("h003"),

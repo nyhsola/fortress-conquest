@@ -103,12 +103,6 @@ STRING 23
 Force 6
 }
 
-STRING 24
-// Abilities: A000 (Random position), Name (Name)
-{
-Random position
-}
-
 STRING 25
 // Units: h001 (Castle), Name (Name)
 {
@@ -133,12 +127,6 @@ STRING 28
 Q
 }
 
-STRING 29
-// Abilities: A000 (Random position), Tip (Tooltip - Normal)
-{
-Random position
-}
-
 STRING 30
 // Abilities: A001 (Скачок), Ubertip (Tooltip - Normal - Extended)
 {
@@ -146,13 +134,13 @@ Teleports to any position on map
 }
 
 STRING 31
-// Abilities: A000 (Random position), Hotkey (Hotkey - Normal)
+// Abilities: A001 (Скачок), Hotkey (Hotkey - Normal)
 {
 Q
 }
 
 STRING 34
-// Abilities: A001 (Скачок), Hotkey (Hotkey - Normal)
+// Abilities: A005 (Ability 1), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -167,18 +155,6 @@ STRING 57
 // Units: h000 (Choose location for Castle), Name (Name)
 {
 Choose location for Castle
-}
-
-STRING 61
-// Abilities: A004 (Progress points), Name (Name)
-{
-Progress points
-}
-
-STRING 62
-// Abilities: A004 (Progress points), Tip (Tooltip - Normal)
-{
-You have 0/0 points
 }
 
 STRING 68
@@ -228,12 +204,6 @@ STRING 89
 Income
 }
 
-STRING 91
-// Abilities: A005 (Ability 1), Hotkey (Hotkey - Normal)
-{
-Q
-}
-
 STRING 92
 // Abilities: A005 (Ability 1), Name (Name)
 {
@@ -262,5 +232,29 @@ STRING 96
 // Destructibles: B001 (Banner), Name (Name)
 {
 Banner
+}
+
+STRING 97
+// Units: h005 (Footman), Name (Name)
+{
+Footman
+}
+
+STRING 98
+// Abilities: A000 (Footman), Name (Name)
+{
+Footman
+}
+
+STRING 99
+// Abilities: A000 (Footman), Ubertip (Tooltip - Normal - Extended)
+{
+Wait...
+}
+
+STRING 100
+// Abilities: A000 (Footman), Tip (Tooltip - Normal)
+{
+Footman
 }
 
