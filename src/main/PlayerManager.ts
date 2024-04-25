@@ -40,6 +40,7 @@ export class PlayerManager {
     if (spellId === ABILITY.ABILITY_3) {
       removeAbility(castingUnit, ABILITY.ABILITY_3)
     }
+    this.footmanManager.onFinishCast(castingUnit, spellId)
   }
 
   public update(delta: number) {

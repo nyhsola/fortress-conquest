@@ -1,7 +1,9 @@
+import { Unit } from "w3ts"
+
 import { FootmanBehaviour } from "behaviour/FootmanBehaviour"
 import { Footman } from "game/Footman"
 import { Player } from "game/Player"
-import { TooltipService } from "service/TooltipService"
+import { FOOTMAN_MODE, TooltipService } from "service/TooltipService"
 import { ABILITY } from "util/Config"
 import { Task } from "util/Task"
 import { createTask } from "util/Util"
@@ -13,6 +15,7 @@ export class FootmanManager {
   private readonly behaviourTask: Task = createTask(() => this.updateBehavior(), 3)
   private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), 5)
 
+  private currentMode = FOOTMAN_MODE.DEFENCE
   private footmanLimit = 6
 
   constructor(player: Player) {
@@ -33,6 +36,13 @@ export class FootmanManager {
     this.behaviour.updateState(this.footmans)
   }
 
+  public onFinishCast(castingUnit: Unit, spellId: number) {
+    if (spellId == ABILITY.FOOTMAN) {
+      this.currentMode === FOOTMAN_MODE.DEFENCE ? (this.currentMode = FOOTMAN_MODE.WAR) : (this.currentMode = FOOTMAN_MODE.DEFENCE)
+      TooltipService.updateFootmanMode(this.player.playerId, this.currentMode)
+    }
+  }
+
   private onFootmanCast() {
     const castle = this.player.getCastle()
     const point = this.player.getPoint()
@@ -43,6 +53,6 @@ export class FootmanManager {
     if (this.footmans.length >= this.footmanLimit || !point || !direction) return
     this.footmans.push(new Footman(point, this.player.allyId))
 
-    TooltipService.updateFootman(this.player.playerId, this.footmans.length, this.footmanLimit)
+    TooltipService.updateFootmanCount(this.player.playerId, this.footmans.length, this.footmanLimit)
   }
 }

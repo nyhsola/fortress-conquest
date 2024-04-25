@@ -288,3 +288,27 @@ STRING 105
 E
 }
 
+STRING 108
+// Abilities: A008 (Footman (Defence)), Ubertip (Tooltip - Normal - Extended)
+{
+Wait...
+}
+
+STRING 110
+// Abilities: A008 (Footman (Defence)), Name (Name)
+{
+Footman (Defence)
+}
+
+STRING 112
+// Abilities: A008 (Footman (Defence)), Hotkey (Hotkey - Normal)
+{
+Z
+}
+
+STRING 114
+// Abilities: A008 (Footman (Defence)), Tip (Tooltip - Normal)
+{
+Footman |c0096FF96(Defence)|r
+}
+
