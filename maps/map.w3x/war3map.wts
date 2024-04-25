@@ -264,15 +264,27 @@ STRING 101
 Ability 2
 }
 
-STRING 106
+STRING 102
 // Abilities: A004 (Ability 2), Tip (Tooltip - Normal)
 {
 Ability 2
 }
 
-STRING 108
-// Abilities: A004 (Ability 2), Hotkey (Hotkey - Normal)
+STRING 103
+// Abilities: A006 (Ability 3), Name (Name)
 {
-W
+Ability 3
+}
+
+STRING 104
+// Abilities: A006 (Ability 3), Tip (Tooltip - Normal)
+{
+Ability 3
+}
+
+STRING 105
+// Abilities: A006 (Ability 3), Hotkey (Hotkey - Normal)
+{
+E
 }
 

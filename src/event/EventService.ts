@@ -8,6 +8,7 @@ export const enum EventType {
   PER_SECOND,
   BUILDING_FINISHED,
   CASTING_STARTED,
+  CASTING_FINISHED,
   START_TIMER_EXPIRED,
 }
 
@@ -16,6 +17,7 @@ export class EventService {
     [EventType.PER_SECOND]: new EventHandler<() => void>(),
     [EventType.BUILDING_FINISHED]: new EventHandler<(building: Unit | undefined) => void>(),
     [EventType.CASTING_STARTED]: new EventHandler<() => void>(),
+    [EventType.CASTING_FINISHED]: new EventHandler<() => void>(),
     [EventType.START_TIMER_EXPIRED]: new EventHandler<() => void>(),
   }
 
@@ -35,6 +37,10 @@ export class EventService {
     const beginsCast = Trigger.create()
     beginsCast.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST)
     beginsCast.addAction(() => this.handlers[EventType.CASTING_STARTED].fire(Unit.fromHandle(GetSpellAbilityUnit()), GetSpellAbilityId()))
+
+    const finishedCast = Trigger.create()
+    finishedCast.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_ENDCAST)
+    finishedCast.addAction(() => this.handlers[EventType.CASTING_FINISHED].fire(Unit.fromHandle(GetSpellAbilityUnit()), GetSpellAbilityId()))
 
     const startTimerExpired = Trigger.create()
     startTimerExpired.registerTimerExpireEvent(timer)

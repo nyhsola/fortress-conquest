@@ -15,7 +15,7 @@ export class EnemyManager {
     this.spawn = createTask(() => this.spawnZombie(), 10)
   }
 
-  public onStartTimerExpired() {
+  public init() {
     this.started = true
   }
 

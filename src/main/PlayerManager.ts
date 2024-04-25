@@ -28,9 +28,17 @@ export class PlayerManager {
     }
   }
 
-  public onCast(castingUnit: Unit, spellId: number) {
+  public onCast(castingUnit: Unit, spellId: number) {}
+
+  public onFinishCast(castingUnit: Unit, spellId: number) {
+    if (spellId === ABILITY.ABILITY_1) {
+      removeAbility(castingUnit, ABILITY.ABILITY_1)
+    }
     if (spellId === ABILITY.ABILITY_2) {
       removeAbility(castingUnit, ABILITY.ABILITY_2)
+    }
+    if (spellId === ABILITY.ABILITY_3) {
+      removeAbility(castingUnit, ABILITY.ABILITY_3)
     }
   }
 
