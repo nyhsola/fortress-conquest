@@ -1,4 +1,4 @@
-import { Unit } from "w3ts"
+import { Point, Unit } from "w3ts"
 
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
@@ -22,10 +22,14 @@ export class PlayerManager {
 
   public onBuild(building: Unit) {
     if (building.typeId === UNIT.CASTLE) {
-      this.player.init(building)
+      this.player.onCastleBuild(building)
       this.workerManager.init()
       this.footmanManager.init()
     }
+  }
+
+  public onWarInit(point: Point) {
+    this.player.onWarInit(point)
   }
 
   public onCast(castingUnit: Unit, spellId: number) {}
@@ -40,7 +44,9 @@ export class PlayerManager {
     if (spellId === ABILITY.ABILITY_3) {
       removeAbility(castingUnit, ABILITY.ABILITY_3)
     }
-    this.footmanManager.onFinishCast(castingUnit, spellId)
+    if (spellId == ABILITY.FOOTMAN) {
+      this.footmanManager.onWarModeSwitch()
+    }
   }
 
   public update(delta: number) {

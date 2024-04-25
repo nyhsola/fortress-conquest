@@ -1,6 +1,6 @@
 import { Unit } from "w3ts"
 
-import { FootmanBehaviour } from "behaviour/FootmanBehaviour"
+import { FOOTMAN_ORDER, FootmanBehaviour } from "behaviour/FootmanBehaviour"
 import { Footman } from "game/Footman"
 import { Player } from "game/Player"
 import { FOOTMAN_MODE, TooltipService } from "service/TooltipService"
@@ -21,6 +21,7 @@ export class FootmanManager {
   constructor(player: Player) {
     this.player = player
     this.behaviour = new FootmanBehaviour(this.player)
+    this.behaviour.addOrder(FOOTMAN_ORDER.DEFEND, this.footmanLimit)
   }
 
   public init() {
@@ -36,11 +37,12 @@ export class FootmanManager {
     this.behaviour.updateState(this.footmans)
   }
 
-  public onFinishCast(castingUnit: Unit, spellId: number) {
-    if (spellId == ABILITY.FOOTMAN) {
-      this.currentMode === FOOTMAN_MODE.DEFENCE ? (this.currentMode = FOOTMAN_MODE.WAR) : (this.currentMode = FOOTMAN_MODE.DEFENCE)
-      TooltipService.updateFootmanMode(this.player.playerId, this.currentMode)
-    }
+  public onWarModeSwitch() {
+    this.currentMode === FOOTMAN_MODE.DEFENCE ? (this.currentMode = FOOTMAN_MODE.WAR) : (this.currentMode = FOOTMAN_MODE.DEFENCE)
+    const newOrder = this.currentMode === FOOTMAN_MODE.DEFENCE ? FOOTMAN_ORDER.DEFEND : FOOTMAN_ORDER.WAR
+    TooltipService.updateFootmanMode(this.player.playerId, this.currentMode)
+    this.behaviour.addOrder(newOrder, this.footmanLimit)
+    print("switched")
   }
 
   private onFootmanCast() {

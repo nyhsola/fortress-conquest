@@ -9,7 +9,7 @@ import { createTask } from "util/Util"
 export class WorkerManager {
   private readonly player: Player
   private readonly workers: Array<Worker> = []
-  private readonly workerBehaviour: WorkerBehaviour
+  private readonly behaviour: WorkerBehaviour
   private readonly behaviourTask: Task = createTask(() => this.updateWorker(), 3)
   private readonly workerAbility: Task = createTask(() => this.onWorkerCast(), 5)
 
@@ -17,7 +17,8 @@ export class WorkerManager {
 
   constructor(player: Player) {
     this.player = player
-    this.workerBehaviour = new WorkerBehaviour(this.player)
+    this.behaviour = new WorkerBehaviour(this.player)
+    this.behaviour.addOrder(WORKER_ORDER.BUILD_STOCK)
   }
 
   public init() {
@@ -29,12 +30,8 @@ export class WorkerManager {
     this.workerAbility.update(delta)
   }
 
-  public addOrder(order: WORKER_ORDER) {
-    this.workerBehaviour.addOrder(order)
-  }
-
   private updateWorker() {
-    this.workerBehaviour.updateState(this.workers)
+    this.behaviour.updateState(this.workers)
   }
 
   private onWorkerCast() {

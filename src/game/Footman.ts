@@ -5,24 +5,36 @@ import { createUnitAtPoint, issueBuildOrder, issueOrder, issuePointOrder } from 
 
 export enum FOOTMAN_STATE {
   FREE,
-  ON_POSITION,
+  LOCKED,
+  ON_DEFEND_POSITION,
+  ON_WAR_POSITION,
 }
 
 export class Footman {
   private readonly footman: Unit | undefined
-  private state: FOOTMAN_STATE
+  private state: FOOTMAN_STATE = FOOTMAN_STATE.FREE
 
   constructor(point: Point, allyId: number) {
     this.footman = createUnitAtPoint(point, allyId, UNIT.FOOTMAN)
-    this.state = FOOTMAN_STATE.FREE
   }
 
-  public orderPoint(location: location) {
+  public orderDefPoint(location: location) {
     this.footman && issuePointOrder(this.footman, location)
-    this.state = FOOTMAN_STATE.ON_POSITION
+    this.state = FOOTMAN_STATE.ON_DEFEND_POSITION
+  }
+
+  public orderWarPoint(location: location) {
+    this.footman && issuePointOrder(this.footman, location)
+    this.state = FOOTMAN_STATE.ON_WAR_POSITION
+  }
+
+  public lockFootman() {
+    this.state = FOOTMAN_STATE.LOCKED
   }
 
   public getState = () => this.state
 
   public isBusy = () => this.footman?.currentOrder != 0
+
+  public resetState = () => (this.state = FOOTMAN_STATE.FREE)
 }

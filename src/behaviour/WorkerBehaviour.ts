@@ -21,7 +21,6 @@ export class WorkerBehaviour {
 
   constructor(player: Player) {
     this.player = player
-    this.addOrder(WORKER_ORDER.BUILD_STOCK)
   }
 
   public addOrder(order: WORKER_ORDER) {

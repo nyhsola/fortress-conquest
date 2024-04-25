@@ -48,7 +48,10 @@ export class GameManager {
 
   private onStartTimerExpired() {
     this.enemyManager.init()
-    WarService.initializeWarPlace(this.playersArr)
+    const point = WarService.initializeWarPlace(this.playersArr)
+    for (const player in this.players) {
+      point && this.players[player].onWarInit(point)
+    }
   }
 
   private update(delta: number) {

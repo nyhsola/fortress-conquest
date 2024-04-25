@@ -9,7 +9,7 @@ const STEP_Y = 300
 const FOG_RADIUS = 1200
 
 export class WarService {
-  static initializeWarPlace(players: Array<Player>) {
+  static initializeWarPlace(players: Array<Player>): Point | undefined | 0 {
     const map = GetPlayableMapRect()
     const points: Array<Point> = []
     players.forEach((it) => {
@@ -17,14 +17,13 @@ export class WarService {
       point && points.push(point)
     })
     const freeRect = map && this.findFreeRect(map, 2, points)
-    print(freeRect?.minX, freeRect?.maxX, freeRect?.minY, freeRect?.maxY)
-    print(points[0]?.x, points[0]?.y)
     const centerX = freeRect?.centerX
     const centerY = freeRect?.centerY
     const center = centerX && centerY && Point.create(centerX, centerY)
     center && createDestructableAtPoint(center, 2, UNIT.BANNER)
     const location = centerX && centerY && Location(centerX, centerY)
     forEachPlayer((mapPlayer) => location && CreateFogModifierRadiusLocBJ(true, mapPlayer.handle, FOG_OF_WAR_VISIBLE, location, FOG_RADIUS))
+    return center
   }
 
   private static findFreeRect(mainRectHandle: rect, times: number, points: Array<Point | undefined>): Rectangle | undefined {

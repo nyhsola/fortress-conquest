@@ -15,6 +15,7 @@ export class Player {
   private stock: Unit | undefined
   private point: Point | undefined
   private direction: number | undefined
+  private warPoint: Point | undefined
 
   constructor(config: Config, playerId: number, allyId: number) {
     this.config = config
@@ -24,12 +25,16 @@ export class Player {
     withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
   }
 
-  public init(castle: Unit | undefined) {
+  public onCastleBuild(castle: Unit | undefined) {
     this.castle = castle
     this.point = this.castle && this.castle.getPoint()
     this.direction = GetRandomDirectionDeg()
     const minePoint = this.point && BaseFormation.MINE(this.point, this.direction)
     this.mine = minePoint && createUnitAtPoint(minePoint, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
+  }
+
+  public onWarInit(point: Point) {
+    this.warPoint = point
   }
 
   public getStock = () => this.stock
@@ -43,4 +48,6 @@ export class Player {
   public getPoint = () => this.point
 
   public getDirection = () => this.direction
+
+  public getWarPoint = () => this.warPoint
 }
