@@ -1,5 +1,5 @@
 import { WORKER_ORDER, WorkerBehaviour } from "behaviour/WorkerBehaviour"
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { Worker } from "game/Worker"
 import { TooltipService } from "service/TooltipService"
 import { ABILITY } from "util/Config"
@@ -7,7 +7,7 @@ import { Task } from "util/Task"
 import { createTask } from "util/Util"
 
 export class WorkerManager {
-  private readonly player: Player
+  private readonly player: GamePlayer
   private readonly workers: Array<Worker> = []
   private readonly behaviour: WorkerBehaviour
   private readonly behaviourTask: Task = createTask(() => this.updateWorker(), 3)
@@ -15,7 +15,7 @@ export class WorkerManager {
 
   private workerLimit = 3
 
-  constructor(player: Player) {
+  constructor(player: GamePlayer) {
     this.player = player
     this.behaviour = new WorkerBehaviour(this.player)
     this.behaviour.addOrder(WORKER_ORDER.BUILD_STOCK)

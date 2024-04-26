@@ -1,6 +1,6 @@
 import { FogModifier, Point, Rectangle } from "w3ts"
 
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { UNIT } from "util/Config"
 import { createDestructableAtPoint, forEachPlayer } from "util/Util"
 
@@ -9,7 +9,7 @@ const STEP_Y = 300
 const FOG_RADIUS = 1200
 
 export class WarService {
-  static initializeWarPlace(players: Array<Player>): Point | undefined | 0 {
+  static initializeWarPlace(players: Array<GamePlayer>): Point | undefined | 0 {
     const map = GetPlayableMapRect()
     const points: Array<Point> = []
     players.forEach((it) => {

@@ -1,16 +1,16 @@
 import { BaseFormation } from "game/BaseFormation"
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { UNIT } from "util/Config"
 import { ENEMY_PLAYER } from "util/Globals"
 import { Task } from "util/Task"
 import { createTask, createUnitAtPoint } from "util/Util"
 
 export class EnemyManager {
-  private readonly players: Array<Player>
+  private readonly players: Array<GamePlayer>
   private readonly spawn: Task
   private started = false
 
-  constructor(players: Array<Player>) {
+  constructor(players: Array<GamePlayer>) {
     this.players = players
     this.spawn = createTask(() => this.spawnZombie(), 10)
   }

@@ -1,7 +1,7 @@
 import { Point } from "w3ts"
 
 import { BaseFormation } from "game/BaseFormation"
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { Worker, WORKER_STATE } from "game/Worker"
 import { UNIT } from "util/Config"
 
@@ -16,10 +16,10 @@ export enum WORKER_ORDER {
 }
 
 export class WorkerBehaviour {
-  private readonly player: Player
+  private readonly player: GamePlayer
   private readonly orders: Array<WORKER_ORDER> = []
 
-  constructor(player: Player) {
+  constructor(player: GamePlayer) {
     this.player = player
   }
 

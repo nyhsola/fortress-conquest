@@ -3,17 +3,17 @@ import { Point, Unit } from "w3ts"
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
 import { WorkerManager } from "./WorkerManager"
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { ABILITY, UNIT } from "util/Config"
 import { removeAbility } from "util/Util"
 
 export class PlayerManager {
-  public readonly player: Player
+  public readonly player: GamePlayer
   private readonly workerManager: WorkerManager
   private readonly incomeManager: IncomeManager
   private readonly footmanManager: FootmanManager
 
-  constructor(player: Player) {
+  constructor(player: GamePlayer) {
     this.player = player
     this.workerManager = new WorkerManager(this.player)
     this.incomeManager = new IncomeManager(this.player)

@@ -2,14 +2,14 @@ import { Unit } from "w3ts"
 
 import { FOOTMAN_ORDER, FootmanBehaviour } from "behaviour/FootmanBehaviour"
 import { Footman } from "game/Footman"
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { FOOTMAN_MODE, TooltipService } from "service/TooltipService"
 import { ABILITY } from "util/Config"
 import { Task } from "util/Task"
 import { createTask } from "util/Util"
 
 export class FootmanManager {
-  private readonly player: Player
+  private readonly player: GamePlayer
   private readonly footmans: Array<Footman> = []
   private readonly behaviour: FootmanBehaviour
   private readonly behaviourTask: Task = createTask(() => this.updateBehavior(), 3)
@@ -18,7 +18,7 @@ export class FootmanManager {
   private currentMode = FOOTMAN_MODE.DEFENCE
   private footmanLimit = 6
 
-  constructor(player: Player) {
+  constructor(player: GamePlayer) {
     this.player = player
     this.behaviour = new FootmanBehaviour(this.player)
     this.behaviour.addOrder(FOOTMAN_ORDER.DEFEND, this.footmanLimit)

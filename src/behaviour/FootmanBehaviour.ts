@@ -1,6 +1,6 @@
 import { BaseFormation } from "game/BaseFormation"
 import { Footman, FOOTMAN_STATE } from "game/Footman"
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 
 export enum FOOTMAN_ORDER {
   DEFEND,
@@ -12,12 +12,12 @@ enum GLOBAL_ORDER {
 }
 
 export class FootmanBehaviour {
-  private readonly player: Player
+  private readonly player: GamePlayer
   private readonly globalOrders: Array<GLOBAL_ORDER> = []
   private readonly orders: Array<FOOTMAN_ORDER> = []
   private readonly freePositions: Array<number> = []
 
-  constructor(player: Player) {
+  constructor(player: GamePlayer) {
     this.player = player
     Object.keys(BaseFormation.FOOTMAN_DEF).forEach((it) => this.freePositions.push(parseInt(it)))
   }

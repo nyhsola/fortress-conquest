@@ -4,7 +4,7 @@ import { BaseFormation } from "./BaseFormation"
 import { Config, UNIT } from "util/Config"
 import { createUnitAtCenter, createUnitAtPoint, withTimedLife } from "util/Util"
 
-export class Player {
+export class GamePlayer {
   private readonly config: Config
 
   public readonly playerId: number

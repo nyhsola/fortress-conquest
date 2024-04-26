@@ -86,6 +86,10 @@ export function removeAbility(unit: Unit | undefined, ability: number) {
   unitHandle && UnitRemoveAbility(unitHandle, ability)
 }
 
+export function setAliance(sourcePlayer: player | undefined, otherPlayer: player | undefined) {
+  sourcePlayer && otherPlayer && SetPlayerAlliance(sourcePlayer, otherPlayer, ALLIANCE_SHARED_VISION, true)
+}
+
 // interval in sec
 export function createTask(customAction: () => void, interval: number): Task {
   return new (class extends Task {

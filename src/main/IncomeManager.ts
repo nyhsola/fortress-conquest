@@ -1,6 +1,6 @@
 import { MapPlayer } from "w3ts"
 
-import { Player } from "game/Player"
+import { GamePlayer } from "game/Player"
 import { TooltipService } from "service/TooltipService"
 import { createFloatingText } from "util/FTextUtil"
 import { Task } from "util/Task"
@@ -11,7 +11,7 @@ export class IncomeManager {
   private totalGold = 0
   private totalTime = 0
 
-  constructor(player: Player) {
+  constructor(player: GamePlayer) {
     this.income = createTask(() => this.onIncome(player), 10)
   }
 
@@ -20,7 +20,7 @@ export class IncomeManager {
     this.totalTime = this.totalTime + delta
   }
 
-  private onIncome(player: Player) {
+  private onIncome(player: GamePlayer) {
     const mapAlly = MapPlayer.fromIndex(player.allyId)
     const allyGold = mapAlly?.getState(PLAYER_STATE_RESOURCE_GOLD) ?? 0
     if (allyGold > 0) {
