@@ -42,7 +42,6 @@ export class FootmanManager {
     const newOrder = this.currentMode === FOOTMAN_MODE.DEFENCE ? FOOTMAN_ORDER.DEFEND : FOOTMAN_ORDER.WAR
     TooltipService.updateFootmanMode(this.player.playerId, this.currentMode)
     this.behaviour.addOrder(newOrder, this.footmanLimit)
-    print("switched")
   }
 
   private onFootmanCast() {

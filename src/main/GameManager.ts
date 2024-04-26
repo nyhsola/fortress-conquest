@@ -32,6 +32,9 @@ export class GameManager {
     this.eventService.subscribe(EventType.CASTING_STARTED, (castingUnit: Unit, spellId: number) => this.onCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.START_TIMER_EXPIRED, () => this.onStartTimerExpired())
+
+    FogEnableOff()
+    FogMaskEnableOff()
   }
 
   private onBuild(building: Unit) {

@@ -4,6 +4,14 @@ import { Players } from "w3ts/globals"
 import { TEXT } from "util/Config"
 import { Task } from "util/Task"
 
+export function doForLocalPlayer(action: () => void, playerId: number) {
+  forEachPlayer((player: MapPlayer) => {
+    if (player.id == playerId && GetLocalPlayer() == player.handle) {
+      action()
+    }
+  })
+}
+
 export function forEachPlayer(action: (player: MapPlayer) => void) {
   let players = GetPlayersAll()
   players &&
@@ -73,21 +81,9 @@ export function withTimedLife(unit: Unit | undefined, seconds: number): Unit | u
   return unit
 }
 
-export function doForLocalPlayer(action: () => void, playerId: number) {
-  forEachPlayer((player: MapPlayer) => {
-    if (player.id == playerId && GetLocalPlayer() == player.handle) {
-      action()
-    }
-  })
-}
-
 export function removeAbility(unit: Unit | undefined, ability: number) {
   const unitHandle = unit?.handle
-  const playerId = unit?.owner.id
-  playerId &&
-    doForLocalPlayer(() => {
-      unitHandle && UnitRemoveAbility(unitHandle, ability)
-    }, playerId)
+  unitHandle && UnitRemoveAbility(unitHandle, ability)
 }
 
 // interval in sec
