@@ -28,11 +28,6 @@ STRING 7
 Force 1
 }
 
-STRING 8
-{
-Force 2
-}
-
 STRING 9
 {
 fortress-conquest
@@ -81,21 +76,6 @@ Player 16
 STRING 18
 {
 Player 17
-}
-
-STRING 20
-{
-Force 3
-}
-
-STRING 21
-{
-Force 4
-}
-
-STRING 22
-{
-Force 5
 }
 
 STRING 23

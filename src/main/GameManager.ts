@@ -36,6 +36,9 @@ export class GameManager {
     FogEnableOff()
     FogMaskEnableOff()
 
+    const playersAll = GetPlayersAll()
+    playersAll && SetForceAllianceStateBJ(playersAll, playersAll, bj_ALLIANCE_UNALLIED)
+
     setAliance(Player(1), Player(13))
     setAliance(Player(2), Player(14))
     setAliance(Player(3), Player(15))
