@@ -33,15 +33,15 @@ export class FootmanManager {
     this.footmanAbility.update(delta)
   }
 
-  private updateBehavior() {
-    this.behaviour.updateState(this.footmans)
-  }
-
   public onWarModeSwitch() {
     this.currentMode === FOOTMAN_MODE.DEFENCE ? (this.currentMode = FOOTMAN_MODE.WAR) : (this.currentMode = FOOTMAN_MODE.DEFENCE)
     const newOrder = this.currentMode === FOOTMAN_MODE.DEFENCE ? FOOTMAN_ORDER.DEFEND : FOOTMAN_ORDER.WAR
     TooltipService.updateFootmanMode(this.player.playerId, this.currentMode)
     this.behaviour.addOrder(newOrder, this.footmanLimit)
+  }
+
+  private updateBehavior() {
+    this.behaviour.updateState(this.footmans)
   }
 
   private onFootmanCast() {

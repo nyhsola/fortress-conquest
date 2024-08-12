@@ -33,17 +33,13 @@ export class GameManager {
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.START_TIMER_EXPIRED, () => this.onStartTimerExpired())
 
-    FogEnableOff()
     FogMaskEnableOff()
 
-    const playersAll = GetPlayersAll()
-    playersAll && SetForceAllianceStateBJ(playersAll, playersAll, bj_ALLIANCE_UNALLIED)
-
+    setAliance(Player(0), Player(12))
     setAliance(Player(1), Player(13))
     setAliance(Player(2), Player(14))
     setAliance(Player(3), Player(15))
     setAliance(Player(4), Player(16))
-    setAliance(Player(5), Player(17))
   }
 
   private onBuild(building: Unit) {

@@ -45,6 +45,7 @@ export class FootmanBehaviour {
           break
       }
     }
+
     if (this.orders.length > 0) {
       footmans
         .filter((footman, index) => footman.getState() == FOOTMAN_STATE.FREE)
