@@ -3,5 +3,5 @@
   "minifyScript": false,
   "gameExecutable": "D:/games/Warcraft III/_retail_/x86_64/Warcraft III.exe",
   "outputFolder": "./dist/bin",
-  "launchArgs": ["-launch"]
+  "launchArgs": ["-launch", "-nowfpause"]
 }

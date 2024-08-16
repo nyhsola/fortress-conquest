@@ -5,7 +5,7 @@ import { PlayerManager } from "./PlayerManager"
 import { EventService, EventType } from "event/EventService"
 import { GamePlayer } from "game/Player"
 import { WarService } from "service/WarService"
-import { Config } from "util/Config"
+import { Config, Zones } from "util/Config"
 import { ALLY_SHIFT } from "util/Globals"
 import { forEachPlayer, setAliance } from "util/Util"
 
@@ -18,7 +18,7 @@ export class GameManager {
   constructor(config: Config) {
     forEachPlayer((mapPlayer: MapPlayer) => {
       const playerId = mapPlayer.id
-      const player = new GamePlayer(config, playerId, playerId + ALLY_SHIFT)
+      const player = new GamePlayer(config.zones, playerId, playerId + ALLY_SHIFT)
       this.players[playerId] = new PlayerManager(player)
     })
 

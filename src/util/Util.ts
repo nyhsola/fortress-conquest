@@ -98,3 +98,10 @@ export function createTask(customAction: () => void, interval: number): Task {
     }
   })(interval)
 }
+
+export function sendChatMessageToAllPlayers(message: string) {
+  forEachPlayer((player: MapPlayer) => {
+    const playerHandler = player.handle
+    DisplayTextToPlayer(playerHandler, 0, 0, message)
+  })
+}

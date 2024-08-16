@@ -1,11 +1,11 @@
 import { Point, Unit } from "w3ts"
 
 import { BaseFormation } from "./BaseFormation"
-import { Config, UNIT } from "util/Config"
+import { UNIT, Zones } from "util/Config"
 import { createUnitAtCenter, createUnitAtPoint, withTimedLife } from "util/Util"
 
 export class GamePlayer {
-  private readonly config: Config
+  private readonly config: Zones
 
   public readonly playerId: number
   public readonly allyId: number
@@ -17,7 +17,7 @@ export class GamePlayer {
   private direction: number | undefined
   private warPoint: Point | undefined
 
-  constructor(config: Config, playerId: number, allyId: number) {
+  constructor(config: Zones, playerId: number, allyId: number) {
     this.config = config
     this.playerId = playerId
     this.allyId = allyId

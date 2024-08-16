@@ -1,7 +1,6 @@
-import { GameManager } from "main/GameManager"
-import { Config } from "util/Config"
+import { StartupManager } from "main/StartupManager"
+import { Zones } from "util/Config"
 
 export function initializeGame() {
-  const config = new Config()
-  new GameManager(config)
+  new StartupManager()
 }

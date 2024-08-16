@@ -24,5 +24,20 @@ export const TEXT = {
 } as const
 
 export class Config {
+  public readonly mode: Mode
+  public readonly zones: Zones
+
+  constructor(mode: Mode) {
+    this.mode = mode
+    this.zones = new Zones()
+  }
+}
+
+export class Zones {
   zone = [gg_rct_start_1, gg_rct_start_2, gg_rct_start_3, gg_rct_start_4, gg_rct_start_5, gg_rct_start_6]
+}
+
+export enum Mode {
+  DEFAULT,
+  DEBUG,
 }
