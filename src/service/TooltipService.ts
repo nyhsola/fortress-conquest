@@ -7,8 +7,8 @@ export enum FOOTMAN_MODE {
   DEFENCE,
 }
 
-const workerTemplate = (workerCount: number, workerLimit: number): string => "Count\\Limit: " + workerCount + "\\" + workerLimit + "|n" + "Trains every 5 sec"
-const footmanTemplateCount = (footmanCount: number, footmanLimit: number): string => "Count\\Limit: " + footmanCount + "\\" + footmanLimit + "|n" + "Trains every 5 sec"
+const workerTemplate = (workerCount: number, workerLimit: number): string => "Count: " + workerCount + "|nLimit: " + workerLimit + "|nTrains every 5 sec"
+const footmanTemplateCount = (footmanCount: number, footmanLimit: number): string => "Count: " + footmanCount + "|nLimit: " + footmanLimit + "|nTrains every 5 sec"
 const incomeTemplate = (totalGold: number, goldPerMin: string): string => "Total gold: " + totalGold + "|n" + "Gold per minute: " + goldPerMin
 const footmanTemplateMode = (mode: FOOTMAN_MODE): string =>
   FOOTMAN_MODE.DEFENCE === mode ? "Footman " + withColor("(Defence)", LOCAL_COLOR.GREEN) : "Footman " + withColor("(War)", LOCAL_COLOR.RED)

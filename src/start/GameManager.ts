@@ -7,7 +7,7 @@ import { GamePlayer } from "game/GamePlayer"
 import { WarService } from "service/WarService"
 import { Config, Mode, Zones } from "util/Config"
 import { ALLY_SHIFT } from "util/Globals"
-import { forEachPlayer, sendChatMessageToAllPlayers, setAliance } from "util/Util"
+import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance } from "util/Util"
 
 export class GameManager {
   private readonly players: Record<number, PlayerManager> = {}
@@ -17,12 +17,14 @@ export class GameManager {
 
   constructor(config: Config) {
     forEachPlayer((mapPlayer: MapPlayer) => {
-      const playerId = mapPlayer.id
-      const allyId = playerId + ALLY_SHIFT
-      const player = new GamePlayer(config, playerId, allyId)
-      this.players[playerId] = new PlayerManager(player)
-      const mapPlayerAlly = MapPlayer.fromIndex(allyId)
-      mapPlayerAlly && (mapPlayerAlly.name = mapPlayer.name)
+      if (mapPlayer.slotState == PLAYER_SLOT_STATE_PLAYING && mapPlayer.controller == MAP_CONTROL_USER) {
+        const playerId = mapPlayer.id
+        const allyId = playerId + ALLY_SHIFT
+        const player = new GamePlayer(config, playerId, allyId)
+        this.players[playerId] = new PlayerManager(player)
+        const mapPlayerAlly = MapPlayer.fromIndex(allyId)
+        mapPlayerAlly && (mapPlayerAlly.name = mapPlayer.name)
+      }
     })
 
     if (config.mode == Mode.DEBUG) {
@@ -36,7 +38,7 @@ export class GameManager {
 
     this.playersArr = Object.entries(this.players).map((it) => it[1].player)
 
-    this.eventService = new EventService()
+    this.eventService = new EventService(config)
     this.enemyManager = new EnemyManager(this.playersArr)
 
     this.eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
@@ -44,6 +46,7 @@ export class GameManager {
     this.eventService.subscribe(EventType.CASTING_STARTED, (castingUnit: Unit, spellId: number) => this.onCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.START_TIMER_EXPIRED, () => this.onStartTimerExpired())
+    this.eventService.subscribe(EventType.UNIT_DEATH, (deathUnit: Unit, killingUnit: Unit) => this.onUnitDeath(deathUnit, killingUnit))
 
     if (config.mode == Mode.DEBUG) {
       FogMaskEnableOff()
@@ -60,7 +63,7 @@ export class GameManager {
   }
 
   private onBuild(building: Unit) {
-    this.players[building.owner.id].onBuild(building)
+    this.players[ifAllyGetOwner(building.owner.id)].onBuild(building)
   }
 
   private onCast(castingUnit: Unit, spellId: number) {
@@ -69,6 +72,10 @@ export class GameManager {
 
   private onFinishCast(castingUnit: Unit, spellId: number) {
     this.players[castingUnit.owner.id].onFinishCast(castingUnit, spellId)
+  }
+
+  private onUnitDeath(deathUnit: Unit, killingUnit: Unit) {
+    this.enemyManager.onUnitDeath(deathUnit, killingUnit)
   }
 
   private onStartTimerExpired() {

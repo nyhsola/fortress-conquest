@@ -46,7 +46,7 @@ export class FootmanManager {
 
   private onFootmanCast() {
     const castle = this.player.getCastle()
-    const point = this.player.getPoint()
+    const point = this.player.getBarracks()?.getPoint()
     const direction = this.player.getDirection()
 
     if (!castle || castle.getAbilityLevel(ABILITY.FOOTMAN) != 1) return

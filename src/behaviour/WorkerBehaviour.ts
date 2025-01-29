@@ -7,6 +7,7 @@ import { UNIT } from "util/Config"
 
 export enum WORKER_ORDER {
   BUILD_STOCK,
+  BUILD_BARRACKS,
   BUILD_TOWER_1,
   BUILD_TOWER_2,
   BUILD_TOWER_3,
@@ -49,12 +50,17 @@ export class WorkerBehaviour {
     switch (this.orders.shift()) {
       case WORKER_ORDER.BUILD_STOCK:
         this.onBuildOrder(worker, UNIT.STOCK, (point: Point, direction: number) => BaseFormation.STOCK(point, direction))
+        this.addOrder(WORKER_ORDER.BUILD_BARRACKS)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_1)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_2)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_3)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_4)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_5)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_6)
+        break
+
+      case WORKER_ORDER.BUILD_BARRACKS:
+        this.onBuildOrder(worker, UNIT.BARRACKS, (point: Point, direction: number) => BaseFormation.BARRACKS(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_1:

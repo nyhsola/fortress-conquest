@@ -7,6 +7,7 @@ export class BaseFormation {
 
   static MINE = (point: Point, direction: number) => getPolarPoint(point, direction + 20, 800)
   static STOCK = (point: Point, direction: number) => getPolarPoint(point, direction + 90, 800)
+  static BARRACKS = (point: Point, direction: number) => getPolarPoint(point, direction + 210, 800)
 
   static TOWER_1 = (point: Point, direction: number) => getPolarPoint(point, direction + 60, 1200)
   static TOWER_2 = (point: Point, direction: number) => getPolarPoint(point, direction + 120, 1200)

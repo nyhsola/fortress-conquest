@@ -1,6 +1,9 @@
 import { Trigger } from "w3ts"
 import { Unit } from "w3ts"
 
+import { Config, Mode } from "util/Config"
+
+const UNTIL_START_DEBUG = 60
 const UNTIL_START = 120
 const DIALOG_TITLE = "Game start in..."
 
@@ -10,20 +13,22 @@ export const enum EventType {
   CASTING_STARTED,
   CASTING_FINISHED,
   START_TIMER_EXPIRED,
+  UNIT_DEATH,
 }
 
 export class EventService {
-  private readonly handlers: Record<EventType, EventHandler<(e: any) => any>> = {
+  private readonly handlers: Record<EventType, EventHandler<(...e: any) => any>> = {
     [EventType.PER_SECOND]: new EventHandler<() => void>(),
     [EventType.BUILDING_FINISHED]: new EventHandler<(building: Unit | undefined) => void>(),
     [EventType.CASTING_STARTED]: new EventHandler<() => void>(),
     [EventType.CASTING_FINISHED]: new EventHandler<() => void>(),
     [EventType.START_TIMER_EXPIRED]: new EventHandler<() => void>(),
+    [EventType.UNIT_DEATH]: new EventHandler<(deathUnit: Unit | undefined, killingUnit: Unit | undefined) => void>(),
   }
 
-  constructor() {
+  constructor(config: Config) {
     const timer = CreateTimer()
-    StartTimerBJ(timer, false, UNTIL_START)
+    StartTimerBJ(timer, false, config.mode == Mode.DEBUG ? UNTIL_START_DEBUG : UNTIL_START)
     const timerDialog = CreateTimerDialogBJ(timer, DIALOG_TITLE)
 
     const buildingFinishedTrigger = Trigger.create()
@@ -41,6 +46,10 @@ export class EventService {
     const finishedCast = Trigger.create()
     finishedCast.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_ENDCAST)
     finishedCast.addAction(() => this.handlers[EventType.CASTING_FINISHED].fire(Unit.fromHandle(GetSpellAbilityUnit()), GetSpellAbilityId()))
+
+    const unitDeath = Trigger.create()
+    unitDeath.registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    unitDeath.addAction(() => this.handlers[EventType.UNIT_DEATH].fire(Unit.fromHandle(GetTriggerUnit()), Unit.fromHandle(GetKillingUnit())))
 
     const startTimerExpired = Trigger.create()
     startTimerExpired.registerTimerExpireEvent(timer)

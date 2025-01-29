@@ -1,8 +1,11 @@
 import { MapPlayer, Point, Rectangle, Unit } from "w3ts"
 import { Players } from "w3ts/globals"
 
+import { ALLY_SHIFT } from "./Globals"
 import { TEXT } from "util/Config"
 import { Task } from "util/Task"
+
+const allies = [12, 13, 14, 15, 16]
 
 export function doForLocalPlayer(action: () => void, playerId: number) {
   forEachPlayer((player: MapPlayer) => {
@@ -104,4 +107,12 @@ export function sendChatMessageToAllPlayers(message: string) {
     const playerHandler = player.handle
     DisplayTextToPlayer(playerHandler, 0, 0, message)
   })
+}
+
+export function ifAllyGetOwner(id: number): number {
+  if (allies.indexOf(id) != -1) {
+    return id - ALLY_SHIFT
+  } else {
+    return id
+  }
 }

@@ -1,9 +1,12 @@
+import { MapPlayer, Unit } from "w3ts/handles"
+
 import { BaseFormation } from "game/BaseFormation"
 import { GamePlayer } from "game/GamePlayer"
 import { UNIT } from "util/Config"
-import { ENEMY_PLAYER } from "util/Globals"
+import { createFloatingText, createFloatingTextOnUnitRandom, FColor } from "util/FTextUtil"
+import { ALLY_SHIFT, ENEMY_PLAYER } from "util/Globals"
 import { Task } from "util/Task"
-import { createTask, createUnitAtPoint } from "util/Util"
+import { createTask, createUnitAtPoint, sendChatMessageToAllPlayers } from "util/Util"
 
 export class EnemyManager {
   private readonly players: Array<GamePlayer>
@@ -21,6 +24,17 @@ export class EnemyManager {
 
   public update(delta: number) {
     this.started && this.spawn.update(delta)
+  }
+
+  public onUnitDeath(deathUnit: Unit, killingUnit: Unit) {
+    if (deathUnit.typeId == UNIT.ZOMBIE) {
+      const id = killingUnit.owner.id - ALLY_SHIFT
+      const mapPlayer = MapPlayer.fromIndex(id)
+      mapPlayer && createFloatingTextOnUnitRandom("DEAD!", deathUnit, mapPlayer, 8, FColor.RED)
+      const playerGold = mapPlayer?.getState(PLAYER_STATE_RESOURCE_GOLD) ?? 0
+      mapPlayer?.setState(PLAYER_STATE_RESOURCE_GOLD, playerGold + 10)
+      mapPlayer && createFloatingTextOnUnitRandom("+10", deathUnit, mapPlayer, 8, FColor.GOLD)
+    }
   }
 
   private spawnZombie() {

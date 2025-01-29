@@ -24,6 +24,9 @@ export class PlayerManager {
     if (building.typeId === UNIT.CASTLE) {
       this.player.onCastleBuild(building)
       this.workerManager.init()
+    }
+    if (building.typeId === UNIT.BARRACKS) {
+      this.player.onBarracksBuild(building)
       this.footmanManager.init()
     }
   }

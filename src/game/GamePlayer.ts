@@ -13,6 +13,7 @@ export class GamePlayer {
   private castle: Unit | undefined
   private mine: Unit | undefined
   private stock: Unit | undefined
+  private barracks: Unit | undefined
   private point: Point | undefined
   private direction: number | undefined
   private warPoint: Point | undefined
@@ -37,6 +38,10 @@ export class GamePlayer {
     this.mine = minePoint && createUnitAtPoint(minePoint, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
   }
 
+  public onBarracksBuild(barracks: Unit | undefined) {
+    this.barracks = barracks
+  }
+
   public onWarInit(point: Point) {
     this.warPoint = point
   }
@@ -48,6 +53,8 @@ export class GamePlayer {
   public getCastle = () => this.castle
 
   public getMine = () => this.mine
+
+  public getBarracks = () => this.barracks
 
   public getPoint = () => this.point
 

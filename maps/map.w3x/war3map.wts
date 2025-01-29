@@ -197,7 +197,7 @@ Ability 1
 }
 
 STRING 94
-// Units: h003 (Сторожевая башня), Tip (Tooltip - Basic)
+// Units: h003 (Guard Tower), Tip (Tooltip - Basic)
 {
 Guard Tower
 }
@@ -290,5 +290,23 @@ STRING 114
 // Abilities: A008 (Footman (Defence)), Tip (Tooltip - Normal)
 {
 Footman |c0096FF96(Defence)|r
+}
+
+STRING 115
+// Units: h003 (Guard Tower), Name (Name)
+{
+Guard Tower
+}
+
+STRING 116
+// Units: h006 (Barracks), Tip (Tooltip - Basic)
+{
+Barracks
+}
+
+STRING 117
+// Units: h006 (Barracks), Name (Name)
+{
+Barracks
 }
 
