@@ -1,13 +1,13 @@
 import { MapPlayer, Unit } from "w3ts"
 
-import { EnemyManager } from "./EnemyManager"
-import { PlayerManager } from "./PlayerManager"
+import { EnemyManager } from "../main/EnemyManager"
+import { PlayerManager } from "../main/PlayerManager"
 import { EventService, EventType } from "event/EventService"
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { WarService } from "service/WarService"
-import { Config, Zones } from "util/Config"
+import { Config, Mode, Zones } from "util/Config"
 import { ALLY_SHIFT } from "util/Globals"
-import { forEachPlayer, setAliance } from "util/Util"
+import { forEachPlayer, sendChatMessageToAllPlayers, setAliance } from "util/Util"
 
 export class GameManager {
   private readonly players: Record<number, PlayerManager> = {}
@@ -18,9 +18,21 @@ export class GameManager {
   constructor(config: Config) {
     forEachPlayer((mapPlayer: MapPlayer) => {
       const playerId = mapPlayer.id
-      const player = new GamePlayer(config.zones, playerId, playerId + ALLY_SHIFT)
+      const allyId = playerId + ALLY_SHIFT
+      const player = new GamePlayer(config, playerId, allyId)
       this.players[playerId] = new PlayerManager(player)
+      const mapPlayerAlly = MapPlayer.fromIndex(allyId)
+      mapPlayerAlly && (mapPlayerAlly.name = mapPlayer.name)
     })
+
+    if (config.mode == Mode.DEBUG) {
+      const playerId = 4
+      const allyId = playerId + ALLY_SHIFT
+      const player = new GamePlayer(config, playerId, allyId)
+      this.players[4] = new PlayerManager(player)
+      const mapPlayer = MapPlayer.fromIndex(4)
+      mapPlayer && (mapPlayer.name = "DEBUG")
+    }
 
     this.playersArr = Object.entries(this.players).map((it) => it[1].player)
 
@@ -33,7 +45,12 @@ export class GameManager {
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.START_TIMER_EXPIRED, () => this.onStartTimerExpired())
 
-    FogMaskEnableOff()
+    if (config.mode == Mode.DEBUG) {
+      FogMaskEnableOff()
+      FogEnableOff()
+    } else {
+      FogMaskEnableOff()
+    }
 
     setAliance(Player(0), Player(12))
     setAliance(Player(1), Player(13))

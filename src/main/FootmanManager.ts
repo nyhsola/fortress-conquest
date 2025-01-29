@@ -2,7 +2,7 @@ import { Unit } from "w3ts"
 
 import { FOOTMAN_ORDER, FootmanBehaviour } from "behaviour/FootmanBehaviour"
 import { Footman } from "game/Footman"
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { FOOTMAN_MODE, TooltipService } from "service/TooltipService"
 import { ABILITY } from "util/Config"
 import { Task } from "util/Task"

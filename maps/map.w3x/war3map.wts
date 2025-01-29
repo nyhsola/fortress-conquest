@@ -251,19 +251,19 @@ Ability 2
 }
 
 STRING 103
-// Abilities: A006 (Ability 3), Name (Name)
+// Abilities: A007 (Ability 3), Name (Name)
 {
 Ability 3
 }
 
 STRING 104
-// Abilities: A006 (Ability 3), Tip (Tooltip - Normal)
+// Abilities: A007 (Ability 3), Tip (Tooltip - Normal)
 {
 Ability 3
 }
 
 STRING 105
-// Abilities: A006 (Ability 3), Hotkey (Hotkey - Normal)
+// Abilities: A007 (Ability 3), Hotkey (Hotkey - Normal)
 {
 E
 }

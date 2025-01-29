@@ -19,7 +19,7 @@ export class StartupManager {
     dialog.setMessage("Choose an option")
 
     const button1 = dialog.addButton("Default")
-    const button2 = dialog.addButton("Debug")
+    const button2 = dialog.addButton("Debug (Only single player)")
 
     const trigger1 = Trigger.create()
     const trigger2 = Trigger.create()

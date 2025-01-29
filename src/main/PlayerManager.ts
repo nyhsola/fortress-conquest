@@ -3,7 +3,7 @@ import { Point, Unit } from "w3ts"
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
 import { WorkerManager } from "./WorkerManager"
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { ABILITY, UNIT } from "util/Config"
 import { removeAbility } from "util/Util"
 

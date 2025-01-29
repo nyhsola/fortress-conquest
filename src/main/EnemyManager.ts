@@ -1,5 +1,5 @@
 import { BaseFormation } from "game/BaseFormation"
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { UNIT } from "util/Config"
 import { ENEMY_PLAYER } from "util/Globals"
 import { Task } from "util/Task"

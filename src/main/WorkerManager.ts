@@ -1,5 +1,5 @@
 import { WORKER_ORDER, WorkerBehaviour } from "behaviour/WorkerBehaviour"
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { Worker } from "game/Worker"
 import { TooltipService } from "service/TooltipService"
 import { ABILITY } from "util/Config"

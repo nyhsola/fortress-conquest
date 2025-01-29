@@ -1,6 +1,6 @@
 import { FogModifier, Point, Rectangle } from "w3ts"
 
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { UNIT } from "util/Config"
 import { createDestructableAtPoint, forEachPlayer } from "util/Util"
 

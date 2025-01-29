@@ -1,6 +1,6 @@
 import { MapPlayer } from "w3ts"
 
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 import { TooltipService } from "service/TooltipService"
 import { createFloatingText } from "util/FTextUtil"
 import { Task } from "util/Task"

@@ -4,7 +4,7 @@ export const ABILITY = {
   INCOME: FourCC("A002"),
   ABILITY_1: FourCC("A005"),
   ABILITY_2: FourCC("A004"),
-  ABILITY_3: FourCC("A006"),
+  ABILITY_3: FourCC("A007"),
 } as const
 
 export const UNIT = {

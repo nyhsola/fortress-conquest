@@ -1,6 +1,6 @@
 import { BaseFormation } from "game/BaseFormation"
 import { Footman, FOOTMAN_STATE } from "game/Footman"
-import { GamePlayer } from "game/Player"
+import { GamePlayer } from "game/GamePlayer"
 
 export enum FOOTMAN_ORDER {
   DEFEND,

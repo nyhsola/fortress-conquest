@@ -1,8 +1,8 @@
 import { Point, Unit } from "w3ts"
 
 import { BaseFormation } from "./BaseFormation"
-import { UNIT, Zones } from "util/Config"
-import { createUnitAtCenter, createUnitAtPoint, withTimedLife } from "util/Util"
+import { Config, Mode, UNIT, Zones } from "util/Config"
+import { createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/Util"
 
 export class GamePlayer {
   private readonly config: Zones
@@ -17,12 +17,16 @@ export class GamePlayer {
   private direction: number | undefined
   private warPoint: Point | undefined
 
-  constructor(config: Zones, playerId: number, allyId: number) {
-    this.config = config
+  constructor(config: Config, playerId: number, allyId: number) {
+    this.config = config.zones
     this.playerId = playerId
     this.allyId = allyId
 
-    withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
+    const unit = withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
+
+    if (config.mode == Mode.DEBUG && this.playerId == 4) {
+      unit && issueBuildOrder(unit, UNIT.CASTLE, Location(4000, -5000))
+    }
   }
 
   public onCastleBuild(castle: Unit | undefined) {
