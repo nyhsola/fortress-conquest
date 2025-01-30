@@ -7,26 +7,28 @@ export enum FOOTMAN_MODE {
   DEFENCE,
 }
 
-const workerTemplate = (workerCount: number, workerLimit: number): string => "Count: " + workerCount + "|nLimit: " + workerLimit + "|nTrains every 5 sec"
-const footmanTemplateCount = (footmanCount: number, footmanLimit: number): string => "Count: " + footmanCount + "|nLimit: " + footmanLimit + "|nTrains every 5 sec"
+const workerTemplate = (workerCount: number, workerLimit: number): string => "Workers (" + workerCount + "/" + workerLimit + ")"
+const workerTemplateExtended = (): string => "Trains every 5 sec"
+
+const footmanWarMode = (mode: FOOTMAN_MODE): string => (FOOTMAN_MODE.DEFENCE === mode ? withColor("(Defence)", LOCAL_COLOR.GREEN) : withColor("(War)", LOCAL_COLOR.RED))
+const footmanTemplate = (mode: FOOTMAN_MODE, count: number, limit: number): string => "Footman (" + count + "/" + limit + ") " + footmanWarMode(mode)
+const footmanTemplateExtended = (): string => "Trains every 5 sec"
+
 const incomeTemplate = (totalGold: number, goldPerMin: string): string => "Total gold: " + totalGold + "|n" + "Gold per minute: " + goldPerMin
-const footmanTemplateMode = (mode: FOOTMAN_MODE): string =>
-  FOOTMAN_MODE.DEFENCE === mode ? "Footman " + withColor("(Defence)", LOCAL_COLOR.GREEN) : "Footman " + withColor("(War)", LOCAL_COLOR.RED)
 
 export class TooltipService {
   static updateWorker(playerId: number, workersCount: number | undefined, workersLimit: number | undefined) {
-    const text = workerTemplate(workersCount ?? 0, workersLimit ?? 0)
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, text, 0), playerId)
+    const template = workerTemplate(workersCount ?? 0, workersLimit ?? 0)
+    const extended = workerTemplateExtended()
+    doForLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.WORKERS, template, 0), playerId)
+    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, extended, 0), playerId)
   }
 
-  static updateFootmanCount(playerId: number, footmanCount: number | undefined, footmanLimit: number | undefined) {
-    const text = footmanTemplateCount(footmanCount ?? 0, footmanLimit ?? 0)
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.FOOTMAN, text, 0), playerId)
-  }
-
-  static updateFootmanMode(playerId: number, mode: FOOTMAN_MODE) {
-    const text = footmanTemplateMode(mode)
-    doForLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.FOOTMAN, text, 0), playerId)
+  static updateFootman(playerId: number, mode: FOOTMAN_MODE, footmanCount: number | undefined, footmanLimit: number | undefined) {
+    const template = footmanTemplate(mode, footmanCount ?? 0, footmanLimit ?? 0)
+    const extended = footmanTemplateExtended()
+    doForLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.FOOTMAN, template, 0), playerId)
+    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.FOOTMAN, extended, 0), playerId)
   }
 
   static updateIncome(playerId: number, totalGold: number | undefined, goldPerMin: number | undefined) {

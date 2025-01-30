@@ -1,4 +1,4 @@
-import { FogModifier, Point, Rectangle } from "w3ts"
+import { FogModifier, MapPlayer, Point, Rectangle } from "w3ts"
 
 import { GamePlayer } from "game/GamePlayer"
 import { UNIT } from "util/Config"
@@ -22,7 +22,10 @@ export class WarService {
     const center = centerX && centerY && Point.create(centerX, centerY)
     center && createDestructableAtPoint(center, 2, UNIT.BANNER)
     const location = centerX && centerY && Location(centerX, centerY)
-    forEachPlayer((mapPlayer) => location && CreateFogModifierRadiusLocBJ(true, mapPlayer.handle, FOG_OF_WAR_VISIBLE, location, FOG_RADIUS))
+    forEachPlayer((mapPlayer) => {
+      location && CreateFogModifierRadiusLocBJ(true, mapPlayer.handle, FOG_OF_WAR_VISIBLE, location, FOG_RADIUS)
+      centerX && centerY && PingMinimapForPlayer(mapPlayer.handle, centerX, centerY, 6)
+    })
     return center
   }
 

@@ -17,7 +17,7 @@ export const UNIT = {
   CASTLE: FourCC("h001"),
   STOCK: FourCC("h004"),
   TOWER: FourCC("h003"),
-  BARRACKS: FourCC("h006"),
+  BARRACKS: FourCC("h007"),
   MINE: FourCC("n000"),
 
   BANNER: FourCC("B001"),

@@ -82,7 +82,7 @@ export class FootmanBehaviour {
     const point = this.player.getWarPoint()
     const direction = this.player.getDirection()
     const position = this.freePositions.pop()
-    const defPoint = position && point && direction && BaseFormation.FOOTMAN_DEF[position](point, direction)
+    const defPoint = position && point && direction && BaseFormation.FOOTMAN_WAR[position](point, direction)
     const location = defPoint && Location(defPoint?.x, defPoint?.y)
     location && footman.orderWarPoint(location)
   }

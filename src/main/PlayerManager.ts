@@ -1,4 +1,4 @@
-import { Point, Unit } from "w3ts"
+import { MapPlayer, Point, Unit } from "w3ts"
 
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
@@ -26,6 +26,8 @@ export class PlayerManager {
       this.workerManager.init()
     }
     if (building.typeId === UNIT.BARRACKS) {
+      const mapPlayer = MapPlayer.fromIndex(this.player.playerId)
+      mapPlayer && building.setOwner(mapPlayer, true)
       this.player.onBarracksBuild(building)
       this.footmanManager.init()
     }

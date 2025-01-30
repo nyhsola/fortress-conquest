@@ -36,7 +36,7 @@ export class FootmanManager {
   public onWarModeSwitch() {
     this.currentMode === FOOTMAN_MODE.DEFENCE ? (this.currentMode = FOOTMAN_MODE.WAR) : (this.currentMode = FOOTMAN_MODE.DEFENCE)
     const newOrder = this.currentMode === FOOTMAN_MODE.DEFENCE ? FOOTMAN_ORDER.DEFEND : FOOTMAN_ORDER.WAR
-    TooltipService.updateFootmanMode(this.player.playerId, this.currentMode)
+    TooltipService.updateFootman(this.player.playerId, this.currentMode, this.footmans.length, this.footmanLimit)
     this.behaviour.addOrder(newOrder, this.footmanLimit)
   }
 
@@ -45,15 +45,15 @@ export class FootmanManager {
   }
 
   private onFootmanCast() {
-    const castle = this.player.getCastle()
-    const point = this.player.getBarracks()?.getPoint()
+    const barracks = this.player.getBarracks()
+    const point = barracks?.getPoint()
     const direction = this.player.getDirection()
 
-    if (!castle || castle.getAbilityLevel(ABILITY.FOOTMAN) != 1) return
+    if (!barracks || barracks.getAbilityLevel(ABILITY.FOOTMAN) != 1) return
 
     if (this.footmans.length >= this.footmanLimit || !point || !direction) return
     this.footmans.push(new Footman(point, this.player.allyId))
 
-    TooltipService.updateFootmanCount(this.player.playerId, this.footmans.length, this.footmanLimit)
+    TooltipService.updateFootman(this.player.playerId, this.currentMode, this.footmans.length, this.footmanLimit)
   }
 }

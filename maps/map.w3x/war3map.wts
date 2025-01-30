@@ -280,12 +280,6 @@ STRING 110
 Footman (Defence)
 }
 
-STRING 112
-// Abilities: A008 (Footman (Defence)), Hotkey (Hotkey - Normal)
-{
-Z
-}
-
 STRING 114
 // Abilities: A008 (Footman (Defence)), Tip (Tooltip - Normal)
 {
@@ -299,14 +293,14 @@ Guard Tower
 }
 
 STRING 116
-// Units: h006 (Barracks), Tip (Tooltip - Basic)
+// Units: h007 (Barracks), Name (Name)
 {
 Barracks
 }
 
-STRING 117
-// Units: h006 (Barracks), Name (Name)
+STRING 119
+// Abilities: A008 (Footman (Defence)), Hotkey (Hotkey - Normal)
 {
-Barracks
+Q
 }
 

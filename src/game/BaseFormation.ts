@@ -24,4 +24,13 @@ export class BaseFormation {
     5: (point: Point, direction: number) => getPolarPoint(point, direction + 270, 1000),
     6: (point: Point, direction: number) => getPolarPoint(point, direction + 330, 1000),
   }
+
+  static FOOTMAN_WAR: Record<number, (point: Point, direction: number) => Point | undefined> = {
+    1: (point: Point, direction: number) => getPolarPoint(point, direction + 30, 600),
+    2: (point: Point, direction: number) => getPolarPoint(point, direction + 90, 600),
+    3: (point: Point, direction: number) => getPolarPoint(point, direction + 150, 600),
+    4: (point: Point, direction: number) => getPolarPoint(point, direction + 210, 600),
+    5: (point: Point, direction: number) => getPolarPoint(point, direction + 270, 600),
+    6: (point: Point, direction: number) => getPolarPoint(point, direction + 330, 600),
+  }
 }
