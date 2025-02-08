@@ -1,10 +1,10 @@
 import { WORKER_ORDER, WorkerBehaviour } from "behaviour/WorkerBehaviour"
 import { GamePlayer } from "game/GamePlayer"
 import { Worker } from "game/Worker"
+import { ABILITY } from "global/Config"
+import { Task } from "global/Task"
 import { TooltipService } from "service/TooltipService"
-import { ABILITY } from "util/Config"
-import { Task } from "util/Task"
-import { createTask } from "util/Util"
+import { createTask } from "util/CommonUtil"
 
 export class WorkerManager {
   private readonly player: GamePlayer

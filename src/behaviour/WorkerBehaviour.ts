@@ -3,7 +3,7 @@ import { Point } from "w3ts"
 import { BaseFormation } from "game/BaseFormation"
 import { GamePlayer } from "game/GamePlayer"
 import { Worker, WORKER_STATE } from "game/Worker"
-import { UNIT } from "util/Config"
+import { UNIT } from "global/Config"
 
 export enum WORKER_ORDER {
   BUILD_STOCK,

@@ -1,8 +1,8 @@
 import { Dialog, MapPlayer, Trigger } from "w3ts"
 
 import { GameManager } from "./GameManager"
-import { Config, Mode, Zones } from "util/Config"
-import { sendChatMessageToAllPlayers } from "util/Util"
+import { Config, Mode, Zones } from "global/Config"
+import { sendChatMessageToAllPlayers } from "util/CommonUtil"
 
 const UNTIL_START = 5
 const DIALOG_TITLE = "Mode pick"

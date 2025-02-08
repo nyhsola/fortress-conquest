@@ -1,7 +1,7 @@
 import { Point, Unit } from "w3ts"
 
-import { UNIT } from "util/Config"
-import { createUnitAtPoint, issueBuildOrder, issueOrder, issuePointOrder } from "util/Util"
+import { UNIT } from "global/Config"
+import { createUnitAtPoint, issueBuildOrder, issueOrder, issuePointOrder } from "util/CommonUtil"
 
 export enum WORKER_STATE {
   FREE,

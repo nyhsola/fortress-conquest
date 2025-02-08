@@ -2,11 +2,11 @@ import { MapPlayer, Unit } from "w3ts/handles"
 
 import { BaseFormation } from "game/BaseFormation"
 import { GamePlayer } from "game/GamePlayer"
-import { UNIT } from "util/Config"
-import { createFloatingText, createFloatingTextOnUnitRandom, FColor } from "util/FTextUtil"
-import { ALLY_SHIFT, ENEMY_PLAYER } from "util/Globals"
-import { Task } from "util/Task"
-import { createTask, createUnitAtPoint, issuePointOrder, sendChatMessageToAllPlayers } from "util/Util"
+import { UNIT } from "global/Config"
+import { ALLY_SHIFT, ENEMY_PLAYER } from "global/Globals"
+import { Task } from "global/Task"
+import { createTask, createUnitAtPoint, issuePointOrder, sendChatMessageToAllPlayers } from "util/CommonUtil"
+import { createFloatingText, createFloatingTextOnUnitRandom, FloatTextUtil } from "util/FloatTextUtil"
 
 export class EnemyManager {
   private readonly players: Array<GamePlayer>
@@ -30,10 +30,10 @@ export class EnemyManager {
     if (deathUnit.typeId == UNIT.ZOMBIE) {
       const id = killingUnit.owner.id - ALLY_SHIFT
       const mapPlayer = MapPlayer.fromIndex(id)
-      mapPlayer && createFloatingTextOnUnitRandom("DEAD!", deathUnit, mapPlayer, 8, FColor.RED)
+      mapPlayer && createFloatingTextOnUnitRandom("DEAD!", deathUnit, mapPlayer, 8, FloatTextUtil.RED)
       const playerGold = mapPlayer?.getState(PLAYER_STATE_RESOURCE_GOLD) ?? 0
       mapPlayer?.setState(PLAYER_STATE_RESOURCE_GOLD, playerGold + 10)
-      mapPlayer && createFloatingTextOnUnitRandom("+10", deathUnit, mapPlayer, 8, FColor.GOLD)
+      mapPlayer && createFloatingTextOnUnitRandom("+10", deathUnit, mapPlayer, 8, FloatTextUtil.GOLD)
     }
   }
 

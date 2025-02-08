@@ -1,8 +1,8 @@
 import { FogModifier, MapPlayer, Point, Rectangle } from "w3ts"
 
 import { GamePlayer } from "game/GamePlayer"
-import { UNIT } from "util/Config"
-import { createDestructableAtPoint, forEachPlayer } from "util/Util"
+import { UNIT } from "global/Config"
+import { createDestructableAtPoint, forEachPlayer } from "util/CommonUtil"
 
 const STEP_X = 300
 const STEP_Y = 300

@@ -1,13 +1,13 @@
 import { MapPlayer, Unit } from "w3ts"
 
-import { EnemyManager } from "../main/EnemyManager"
 import { PlayerManager } from "../main/PlayerManager"
-import { EventService, EventType } from "event/EventService"
+import { EnemyManager } from "./EnemyManager"
 import { GamePlayer } from "game/GamePlayer"
+import { Config, Mode, Zones } from "global/Config"
+import { ALLY_SHIFT } from "global/Globals"
+import { EventService, EventType } from "service/EventService"
 import { WarService } from "service/WarService"
-import { Config, Mode, Zones } from "util/Config"
-import { ALLY_SHIFT } from "util/Globals"
-import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance } from "util/Util"
+import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance } from "util/CommonUtil"
 
 export class GameManager {
   private readonly players: Record<number, PlayerManager> = {}
@@ -81,8 +81,8 @@ export class GameManager {
     iconFrame && BlzFrameSetTexture(iconFrame, "ReplaceableTextures\\CommandButtons\\BTNBlink.blp", 0, true)
 
     const tooltipFrameBackground = originWorldFrame && BlzCreateFrame("QuestButtonBaseTemplate", originWorldFrame, 0, 0)
-    tooltipFrameBackground && BlzFrameSetSize(tooltipFrameBackground, 0.25, 0.025)
-    tooltipFrameBackground && BlzFrameSetPoint(tooltipFrameBackground, FRAMEPOINT_CENTER, originWorldFrame, FRAMEPOINT_CENTER, 0, 0)
+    tooltipFrameBackground && BlzFrameSetSize(tooltipFrameBackground, 0.15, 0.05)
+    tooltipFrameBackground && iconsContainer && BlzFrameSetPoint(tooltipFrameBackground, FRAMEPOINT_BOTTOM, iconsContainer, FRAMEPOINT_BOTTOM, 0.02, -0.05)
 
     const tooltipText = tooltipFrameBackground && BlzCreateFrameByType("TEXT", "TooltipText", tooltipFrameBackground, "", 0)
     tooltipText && BlzFrameSetSize(tooltipText, width, height)

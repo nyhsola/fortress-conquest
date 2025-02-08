@@ -4,8 +4,8 @@ import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
 import { WorkerManager } from "./WorkerManager"
 import { GamePlayer } from "game/GamePlayer"
-import { ABILITY, UNIT } from "util/Config"
-import { removeAbility } from "util/Util"
+import { ABILITY, UNIT } from "global/Config"
+import { removeAbility } from "util/CommonUtil"
 
 export class PlayerManager {
   public readonly player: GamePlayer

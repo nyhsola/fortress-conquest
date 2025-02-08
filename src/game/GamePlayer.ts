@@ -1,8 +1,8 @@
 import { Point, Unit } from "w3ts"
 
 import { BaseFormation } from "./BaseFormation"
-import { Config, Mode, UNIT, Zones } from "util/Config"
-import { createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/Util"
+import { Config, Mode, UNIT, Zones } from "global/Config"
+import { createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/CommonUtil"
 
 export class GamePlayer {
   private readonly config: Zones

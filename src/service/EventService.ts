@@ -1,7 +1,7 @@
 import { Trigger } from "w3ts"
 import { Unit } from "w3ts"
 
-import { Config, Mode } from "util/Config"
+import { Config, Mode } from "global/Config"
 
 const UNTIL_START_DEBUG = 60
 const UNTIL_START = 120

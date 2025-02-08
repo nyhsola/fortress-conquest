@@ -1,9 +1,9 @@
 import { MapPlayer, Point, Rectangle, Unit } from "w3ts"
 import { Players } from "w3ts/globals"
 
-import { ALLY_SHIFT } from "./Globals"
-import { TEXT } from "util/Config"
-import { Task } from "util/Task"
+import { ALLY_SHIFT } from "../global/Globals"
+import { TEXT } from "global/Config"
+import { Task } from "global/Task"
 
 const allies = [12, 13, 14, 15, 16]
 

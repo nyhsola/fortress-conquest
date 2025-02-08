@@ -1,6 +1,6 @@
-import { LOCAL_COLOR, withColor } from "util/Colors"
-import { ABILITY } from "util/Config"
-import { doForLocalPlayer } from "util/Util"
+import { ABILITY } from "global/Config"
+import { doForLocalPlayer } from "util/CommonUtil"
+import { LOCAL_COLOR, withColor } from "util/TextUtil"
 
 export enum FOOTMAN_MODE {
   WAR,

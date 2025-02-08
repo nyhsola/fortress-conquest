@@ -1,6 +1,6 @@
 import { Point } from "w3ts"
 
-import { getPolarPoint } from "util/Util"
+import { getPolarPoint } from "util/CommonUtil"
 
 export class BaseFormation {
   static ZOMBIE_POINT = (point: Point) => getPolarPoint(point, GetRandomDirectionDeg(), 1800)

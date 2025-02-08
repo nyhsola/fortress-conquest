@@ -1,10 +1,10 @@
 import { MapPlayer } from "w3ts"
 
 import { GamePlayer } from "game/GamePlayer"
+import { Task } from "global/Task"
 import { TooltipService } from "service/TooltipService"
-import { createFloatingTextOnUnit, FColor } from "util/FTextUtil"
-import { Task } from "util/Task"
-import { createTask } from "util/Util"
+import { createTask } from "util/CommonUtil"
+import { createFloatingTextOnUnit, FloatTextUtil } from "util/FloatTextUtil"
 
 export class IncomeManager {
   private readonly income: Task
@@ -29,7 +29,7 @@ export class IncomeManager {
       mapAlly?.setState(PLAYER_STATE_RESOURCE_GOLD, 0)
       mapPlayer?.setState(PLAYER_STATE_RESOURCE_GOLD, playerGold + allyGold)
       const castle = player.getCastle()
-      castle && mapPlayer && createFloatingTextOnUnit("+" + allyGold, castle, mapPlayer, 12, FColor.GOLD)
+      castle && mapPlayer && createFloatingTextOnUnit("+" + allyGold, castle, mapPlayer, 12, FloatTextUtil.GOLD)
       this.totalGold = this.totalGold + allyGold
       TooltipService.updateIncome(player.playerId, this.totalGold, this.totalGold / this.totalTime / 60)
     }
