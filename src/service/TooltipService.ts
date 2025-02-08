@@ -1,5 +1,5 @@
 import { ABILITY } from "global/Config"
-import { doForLocalPlayer } from "util/CommonUtil"
+import { forLocalPlayer } from "util/CommonUtil"
 import { LOCAL_COLOR, withColor } from "util/TextUtil"
 
 export enum FOOTMAN_MODE {
@@ -20,19 +20,19 @@ export class TooltipService {
   static updateWorker(playerId: number, workersCount: number | undefined, workersLimit: number | undefined) {
     const template = workerTemplate(workersCount ?? 0, workersLimit ?? 0)
     const extended = workerTemplateExtended()
-    doForLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.WORKERS, template, 0), playerId)
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, extended, 0), playerId)
+    forLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.WORKERS, template, 0), playerId)
+    forLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, extended, 0), playerId)
   }
 
   static updateFootman(playerId: number, mode: FOOTMAN_MODE, footmanCount: number | undefined, footmanLimit: number | undefined) {
     const template = footmanTemplate(mode, footmanCount ?? 0, footmanLimit ?? 0)
     const extended = footmanTemplateExtended()
-    doForLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.FOOTMAN, template, 0), playerId)
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.FOOTMAN, extended, 0), playerId)
+    forLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.FOOTMAN, template, 0), playerId)
+    forLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.FOOTMAN, extended, 0), playerId)
   }
 
   static updateIncome(playerId: number, totalGold: number | undefined, goldPerMin: number | undefined) {
     const text = incomeTemplate(totalGold ?? 0, (goldPerMin ?? 0).toFixed(2))
-    doForLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.INCOME, text, 0), playerId)
+    forLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.INCOME, text, 0), playerId)
   }
 }

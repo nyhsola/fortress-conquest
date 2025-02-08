@@ -7,7 +7,7 @@ import { Task } from "global/Task"
 
 const allies = [12, 13, 14, 15, 16]
 
-export function doForLocalPlayer(action: () => void, playerId: number) {
+export function forLocalPlayer(action: () => void, playerId: number) {
   forEachPlayer((player: MapPlayer) => {
     if (player.id == playerId && GetLocalPlayer() == player.handle) {
       action()

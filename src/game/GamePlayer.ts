@@ -10,6 +10,8 @@ export class GamePlayer {
   public readonly playerId: number
   public readonly allyId: number
 
+  public timedUnit: Unit | undefined
+
   private castle: Unit | undefined
   private mine: Unit | undefined
   private stock: Unit | undefined
@@ -23,10 +25,10 @@ export class GamePlayer {
     this.playerId = playerId
     this.allyId = allyId
 
-    const unit = withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
+    this.timedUnit = withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
 
     if (config.mode == Mode.DEBUG && this.playerId == 4) {
-      unit && issueBuildOrder(unit, UNIT.CASTLE, Location(4000, -5000))
+      this.timedUnit && issueBuildOrder(this.timedUnit, UNIT.CASTLE, Location(4000, -5000))
     }
   }
 

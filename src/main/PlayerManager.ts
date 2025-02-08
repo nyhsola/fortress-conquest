@@ -2,6 +2,7 @@ import { MapPlayer, Point, Unit } from "w3ts"
 
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
+import { UIManager } from "./UIManager"
 import { WorkerManager } from "./WorkerManager"
 import { GamePlayer } from "game/GamePlayer"
 import { ABILITY, UNIT } from "global/Config"
@@ -12,12 +13,14 @@ export class PlayerManager {
   private readonly workerManager: WorkerManager
   private readonly incomeManager: IncomeManager
   private readonly footmanManager: FootmanManager
+  private readonly uiManager: UIManager
 
   constructor(player: GamePlayer) {
     this.player = player
     this.workerManager = new WorkerManager(this.player)
     this.incomeManager = new IncomeManager(this.player)
     this.footmanManager = new FootmanManager(this.player)
+    this.uiManager = new UIManager(this.player)
   }
 
   public onBuild(building: Unit) {

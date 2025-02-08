@@ -24,6 +24,12 @@ export class GameManager {
         this.players[playerId] = new PlayerManager(player)
         const mapPlayerAlly = MapPlayer.fromIndex(allyId)
         mapPlayerAlly && (mapPlayerAlly.name = mapPlayer.name)
+
+        const point = player.timedUnit && player.timedUnit.getPoint()
+        const location = point && Location(point.x, point.y)
+        const camDistance = GetCameraField(CAMERA_FIELD_ZOFFSET)
+
+        player.timedUnit && location && PanCameraToTimedLocWithZForPlayer(mapPlayer.handle, location, camDistance, 0.75)
       }
     })
 
@@ -60,36 +66,6 @@ export class GameManager {
     setAliance(Player(2), Player(14))
     setAliance(Player(3), Player(15))
     setAliance(Player(4), Player(16))
-
-    const originWorldFrame = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
-
-    const iconWidth = 0.02
-    const width = iconWidth * 5
-    const height = 0.02
-
-    const iconsContainer = originWorldFrame && BlzCreateFrameByType("FRAME", "IconsContainer", originWorldFrame, "", 0)
-    iconsContainer && BlzFrameSetSize(iconsContainer, width, height)
-    iconsContainer && BlzFrameSetPoint(iconsContainer, FRAMEPOINT_TOP, originWorldFrame, FRAMEPOINT_TOP, 0.1, -0.025)
-
-    const iconContainer = iconsContainer && BlzCreateFrameByType("FRAME", "IconContainer", iconsContainer, "", 0)
-    iconContainer && BlzFrameSetSize(iconContainer, iconWidth, height)
-    iconContainer && BlzFrameSetPoint(iconContainer, FRAMEPOINT_TOPLEFT, iconsContainer, FRAMEPOINT_TOPLEFT, 0, 0)
-
-    const iconFrame = iconsContainer && BlzCreateFrameByType("BACKDROP", "Icon", iconsContainer, "", 0)
-    iconFrame && BlzFrameSetSize(iconFrame, iconWidth, height)
-    iconFrame && BlzFrameSetPoint(iconFrame, FRAMEPOINT_TOPLEFT, iconsContainer, FRAMEPOINT_TOPLEFT, 0, 0)
-    iconFrame && BlzFrameSetTexture(iconFrame, "ReplaceableTextures\\CommandButtons\\BTNBlink.blp", 0, true)
-
-    const tooltipFrameBackground = originWorldFrame && BlzCreateFrame("QuestButtonBaseTemplate", originWorldFrame, 0, 0)
-    tooltipFrameBackground && BlzFrameSetSize(tooltipFrameBackground, 0.15, 0.05)
-    tooltipFrameBackground && iconsContainer && BlzFrameSetPoint(tooltipFrameBackground, FRAMEPOINT_BOTTOM, iconsContainer, FRAMEPOINT_BOTTOM, 0.02, -0.05)
-
-    const tooltipText = tooltipFrameBackground && BlzCreateFrameByType("TEXT", "TooltipText", tooltipFrameBackground, "", 0)
-    tooltipText && BlzFrameSetSize(tooltipText, width, height)
-    tooltipText && BlzFrameSetPoint(tooltipText, FRAMEPOINT_CENTER, tooltipFrameBackground, FRAMEPOINT_CENTER, 0, 0)
-    tooltipText && BlzFrameSetText(tooltipText, "|cffffcc00Gold Income|r\n+5 gold per second\nGold Spent: 500\nGold Earned: 55")
-
-    tooltipText && iconContainer && BlzFrameSetTooltip(iconContainer, tooltipFrameBackground)
   }
 
   private onBuild(building: Unit) {

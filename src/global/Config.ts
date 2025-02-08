@@ -23,6 +23,10 @@ export const UNIT = {
   BANNER: FourCC("B001"),
 } as const
 
+export const TEXTURES = {
+  WORKER: "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
+}
+
 export const TEXT = {
   TIMED_LIFE: FourCC("BTLF"),
 } as const
