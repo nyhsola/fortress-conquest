@@ -74,9 +74,9 @@ export function issueBuildOrder(unit: Unit, toBuild: number, place: location) {
   unitHandle && IssueBuildOrderByIdLocBJ(unitHandle, toBuild, place)
 }
 
-export function issuePointOrder(unit: Unit, place: location): boolean {
+export function issuePointOrder(unit: Unit, order: string, place: location): boolean {
   const unitHandle = unit.handle
-  return unitHandle && IssuePointOrderLocBJ(unitHandle, "move", place)
+  return unitHandle && IssuePointOrderLocBJ(unitHandle, order, place)
 }
 
 export function withTimedLife(unit: Unit | undefined, seconds: number): Unit | undefined {

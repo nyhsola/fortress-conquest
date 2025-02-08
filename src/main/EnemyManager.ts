@@ -6,7 +6,7 @@ import { UNIT } from "util/Config"
 import { createFloatingText, createFloatingTextOnUnitRandom, FColor } from "util/FTextUtil"
 import { ALLY_SHIFT, ENEMY_PLAYER } from "util/Globals"
 import { Task } from "util/Task"
-import { createTask, createUnitAtPoint, sendChatMessageToAllPlayers } from "util/Util"
+import { createTask, createUnitAtPoint, issuePointOrder, sendChatMessageToAllPlayers } from "util/Util"
 
 export class EnemyManager {
   private readonly players: Array<GamePlayer>
@@ -41,7 +41,9 @@ export class EnemyManager {
     this.players.forEach((it) => {
       const point = it.getPoint()
       const zPoint = point && BaseFormation.ZOMBIE_POINT(point)
-      zPoint && createUnitAtPoint(zPoint, ENEMY_PLAYER, UNIT.ZOMBIE)
+      const unit = zPoint && createUnitAtPoint(zPoint, ENEMY_PLAYER, UNIT.ZOMBIE)
+      const location = it.getCastle()?.point.handle
+      unit && location && issuePointOrder(unit, "attack", location)
     })
   }
 }

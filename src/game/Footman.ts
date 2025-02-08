@@ -19,12 +19,12 @@ export class Footman {
   }
 
   public orderDefPoint(location: location) {
-    this.footman && issuePointOrder(this.footman, location)
+    this.footman && issuePointOrder(this.footman, "move", location)
     this.state = FOOTMAN_STATE.ON_DEFEND_POSITION
   }
 
   public orderWarPoint(location: location) {
-    this.footman && issuePointOrder(this.footman, location)
+    this.footman && issuePointOrder(this.footman, "move", location)
     this.state = FOOTMAN_STATE.ON_WAR_POSITION
   }
 

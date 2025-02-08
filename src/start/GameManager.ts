@@ -60,6 +60,33 @@ export class GameManager {
     setAliance(Player(2), Player(14))
     setAliance(Player(3), Player(15))
     setAliance(Player(4), Player(16))
+
+    const originGameFrame = BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
+    const originWorldFrame = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)
+
+    const iconWidth = 0.02
+
+    const width = iconWidth * 5
+    const height = 0.02
+
+    const frame = originWorldFrame && BlzCreateFrameByType("BACKDROP", "Container", originWorldFrame, "", 0)
+    frame && BlzFrameSetSize(frame, width, height)
+    frame && BlzFrameSetPoint(frame, FRAMEPOINT_TOP, originWorldFrame, FRAMEPOINT_TOP, 0.1, -0.025)
+
+    const iconContainer = frame && BlzCreateFrameByType("FRAME", "Icon", frame, "", 0)
+    iconContainer && BlzFrameSetSize(iconContainer, iconWidth, height)
+    iconContainer && BlzFrameSetPoint(iconContainer, FRAMEPOINT_TOPLEFT, frame, FRAMEPOINT_TOPLEFT, 0, 0)
+
+    const iconFrame = frame && BlzCreateFrameByType("BACKDROP", "Icon", frame, "", 0)
+    iconFrame && BlzFrameSetSize(iconFrame, iconWidth, height)
+    iconFrame && BlzFrameSetPoint(iconFrame, FRAMEPOINT_TOPLEFT, frame, FRAMEPOINT_TOPLEFT, 0, 0)
+    iconFrame && BlzFrameSetTexture(iconFrame, "ReplaceableTextures\\CommandButtons\\BTNBlink.blp", 0, true)
+
+    const tooltipFrame = originWorldFrame && BlzCreateFrameByType("TEXT", "Text", originWorldFrame, "", 0)
+    tooltipFrame && BlzFrameSetSize(tooltipFrame, width, height)
+    tooltipFrame && BlzFrameSetPoint(tooltipFrame, FRAMEPOINT_CENTER, originWorldFrame, FRAMEPOINT_CENTER, 0, 0)
+    tooltipFrame && BlzFrameSetText(tooltipFrame, "|cffffcc00Gold Income|r\n+5 gold per second\nGold Spent: 500\nGold Earned: 55")
+    tooltipFrame && iconContainer && BlzFrameSetTooltip(iconContainer, tooltipFrame)
   }
 
   private onBuild(building: Unit) {

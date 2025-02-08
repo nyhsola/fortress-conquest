@@ -20,7 +20,7 @@ export class Worker {
   }
 
   public orderPoint(location: location) {
-    this.worker && issuePointOrder(this.worker, location)
+    this.worker && issuePointOrder(this.worker, "move", location)
     this.state = WORKER_STATE.LOCKED
   }
 
