@@ -27,7 +27,7 @@ export class GamePlayer {
     this.timedUnit = withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
 
     if (config.mode == Mode.DEBUG && this.playerId == 4) {
-      this.timedUnit && issueBuildOrder(this.timedUnit, UNIT.CASTLE, Location(4000, -5000))
+      this.timedUnit && issueBuildOrder(this.timedUnit, UNIT.CASTLE, Location(3000, -4000))
     }
   }
 

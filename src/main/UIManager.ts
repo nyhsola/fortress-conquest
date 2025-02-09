@@ -11,6 +11,7 @@ export enum UI_ICON {
   WORKER,
   FOOTMAN,
   GOLD_CHEST,
+  DEADLORD,
 }
 
 export class UIManager {
@@ -22,11 +23,12 @@ export class UIManager {
 
     const worldFrame = BlzGetOriginFrame(ORIGIN_FRAME_WORLD_FRAME, 0)!!
 
-    this.iconPanel = new IconPanel(worldFrame, iconCount, iconWidth, iconHeight)
+    this.iconPanel = new IconPanel(worldFrame, 0.002, iconCount, iconWidth, iconHeight)
 
     this.iconPanel.addIcon(UI_ICON.GOLD_CHEST.toString(), TEXTURES.GOLD_CHEST, 2)
     this.iconPanel.addIcon(UI_ICON.WORKER.toString(), TEXTURES.WORKER, 2)
-    this.iconPanel.addIcon(UI_ICON.FOOTMAN.toString(), TEXTURES.FOOTMAN, 3)
+    this.iconPanel.addIcon(UI_ICON.FOOTMAN.toString(), TEXTURES.FOOTMAN, 2)
+    this.iconPanel.addIcon(UI_ICON.DEADLORD.toString(), TEXTURES.DEADLORD, 2)
 
     BlzFrameSetVisible(this.iconPanel.handle, false)
 

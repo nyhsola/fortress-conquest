@@ -28,6 +28,7 @@ export const TEXTURES = {
   WORKER: "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
   FOOTMAN: "ReplaceableTextures\\CommandButtons\\BTNFootman.blp",
   GOLD_CHEST: "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp",
+  DEADLORD: "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp",
 }
 
 export const TEXT = {

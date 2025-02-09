@@ -8,13 +8,12 @@ export enum FOOTMAN_MODE {
 }
 
 const workerTemplate = (workerCount: number, workerLimit: number): string => "Workers (" + workerCount + "/" + workerLimit + ")"
-const workerTemplateExtended = (): string => "Trains every 5 sec"
+const workerTemplateExtended = (): string => withColor("Trains every 5 sec", LOCAL_COLOR.GREY)
 
-const footmanWarMode = (mode: FOOTMAN_MODE): string => (FOOTMAN_MODE.DEFENCE === mode ? withColor("(Defence)", LOCAL_COLOR.GREEN) : withColor("(War)", LOCAL_COLOR.RED))
-const footmanTemplate = (mode: FOOTMAN_MODE, count: number, limit: number): string => "Footman (" + count + "/" + limit + ") " + footmanWarMode(mode)
-const footmanTemplateExtended = (): string => "Trains every 5 sec"
+const footmanTemplate = (count: number, limit: number): string => "Footman (" + count + "/" + limit + ") "
+const footmanTemplateExtended = (): string => withColor("Trains every 5 sec", LOCAL_COLOR.GREY)
 
-const incomeTemplate = (totalGold: number, goldPerMin: string): string => "Total gold: " + totalGold + "|n" + "GPM: " + goldPerMin
+const incomeTemplate = (totalGold: number, goldPerMin: string): string => "TG: " + totalGold + "|n" + "GPM: " + goldPerMin
 
 export class TooltipService {
   static workerText(workersCount: number | undefined, workersLimit: number | undefined): string {
@@ -23,8 +22,8 @@ export class TooltipService {
     return template + "|n" + extended
   }
 
-  static footmanText(mode: FOOTMAN_MODE, footmanCount: number | undefined, footmanLimit: number | undefined): string {
-    const template = footmanTemplate(mode, footmanCount ?? 0, footmanLimit ?? 0)
+  static footmanText(footmanCount: number | undefined, footmanLimit: number | undefined): string {
+    const template = footmanTemplate(footmanCount ?? 0, footmanLimit ?? 0)
     const extended = footmanTemplateExtended()
     return template + "|n" + extended
   }

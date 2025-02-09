@@ -21,6 +21,8 @@ export class PlayerManager {
     this.incomeManager = new IncomeManager(this.player)
     this.footmanManager = new FootmanManager(this.player)
     this.uiManager = new UIManager(this.player)
+
+    this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, "Your enemies: 2")
   }
 
   public onBuild(building: Unit) {

@@ -1,9 +1,6 @@
-import { Unit } from "w3ts"
-
 import { FOOTMAN_ORDER, FootmanBehaviour } from "behaviour/FootmanBehaviour"
 import { Footman } from "game/Footman"
 import { GamePlayer } from "game/GamePlayer"
-import { ABILITY } from "global/Config"
 import { Task } from "global/Task"
 import { FOOTMAN_MODE, TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
@@ -40,7 +37,7 @@ export class FootmanManager {
   }
 
   public stats(): string {
-    return TooltipService.footmanText(this.currentMode, this.footmans.length, this.footmanLimit)
+    return TooltipService.footmanText(this.footmans.length, this.footmanLimit)
   }
 
   private updateBehavior() {

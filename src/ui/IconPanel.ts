@@ -8,13 +8,15 @@ export class IconPanel {
 
   private readonly originWorldFrame: framehandle
   private icons: Map<string, Icon> = new Map()
+  private padding: number
   private iconWidth: number
   private iconHeight: number
 
-  constructor(originWorldFrame: framehandle, iconCountMax: number, iconWidth: number, iconHeight: number) {
+  constructor(originWorldFrame: framehandle, padding: number, iconCountMax: number, iconWidth: number, iconHeight: number) {
     this.originWorldFrame = originWorldFrame
     this.iconWidth = iconWidth
     this.iconHeight = iconHeight
+    this.padding = padding
 
     this.handle = BlzCreateFrameByType("FRAME", "IconsContainer", originWorldFrame, "", 0)!!
     this.handle && BlzFrameSetSize(this.handle, iconWidth * iconCountMax, iconHeight)
@@ -22,7 +24,8 @@ export class IconPanel {
   }
 
   public addIcon(name: string, texture: string, lines: number) {
-    const icon = new Icon(this.originWorldFrame, this.handle, lines, texture, this.icons.size, this.iconWidth, this.iconHeight)
+    const offsetX = this.icons.size * this.iconWidth + this.icons.size * this.padding
+    const icon = new Icon(this.originWorldFrame, this.handle, lines, texture, offsetX, this.iconWidth, this.iconHeight)
     this.icons.set(name, icon)
   }
 

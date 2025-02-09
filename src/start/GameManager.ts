@@ -14,8 +14,32 @@ export class GameManager {
   private readonly playersArr: Array<GamePlayer>
   private readonly eventService: EventService
   private readonly enemyManager: EnemyManager
+  private isGameStarted: boolean = false
 
   constructor(config: Config) {
+    this.startGame(config)
+
+    this.playersArr = Object.entries(this.players).map((it) => it[1].player)
+    this.eventService = new EventService()
+    this.enemyManager = new EnemyManager(this.playersArr)
+
+    this.eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onBuild(building))
+
+    if (config.mode == Mode.DEBUG) {
+      FogMaskEnableOff()
+      FogEnableOff()
+    } else {
+      FogMaskEnableOff()
+    }
+
+    setAliance(Player(0), Player(12))
+    setAliance(Player(1), Player(13))
+    setAliance(Player(2), Player(14))
+    setAliance(Player(3), Player(15))
+    setAliance(Player(4), Player(16))
+  }
+
+  private startGame(config: Config) {
     forEachPlayer((mapPlayer: MapPlayer) => {
       if (mapPlayer.slotState == PLAYER_SLOT_STATE_PLAYING && mapPlayer.controller == MAP_CONTROL_USER) {
         const playerId = mapPlayer.id
@@ -41,35 +65,33 @@ export class GameManager {
       const mapPlayer = MapPlayer.fromIndex(4)
       mapPlayer && (mapPlayer.name = "DEBUG")
     }
-
-    this.playersArr = Object.entries(this.players).map((it) => it[1].player)
-
-    this.eventService = new EventService(config)
-    this.enemyManager = new EnemyManager(this.playersArr)
-
-    this.eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
-    this.eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onBuild(building))
-    this.eventService.subscribe(EventType.CASTING_STARTED, (castingUnit: Unit, spellId: number) => this.onCast(castingUnit, spellId))
-    this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
-    this.eventService.subscribe(EventType.START_TIMER_EXPIRED, () => this.onStartTimerExpired())
-    this.eventService.subscribe(EventType.UNIT_DEATH, (deathUnit: Unit, killingUnit: Unit) => this.onUnitDeath(deathUnit, killingUnit))
-
-    if (config.mode == Mode.DEBUG) {
-      FogMaskEnableOff()
-      FogEnableOff()
-    } else {
-      FogMaskEnableOff()
-    }
-
-    setAliance(Player(0), Player(12))
-    setAliance(Player(1), Player(13))
-    setAliance(Player(2), Player(14))
-    setAliance(Player(3), Player(15))
-    setAliance(Player(4), Player(16))
   }
 
   private onBuild(building: Unit) {
     this.players[ifAllyGetOwner(building.owner.id)].onBuild(building)
+    if (!this.isGameStarted) {
+      let isStarted = true
+      for (const player in this.players) {
+        isStarted = isStarted && !(this.players[player].player.getCastle() === undefined)
+      }
+      this.isGameStarted = isStarted
+
+      if (this.isGameStarted) {
+        sendChatMessageToAllPlayers("Game started!")
+        this.init()
+      }
+    }
+  }
+
+  private init() {
+    this.enemyManager.init()
+
+    this.eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
+    this.eventService.subscribe(EventType.CASTING_STARTED, (castingUnit: Unit, spellId: number) => this.onCast(castingUnit, spellId))
+    this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
+    this.eventService.subscribe(EventType.UNIT_DEATH, (deathUnit: Unit, killingUnit: Unit) => this.onUnitDeath(deathUnit, killingUnit))
+
+    new BorderService(this.playersArr)
   }
 
   private onCast(castingUnit: Unit, spellId: number) {
@@ -82,11 +104,6 @@ export class GameManager {
 
   private onUnitDeath(deathUnit: Unit, killingUnit: Unit) {
     this.enemyManager.onUnitDeath(deathUnit, killingUnit)
-  }
-
-  private onStartTimerExpired() {
-    this.enemyManager.init()
-    new BorderService(this.playersArr)
   }
 
   private update(delta: number) {
