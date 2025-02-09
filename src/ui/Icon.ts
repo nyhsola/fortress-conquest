@@ -1,14 +1,18 @@
+import { Tooltip } from "./Tooltip"
+
 export class Icon {
-  public readonly container: framehandle
+  public readonly handle: framehandle
 
-  constructor(iconsContainer: framehandle, iconWidth: number, iconHeight: number) {
-    this.container = BlzCreateFrameByType("FRAME", "IconContainer", iconsContainer, "", 0)!!
-    BlzFrameSetSize(this.container, iconWidth, iconHeight)
-    BlzFrameSetPoint(this.container, FRAMEPOINT_TOPLEFT, iconsContainer, FRAMEPOINT_TOPLEFT, 0, 0)
+  constructor(originWorldFrame: framehandle, relative: framehandle, index: number, iconWidth: number, iconHeight: number) {
+    this.handle = BlzCreateFrameByType("FRAME", "IconContainer", relative, "", 0)!!
+    BlzFrameSetSize(this.handle, iconWidth, iconHeight)
+    BlzFrameSetPoint(this.handle, FRAMEPOINT_TOPLEFT, relative, FRAMEPOINT_TOPLEFT, index * iconWidth, 0)
 
-    const iconFrame = BlzCreateFrameByType("BACKDROP", "Icon", iconsContainer, "", 0)!!
+    const iconFrame = BlzCreateFrameByType("BACKDROP", "Icon", relative, "", 0)!!
     BlzFrameSetSize(iconFrame, iconWidth, iconHeight)
-    BlzFrameSetPoint(iconFrame, FRAMEPOINT_TOPLEFT, iconsContainer, FRAMEPOINT_TOPLEFT, 0, 0)
+    BlzFrameSetPoint(iconFrame, FRAMEPOINT_TOPLEFT, relative, FRAMEPOINT_TOPLEFT, index * iconWidth, 0)
     BlzFrameSetTexture(iconFrame, "ReplaceableTextures\\CommandButtons\\BTNBlink.blp", 0, true)
+
+    new Tooltip(originWorldFrame, relative, index * iconWidth, 0, this.handle)
   }
 }
