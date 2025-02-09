@@ -1,6 +1,6 @@
 import { Point, Unit } from "w3ts"
 
-import { BaseFormation } from "./BaseFormation"
+import { BaseFormation } from "../global/BaseFormation"
 import { Config, Mode, UNIT, Zones } from "global/Config"
 import { createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/CommonUtil"
 
@@ -18,7 +18,6 @@ export class GamePlayer {
   private barracks: Unit | undefined
   private point: Point | undefined
   private direction: number | undefined
-  private warPoint: Point | undefined
 
   constructor(config: Config, playerId: number, allyId: number) {
     this.config = config.zones
@@ -44,10 +43,6 @@ export class GamePlayer {
     this.barracks = barracks
   }
 
-  public onWarInit(point: Point) {
-    this.warPoint = point
-  }
-
   public getStock = () => this.stock
 
   public setStock = (stock: Unit) => (this.stock = stock)
@@ -61,6 +56,4 @@ export class GamePlayer {
   public getPoint = () => this.point
 
   public getDirection = () => this.direction
-
-  public getWarPoint = () => this.warPoint
 }

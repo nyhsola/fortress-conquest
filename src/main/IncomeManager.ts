@@ -20,6 +20,10 @@ export class IncomeManager {
     this.totalTime = this.totalTime + delta
   }
 
+  public stats(): string {
+    return TooltipService.incomeText(this.totalGold, this.totalGold / this.totalTime / 60)
+  }
+
   private onIncome(player: GamePlayer) {
     const mapAlly = MapPlayer.fromIndex(player.allyId)
     const allyGold = mapAlly?.getState(PLAYER_STATE_RESOURCE_GOLD) ?? 0
@@ -31,7 +35,6 @@ export class IncomeManager {
       const castle = player.getCastle()
       castle && mapPlayer && createFloatingTextOnUnit("+" + allyGold, castle, mapPlayer, 12, FloatTextUtil.GOLD)
       this.totalGold = this.totalGold + allyGold
-      TooltipService.updateIncome(player.playerId, this.totalGold, this.totalGold / this.totalTime / 60)
     }
   }
 }

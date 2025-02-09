@@ -1,6 +1,6 @@
-import { BaseFormation } from "game/BaseFormation"
 import { Footman, FOOTMAN_STATE } from "game/Footman"
 import { GamePlayer } from "game/GamePlayer"
+import { BaseFormation } from "global/BaseFormation"
 
 export enum FOOTMAN_ORDER {
   DEFEND,
@@ -62,7 +62,6 @@ export class FootmanBehaviour {
         this.onDefendOrder(footman)
         break
       case FOOTMAN_ORDER.WAR:
-        this.onWarOrder(footman)
         break
     }
 
@@ -76,14 +75,5 @@ export class FootmanBehaviour {
     const defPoint = position && point && direction && BaseFormation.FOOTMAN_DEF[position](point, direction)
     const location = defPoint && Location(defPoint?.x, defPoint?.y)
     location && footman.orderDefPoint(location)
-  }
-
-  private onWarOrder(footman: Footman) {
-    const point = this.player.getWarPoint()
-    const direction = this.player.getDirection()
-    const position = this.freePositions.pop()
-    const defPoint = position && point && direction && BaseFormation.FOOTMAN_WAR[position](point, direction)
-    const location = defPoint && Location(defPoint?.x, defPoint?.y)
-    location && footman.orderWarPoint(location)
   }
 }

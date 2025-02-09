@@ -5,8 +5,8 @@ import { EnemyManager } from "./EnemyManager"
 import { GamePlayer } from "game/GamePlayer"
 import { Config, Mode, Zones } from "global/Config"
 import { ALLY_SHIFT } from "global/Globals"
+import { BorderService } from "service/BorderService"
 import { EventService, EventType } from "service/EventService"
-import { WarService } from "service/WarService"
 import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance } from "util/CommonUtil"
 
 export class GameManager {
@@ -86,10 +86,7 @@ export class GameManager {
 
   private onStartTimerExpired() {
     this.enemyManager.init()
-    const point = WarService.initializeWarPlace(this.playersArr)
-    for (const player in this.players) {
-      point && this.players[player].onWarInit(point)
-    }
+    new BorderService(this.playersArr)
   }
 
   private update(delta: number) {

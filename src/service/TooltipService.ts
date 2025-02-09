@@ -14,25 +14,23 @@ const footmanWarMode = (mode: FOOTMAN_MODE): string => (FOOTMAN_MODE.DEFENCE ===
 const footmanTemplate = (mode: FOOTMAN_MODE, count: number, limit: number): string => "Footman (" + count + "/" + limit + ") " + footmanWarMode(mode)
 const footmanTemplateExtended = (): string => "Trains every 5 sec"
 
-const incomeTemplate = (totalGold: number, goldPerMin: string): string => "Total gold: " + totalGold + "|n" + "Gold per minute: " + goldPerMin
+const incomeTemplate = (totalGold: number, goldPerMin: string): string => "Total gold: " + totalGold + "|n" + "GPM: " + goldPerMin
 
 export class TooltipService {
-  static updateWorker(playerId: number, workersCount: number | undefined, workersLimit: number | undefined) {
+  static workerText(workersCount: number | undefined, workersLimit: number | undefined): string {
     const template = workerTemplate(workersCount ?? 0, workersLimit ?? 0)
     const extended = workerTemplateExtended()
-    forLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.WORKERS, template, 0), playerId)
-    forLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.WORKERS, extended, 0), playerId)
+    return template + "|n" + extended
   }
 
-  static updateFootman(playerId: number, mode: FOOTMAN_MODE, footmanCount: number | undefined, footmanLimit: number | undefined) {
+  static footmanText(mode: FOOTMAN_MODE, footmanCount: number | undefined, footmanLimit: number | undefined): string {
     const template = footmanTemplate(mode, footmanCount ?? 0, footmanLimit ?? 0)
     const extended = footmanTemplateExtended()
-    forLocalPlayer(() => BlzSetAbilityTooltip(ABILITY.FOOTMAN, template, 0), playerId)
-    forLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.FOOTMAN, extended, 0), playerId)
+    return template + "|n" + extended
   }
 
-  static updateIncome(playerId: number, totalGold: number | undefined, goldPerMin: number | undefined) {
-    const text = incomeTemplate(totalGold ?? 0, (goldPerMin ?? 0).toFixed(2))
-    forLocalPlayer(() => BlzSetAbilityExtendedTooltip(ABILITY.INCOME, text, 0), playerId)
+  static incomeText(totalGold: number | undefined, goldPerMin: number | undefined): string {
+    const text = incomeTemplate(totalGold ?? 0, (goldPerMin ?? 0).toFixed(1))
+    return text
   }
 }

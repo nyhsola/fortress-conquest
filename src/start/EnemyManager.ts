@@ -1,7 +1,7 @@
 import { MapPlayer, Unit } from "w3ts/handles"
 
-import { BaseFormation } from "game/BaseFormation"
 import { GamePlayer } from "game/GamePlayer"
+import { BaseFormation } from "global/BaseFormation"
 import { UNIT } from "global/Config"
 import { ALLY_SHIFT, ENEMY_PLAYER } from "global/Globals"
 import { Task } from "global/Task"
@@ -15,11 +15,12 @@ export class EnemyManager {
 
   constructor(players: Array<GamePlayer>) {
     this.players = players
-    this.spawn = createTask(() => this.spawnZombie(), 10)
+    this.spawn = createTask(() => this.spawnEnemy(), 10)
   }
 
   public init() {
     this.started = true
+    this.spawn.reset()
   }
 
   public update(delta: number) {
@@ -27,7 +28,7 @@ export class EnemyManager {
   }
 
   public onUnitDeath(deathUnit: Unit, killingUnit: Unit) {
-    if (deathUnit.typeId == UNIT.ZOMBIE) {
+    if (deathUnit.typeId == UNIT.BOAR) {
       const id = killingUnit.owner.id - ALLY_SHIFT
       const mapPlayer = MapPlayer.fromIndex(id)
       mapPlayer && createFloatingTextOnUnitRandom("DEAD!", deathUnit, mapPlayer, 8, FloatTextUtil.RED)
@@ -37,11 +38,11 @@ export class EnemyManager {
     }
   }
 
-  private spawnZombie() {
+  private spawnEnemy() {
     this.players.forEach((it) => {
       const point = it.getPoint()
-      const zPoint = point && BaseFormation.ZOMBIE_POINT(point)
-      const unit = zPoint && createUnitAtPoint(zPoint, ENEMY_PLAYER, UNIT.ZOMBIE)
+      const zPoint = point && BaseFormation.ANIMALS_SPAWN_POINT(point)
+      const unit = zPoint && createUnitAtPoint(zPoint, ENEMY_PLAYER, UNIT.BOAR)
       const location = it.getCastle()?.point.handle
       unit && location && issuePointOrder(unit, "attack", location)
     })

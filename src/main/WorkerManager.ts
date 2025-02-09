@@ -30,6 +30,10 @@ export class WorkerManager {
     this.workerAbility.update(delta)
   }
 
+  public stats(): string {
+    return TooltipService.workerText(this.workers.length, this.workerLimit)
+  }
+
   private updateWorker() {
     this.behaviour.updateState(this.workers)
   }
@@ -39,11 +43,9 @@ export class WorkerManager {
     const point = this.player.getPoint()
     const direction = this.player.getDirection()
 
-    if (!castle || castle.getAbilityLevel(ABILITY.WORKERS) != 1) return
+    if (!castle) return
 
     if (this.workers.length >= this.workerLimit || !point || !direction) return
     this.workers.push(new Worker(point, this.player.allyId))
-
-    TooltipService.updateWorker(this.player.playerId, this.workers.length, this.workerLimit)
   }
 }

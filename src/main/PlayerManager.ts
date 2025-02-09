@@ -2,7 +2,7 @@ import { MapPlayer, Point, Unit } from "w3ts"
 
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
-import { UIManager } from "./UIManager"
+import { UI_ICON, UIManager } from "./UIManager"
 import { WorkerManager } from "./WorkerManager"
 import { GamePlayer } from "game/GamePlayer"
 import { ABILITY, UNIT } from "global/Config"
@@ -24,20 +24,20 @@ export class PlayerManager {
   }
 
   public onBuild(building: Unit) {
+    const mapPlayer = MapPlayer.fromIndex(this.player.playerId)
+
     if (building.typeId === UNIT.CASTLE) {
       this.player.onCastleBuild(building)
       this.workerManager.init()
     }
     if (building.typeId === UNIT.BARRACKS) {
-      const mapPlayer = MapPlayer.fromIndex(this.player.playerId)
       mapPlayer && building.setOwner(mapPlayer, true)
       this.player.onBarracksBuild(building)
       this.footmanManager.init()
     }
-  }
-
-  public onWarInit(point: Point) {
-    this.player.onWarInit(point)
+    if (building.typeId === UNIT.TOWER) {
+      mapPlayer && building.setOwner(mapPlayer, true)
+    }
   }
 
   public onCast(castingUnit: Unit, spellId: number) {}
@@ -61,5 +61,9 @@ export class PlayerManager {
     this.workerManager.update(delta)
     this.incomeManager.update(delta)
     this.footmanManager.update(delta)
+
+    this.uiManager.updateIconTooltip(UI_ICON.WORKER, this.workerManager.stats())
+    this.uiManager.updateIconTooltip(UI_ICON.FOOTMAN, this.footmanManager.stats())
+    this.uiManager.updateIconTooltip(UI_ICON.GOLD_CHEST, this.incomeManager.stats())
   }
 }

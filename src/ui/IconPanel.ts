@@ -7,7 +7,7 @@ export class IconPanel {
   public readonly handle: framehandle
 
   private readonly originWorldFrame: framehandle
-  private readonly icons: Array<Icon> = []
+  private icons: Map<string, Icon> = new Map()
   private iconWidth: number
   private iconHeight: number
 
@@ -21,7 +21,12 @@ export class IconPanel {
     this.handle && BlzFrameSetPoint(this.handle, FRAMEPOINT_TOP, originWorldFrame, FRAMEPOINT_TOP, OFFSET_X, OFFSET_Y)
   }
 
-  public addIcon() {
-    this.icons.push(new Icon(this.originWorldFrame, this.handle, this.icons.length, this.iconWidth, this.iconHeight))
+  public addIcon(name: string, texture: string, lines: number) {
+    const icon = new Icon(this.originWorldFrame, this.handle, lines, texture, this.icons.size, this.iconWidth, this.iconHeight)
+    this.icons.set(name, icon)
+  }
+
+  public updateIcon(name: string, text: string) {
+    this.icons.get(name)?.updateText(text)
   }
 }

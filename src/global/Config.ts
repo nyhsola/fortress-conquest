@@ -13,6 +13,7 @@ export const UNIT = {
   WORKER: FourCC("h002"),
   FOOTMAN: FourCC("h005"),
   ZOMBIE: FourCC("n001"),
+  BOAR: FourCC("n002"),
 
   CASTLE: FourCC("h001"),
   STOCK: FourCC("h004"),
@@ -25,6 +26,8 @@ export const UNIT = {
 
 export const TEXTURES = {
   WORKER: "ReplaceableTextures\\CommandButtons\\BTNPeasant.blp",
+  FOOTMAN: "ReplaceableTextures\\CommandButtons\\BTNFootman.blp",
+  GOLD_CHEST: "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp",
 }
 
 export const TEXT = {
