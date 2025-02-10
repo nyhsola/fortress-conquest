@@ -7,13 +7,15 @@ import { Config, Mode, Zones } from "global/Config"
 import { ALLY_SHIFT } from "global/Globals"
 import { BorderService } from "service/BorderService"
 import { EventService, EventType } from "service/EventService"
-import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance } from "util/CommonUtil"
+import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance, setEnemies } from "util/CommonUtil"
 
 export class GameManager {
   private readonly players: Record<number, PlayerManager> = {}
   private readonly playersArr: Array<GamePlayer>
   private readonly eventService: EventService
+  private readonly borderService: BorderService
   private readonly enemyManager: EnemyManager
+
   private isGameStarted: boolean = false
 
   constructor(config: Config) {
@@ -22,6 +24,7 @@ export class GameManager {
     this.playersArr = Object.entries(this.players).map((it) => it[1].player)
     this.eventService = new EventService()
     this.enemyManager = new EnemyManager(this.playersArr)
+    this.borderService = new BorderService(this.playersArr)
 
     this.eventService.subscribe(EventType.BUILDING_FINISHED, (building: Unit) => this.onBuild(building))
 
@@ -69,6 +72,7 @@ export class GameManager {
 
   private onBuild(building: Unit) {
     this.players[ifAllyGetOwner(building.owner.id)].onBuild(building)
+
     if (!this.isGameStarted) {
       let isStarted = true
       for (const player in this.players) {
@@ -85,13 +89,34 @@ export class GameManager {
 
   private init() {
     this.enemyManager.init()
+    this.borderService.init()
+
+    for (const player in this.players) {
+      const playerManager = this.players[player]
+      const playerId = playerManager.player.playerId
+      const enemies = this.borderService.neighbors.get(playerId) ?? new Set()
+      playerManager.init(enemies)
+    }
+
+    for (let i = 0; i <= 4; i++) {
+      const player = i
+      const ally = i + ALLY_SHIFT
+      for (let j = 0; j <= 4; j++) {
+        const allyEnemy = j + ALLY_SHIFT
+        if (player != j) {
+          setEnemies(Player(player), Player(j))
+          setEnemies(Player(ally), Player(j))
+
+          setEnemies(Player(player), Player(allyEnemy))
+          setEnemies(Player(ally), Player(allyEnemy))
+        }
+      }
+    }
 
     this.eventService.subscribe(EventType.PER_SECOND, () => this.update(1))
     this.eventService.subscribe(EventType.CASTING_STARTED, (castingUnit: Unit, spellId: number) => this.onCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.UNIT_DEATH, (deathUnit: Unit, killingUnit: Unit) => this.onUnitDeath(deathUnit, killingUnit))
-
-    new BorderService(this.playersArr)
   }
 
   private onCast(castingUnit: Unit, spellId: number) {

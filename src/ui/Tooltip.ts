@@ -16,7 +16,7 @@ export class Tooltip {
     this.handle = tooltipFrameBackground && BlzCreateFrameByType("TEXT", "TooltipText", tooltipFrameBackground, "", 0)!!
     BlzFrameSetSize(this.handle, 0.1, 0.01 * lines)
     BlzFrameSetPoint(this.handle, FRAMEPOINT_CENTER, tooltipFrameBackground, FRAMEPOINT_CENTER, 0, 0)
-    BlzFrameSetText(this.handle, "")
+    BlzFrameSetText(this.handle, "Wait...")
 
     BlzFrameSetTooltip(tooltipFor, tooltipFrameBackground)
   }

@@ -15,6 +15,9 @@ const footmanTemplateExtended = (): string => withColor("Trains every 5 sec", LO
 
 const incomeTemplate = (totalGold: number, goldPerMin: string): string => "TG: " + totalGold + "|n" + "GPM: " + goldPerMin
 
+const enemiesTemplate = (enemies: number): string => "Enemies (" + enemies + ")"
+const enemiesTemplateExtended = (): string => withColor("Nearby enemies", LOCAL_COLOR.GREY)
+
 export class TooltipService {
   static workerText(workersCount: number | undefined, workersLimit: number | undefined): string {
     const template = workerTemplate(workersCount ?? 0, workersLimit ?? 0)
@@ -31,5 +34,11 @@ export class TooltipService {
   static incomeText(totalGold: number | undefined, goldPerMin: number | undefined): string {
     const text = incomeTemplate(totalGold ?? 0, (goldPerMin ?? 0).toFixed(1))
     return text
+  }
+
+  static enemiesText(enemies: number | undefined): string {
+    const text = enemiesTemplate(enemies ?? 0)
+    const extended = enemiesTemplateExtended()
+    return text + "|n" + extended
   }
 }

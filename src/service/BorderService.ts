@@ -6,7 +6,15 @@ const STEP_X = 200
 const STEP_Y = 200
 
 export class BorderService {
+  public readonly neighbors: Map<number, Set<number>>
+  private readonly players: Array<GamePlayer>
+
   constructor(players: Array<GamePlayer>) {
+    this.players = players
+    this.neighbors = new Map()
+  }
+
+  public init() {
     const map = GetPlayableMapRect()
 
     const rectangle = Rectangle.fromHandle(map)
@@ -18,11 +26,6 @@ export class BorderService {
     const startY = rectangle?.minY ?? 0
 
     const voronoi: number[][] = []
-    const neighborMap = new Map()
-
-    for (const player of players) {
-      neighborMap.set(player.playerId, new Set())
-    }
 
     for (let totalWidth = startX; totalWidth < width; totalWidth += STEP_X) {
       voronoi.push([])
@@ -33,7 +36,7 @@ export class BorderService {
         const centerX = totalWidth + STEP_X / 2
         const centerY = totalHeight + STEP_Y / 2
 
-        for (const player of players) {
+        for (const player of this.players) {
           const point = player.getPoint()
           const distance = this.distanceTo(centerX, centerY, point?.x ?? Infinity, point?.y ?? Infinity)
 
@@ -47,6 +50,10 @@ export class BorderService {
       }
     }
 
+    for (const player of this.players) {
+      this.neighbors.set(player.playerId, new Set())
+    }
+
     for (let x = 0; x < voronoi.length; x++) {
       for (let y = 0; y < voronoi[x].length; y++) {
         const currentCastle = voronoi[x][y]
@@ -54,8 +61,8 @@ export class BorderService {
         const neighbors = neighborsArray.filter((n) => n !== undefined && n !== currentCastle)
 
         for (const neighbor of neighbors) {
-          neighborMap.get(currentCastle).add(neighbor)
-          neighborMap.get(neighbor).add(currentCastle)
+          this.neighbors.get(currentCastle)!!.add(neighbor)
+          this.neighbors.get(neighbor)!!.add(currentCastle)
         }
       }
     }

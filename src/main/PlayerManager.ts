@@ -1,4 +1,4 @@
-import { MapPlayer, Point, Unit } from "w3ts"
+import { MapPlayer, Unit } from "w3ts"
 
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
@@ -6,6 +6,7 @@ import { UI_ICON, UIManager } from "./UIManager"
 import { WorkerManager } from "./WorkerManager"
 import { GamePlayer } from "game/GamePlayer"
 import { ABILITY, UNIT } from "global/Config"
+import { TooltipService } from "service/TooltipService"
 import { removeAbility } from "util/CommonUtil"
 
 export class PlayerManager {
@@ -21,8 +22,10 @@ export class PlayerManager {
     this.incomeManager = new IncomeManager(this.player)
     this.footmanManager = new FootmanManager(this.player)
     this.uiManager = new UIManager(this.player)
+  }
 
-    this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, "Your enemies: 2")
+  public init(enemies: Set<number>) {
+    this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, TooltipService.enemiesText(enemies.size))
   }
 
   public onBuild(building: Unit) {

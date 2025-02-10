@@ -93,6 +93,11 @@ export function setAliance(sourcePlayer: player | undefined, otherPlayer: player
   sourcePlayer && otherPlayer && SetPlayerAlliance(sourcePlayer, otherPlayer, ALLIANCE_SHARED_VISION, true)
 }
 
+export function setEnemies(sourcePlayer: player | undefined, otherPlayer: player | undefined) {
+  sourcePlayer && otherPlayer && SetPlayerAlliance(sourcePlayer, otherPlayer, ALLIANCE_SHARED_VISION, false)
+  sourcePlayer && otherPlayer && SetPlayerAllianceStateBJ(sourcePlayer, otherPlayer, bj_ALLIANCE_UNALLIED)
+}
+
 // interval in sec
 export function createTask(customAction: () => void, interval: number): Task {
   return new (class extends Task {
