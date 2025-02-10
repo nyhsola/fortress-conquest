@@ -2,11 +2,6 @@ import { ABILITY } from "global/Config"
 import { forLocalPlayer } from "util/CommonUtil"
 import { LOCAL_COLOR, withColor } from "util/TextUtil"
 
-export enum FOOTMAN_MODE {
-  WAR,
-  DEFENCE,
-}
-
 const workerTemplate = (workerCount: number, workerLimit: number): string => "Workers (" + workerCount + "/" + workerLimit + ")"
 const workerTemplateExtended = (): string => withColor("Trains every 5 sec", LOCAL_COLOR.GREY)
 

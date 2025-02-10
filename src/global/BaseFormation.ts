@@ -3,7 +3,7 @@ import { Point } from "w3ts"
 import { getPolarPoint } from "util/CommonUtil"
 
 const TOWER_DISTANCE = 1200
-const FOOTMAN_DISTANCE = 950
+const FOOTMAN_DISTANCE = 990
 
 export class BaseFormation {
   static ANIMALS_SPAWN_POINT = (point: Point) => getPolarPoint(point, GetRandomDirectionDeg(), 1800)

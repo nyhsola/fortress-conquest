@@ -23,13 +23,11 @@ export class Footman {
     this.state = FOOTMAN_STATE.ON_DEFEND_POSITION
   }
 
-  public lockFootman() {
-    this.state = FOOTMAN_STATE.LOCKED
-  }
-
   public getState = () => this.state
 
   public isBusy = () => this.footman?.currentOrder != 0
+
+  public lockFootman = () => (this.state = FOOTMAN_STATE.LOCKED)
 
   public resetState = () => (this.state = FOOTMAN_STATE.FREE)
 }

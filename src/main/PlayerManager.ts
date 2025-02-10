@@ -57,9 +57,6 @@ export class PlayerManager {
     if (spellId === ABILITY.ABILITY_3) {
       removeAbility(castingUnit, ABILITY.ABILITY_3)
     }
-    if (spellId == ABILITY.FOOTMAN) {
-      this.footmanManager.onWarModeSwitch()
-    }
   }
 
   public update(delta: number) {
