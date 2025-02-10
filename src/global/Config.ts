@@ -22,6 +22,8 @@ export const UNIT = {
   MINE: FourCC("n000"),
 
   BANNER: FourCC("B001"),
+
+  BANNER_HUMAN: FourCC("B002"),
 } as const
 
 export const TEXTURES = {

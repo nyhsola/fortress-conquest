@@ -12,6 +12,8 @@ export class BaseFormation {
   static STOCK = (point: Point, direction: number) => getPolarPoint(point, direction + 90, 800)
   static BARRACKS = (point: Point, direction: number) => getPolarPoint(point, direction + 210, 700)
 
+  static BANNER = (point: Point, direction: number) => getPolarPoint(point, direction + 250, 700)
+
   static TOWER_1 = (point: Point, direction: number) => getPolarPoint(point, direction + 60, TOWER_DISTANCE)
   static TOWER_2 = (point: Point, direction: number) => getPolarPoint(point, direction + 120, TOWER_DISTANCE)
   static TOWER_3 = (point: Point, direction: number) => getPolarPoint(point, direction + 180, TOWER_DISTANCE)

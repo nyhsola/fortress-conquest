@@ -2,7 +2,7 @@ import { Point, Unit } from "w3ts"
 
 import { BaseFormation } from "../global/BaseFormation"
 import { Config, Mode, UNIT, Zones } from "global/Config"
-import { createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/CommonUtil"
+import { createDestructableAtPoint, createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/CommonUtil"
 
 export class GamePlayer {
   private readonly config: Zones
@@ -37,6 +37,9 @@ export class GamePlayer {
     this.direction = GetRandomDirectionDeg()
     const minePoint = this.point && BaseFormation.MINE(this.point, this.direction)
     this.mine = minePoint && createUnitAtPoint(minePoint, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
+
+    const bannerPoint = this.point && BaseFormation.BANNER(this.point, this.direction)
+    bannerPoint && createDestructableAtPoint(bannerPoint, 1, UNIT.BANNER_HUMAN)
   }
 
   public onBarracksBuild(barracks: Unit | undefined) {

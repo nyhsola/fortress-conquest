@@ -18,7 +18,11 @@ export class Footman {
     this.footman = createUnitAtPoint(point, allyId, UNIT.FOOTMAN)
   }
 
-  public orderDefPoint(location: location) {
+  public move(location: location) {
+    this.footman && issuePointOrder(this.footman, "move", location)
+  }
+
+  public orderMove(location: location) {
     this.footman && issuePointOrder(this.footman, "move", location)
     this.state = FOOTMAN_STATE.ON_DEFEND_POSITION
   }

@@ -304,3 +304,9 @@ STRING 119
 Q
 }
 
+STRING 121
+// Destructibles: B002 (Banner Human), Name (Name)
+{
+Banner Human
+}
+

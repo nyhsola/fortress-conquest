@@ -25,11 +25,13 @@ export class Squad {
 
   public getOrders = () => this.orders
 
-  public isSquadFree(): boolean {
-    return this.footmans.length < SQUAD_LIMIT
-  }
+  public isSquadFree = () => this.footmans.length < SQUAD_LIMIT
 
   public addUnit(footman: Footman) {
+    const point = this.player.getPoint()
+    const direction = this.player.getDirection()
+    const pointBanner = point && direction && BaseFormation.BANNER(point, direction)
+    pointBanner && footman.move(Location(pointBanner.x, pointBanner.y))
     this.footmans.push(footman)
   }
 
@@ -57,6 +59,6 @@ export class Squad {
     const position = this.positions.pop()
     const defPoint = position && point && direction && BaseFormation.FOOTMAN_DEF[position](point, direction)
     const location = defPoint && Location(defPoint?.x, defPoint?.y)
-    location && footman.orderDefPoint(location)
+    location && footman.orderMove(location)
   }
 }
