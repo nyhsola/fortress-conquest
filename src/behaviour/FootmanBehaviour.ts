@@ -1,46 +1,53 @@
-import { FOOTMAN_STATE } from "game/Footman"
-import { Squad } from "game/Squad"
+import { Footman } from "game/Footman"
+import { GamePlayer } from "game/GamePlayer"
+import { Positions } from "global/Positions"
 
 export enum FOOTMAN_ORDER {
-  DEFEND,
-  WAR,
-}
-
-enum GLOBAL_ORDER {
-  RESET,
+  DEFEND_CASTLE,
+  PREPARE_FOR_ATTACK,
+  GO_TO_BANNER,
 }
 
 export class FootmanBehaviour {
-  private readonly globalOrders: Array<GLOBAL_ORDER> = []
+  private readonly player: GamePlayer
 
-  constructor() {
-    this.globalOrders.push(GLOBAL_ORDER.RESET)
+  constructor(player: GamePlayer) {
+    this.player = player
   }
 
-  public updateState(squads: Array<Squad>) {
-    switch (this.globalOrders.shift()) {
-      case GLOBAL_ORDER.RESET:
-        squads.forEach((it) => it.reset())
+  public updateState(footman: Footman) {
+    switch (footman.getOrders().shift()) {
+      case FOOTMAN_ORDER.DEFEND_CASTLE:
+        this.onDefendOrder(footman)
+        break
+      case FOOTMAN_ORDER.PREPARE_FOR_ATTACK:
+        this.onPrepareWarOrder(footman)
+        break
+      case FOOTMAN_ORDER.GO_TO_BANNER:
+        this.onBanner(footman)
+        break
     }
-
-    squads.forEach((it) => this.proceedSquad(it))
   }
 
-  private proceedSquad(squad: Squad) {
-    for (const footman of squad.getFootmans()) {
-      switch (footman.getState()) {
-        case FOOTMAN_STATE.LOCKED:
-          squad.proceedOrder(footman)
-          break
-      }
-    }
+  private onDefendOrder(footman: Footman) {
+    const point = this.player.getCastle()?.getPoint()
+    const direction = this.player.getDirection()
+    const position = footman.getIndex()
+    const defPoint = position && point && direction && Positions.FOOTMAN_DEF[position](point, direction)
+    const location = defPoint && Location(defPoint?.x, defPoint?.y)
+    location && footman.orderMove(location)
+  }
 
-    if (squad.getOrders().length > 0) {
-      squad
-        .getFootmans()
-        .filter((footman, index) => footman.getState() == FOOTMAN_STATE.FREE)
-        .slice(0, squad.getOrders().length)
-        .forEach((footman) => footman.lockFootman())
-    }
+  private onPrepareWarOrder(footman: Footman) {
+    const point = this.player.getAttackPoint(0)
+    const location = Location(point?.x, point?.y)
+    location && footman.orderMove(location)
+  }
+
+  private onBanner(footman: Footman) {
+    const point = this.player.getPoint()
+    const direction = this.player.getDirection()
+    const pointBanner = point && direction && Positions.BANNER(point, direction)
+    pointBanner && footman.instantMove(Location(pointBanner.x, pointBanner.y))
   }
 }

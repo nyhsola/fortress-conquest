@@ -1,4 +1,4 @@
-import { FOOTMAN_ORDER, FootmanBehaviour } from "behaviour/FootmanBehaviour"
+import { SQUAD_ORDER, SquadBehaviour } from "behaviour/SquadBehaviour"
 import { Footman } from "game/Footman"
 import { GamePlayer } from "game/GamePlayer"
 import { Squad } from "game/Squad"
@@ -6,9 +6,9 @@ import { Task } from "global/Task"
 import { TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
 
-export class FootmanManager {
+export class SquadManager {
   private readonly player: GamePlayer
-  private readonly behaviour: FootmanBehaviour
+  private readonly squadBehaviour: SquadBehaviour
   private readonly behaviourTask: Task = createTask(() => this.updateBehavior(), 3)
   private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), 5)
 
@@ -16,13 +16,13 @@ export class FootmanManager {
 
   constructor(player: GamePlayer) {
     this.player = player
-    this.behaviour = new FootmanBehaviour()
+    this.squadBehaviour = new SquadBehaviour(player)
 
     const defSquad = new Squad(player)
     const attackSquad = new Squad(player)
 
-    defSquad.setOrderForSquad(FOOTMAN_ORDER.DEFEND)
-    attackSquad.setOrderForSquad(FOOTMAN_ORDER.WAR)
+    defSquad.addOrder(SQUAD_ORDER.DEFEND_CASTLE)
+    attackSquad.addOrder(SQUAD_ORDER.PREPARE_FOR_ATTACK)
 
     this.squads.push(defSquad)
     this.squads.push(attackSquad)
@@ -42,7 +42,7 @@ export class FootmanManager {
   }
 
   private updateBehavior() {
-    this.behaviour.updateState(this.squads)
+    this.squadBehaviour.updateState(this.squads)
   }
 
   private onFootmanCast() {

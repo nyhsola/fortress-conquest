@@ -1,7 +1,7 @@
 import { MapPlayer, Unit } from "w3ts"
 
-import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
+import { SquadManager } from "./SquadManager"
 import { TABLE_ITEM, TableManager } from "./TableManager"
 import { UI_ICON, UIManager } from "./UIManager"
 import { WorkerManager } from "./WorkerManager"
@@ -14,7 +14,7 @@ export class PlayerManager {
   public readonly player: GamePlayer
   private readonly workerManager: WorkerManager
   private readonly incomeManager: IncomeManager
-  private readonly footmanManager: FootmanManager
+  private readonly squadManager: SquadManager
   private readonly uiManager: UIManager
   private readonly tableManager: TableManager
 
@@ -22,7 +22,7 @@ export class PlayerManager {
     this.player = player
     this.workerManager = new WorkerManager(this.player)
     this.incomeManager = new IncomeManager(this.player)
-    this.footmanManager = new FootmanManager(this.player)
+    this.squadManager = new SquadManager(this.player)
     this.uiManager = new UIManager(this.player)
     this.tableManager = new TableManager(this.player)
 
@@ -45,7 +45,7 @@ export class PlayerManager {
     if (building.typeId === UNIT.BARRACKS) {
       mapPlayer && building.setOwner(mapPlayer, true)
       this.player.onBarracksBuild(building)
-      this.footmanManager.init()
+      this.squadManager.init()
     }
     if (building.typeId === UNIT.TOWER) {
       mapPlayer && building.setOwner(mapPlayer, true)
@@ -69,10 +69,10 @@ export class PlayerManager {
   public update(delta: number) {
     this.workerManager.update(delta)
     this.incomeManager.update(delta)
-    this.footmanManager.update(delta)
+    this.squadManager.update(delta)
 
     this.uiManager.updateIconTooltip(UI_ICON.WORKER, this.workerManager.stats())
-    this.uiManager.updateIconTooltip(UI_ICON.FOOTMAN, this.footmanManager.stats())
+    this.uiManager.updateIconTooltip(UI_ICON.FOOTMAN, this.squadManager.stats())
     this.uiManager.updateIconTooltip(UI_ICON.GOLD_CHEST, this.incomeManager.stats())
   }
 }
