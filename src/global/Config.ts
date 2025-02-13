@@ -1,4 +1,5 @@
 export const ABILITY = {
+  FOOTMAN_PASSIVE: FourCC("A000"),
   WORKERS: FourCC("A003"),
   FOOTMAN: FourCC("A008"),
   INCOME: FourCC("A002"),

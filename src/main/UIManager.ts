@@ -25,9 +25,9 @@ export class UIManager {
 
     this.iconPanel = new IconPanel(worldFrame, 0.002, iconCount, iconWidth, iconHeight)
 
-    this.iconPanel.addIcon(UI_ICON.GOLD_CHEST.toString(), TEXTURES.GOLD_CHEST, 2)
-    this.iconPanel.addIcon(UI_ICON.WORKER.toString(), TEXTURES.WORKER, 2)
-    this.iconPanel.addIcon(UI_ICON.FOOTMAN.toString(), TEXTURES.FOOTMAN, 2)
+    // this.iconPanel.addIcon(UI_ICON.GOLD_CHEST.toString(), TEXTURES.GOLD_CHEST, 2)
+    // this.iconPanel.addIcon(UI_ICON.WORKER.toString(), TEXTURES.WORKER, 2)
+    // this.iconPanel.addIcon(UI_ICON.FOOTMAN.toString(), TEXTURES.FOOTMAN, 2)
     this.iconPanel.addIcon(UI_ICON.DEADLORD.toString(), TEXTURES.DEADLORD, 2)
 
     BlzFrameSetVisible(this.iconPanel.handle, false)

@@ -5,6 +5,8 @@ import { Squad } from "game/Squad"
 export enum SQUAD_ORDER {
   DEFEND_CASTLE,
   PREPARE_FOR_ATTACK,
+  LOCK_FOR_ATTACK,
+  ATTACK_CASTLE,
 }
 
 export class SquadBehaviour {
@@ -22,12 +24,32 @@ export class SquadBehaviour {
 
   private proceedSquad(squad: Squad) {
     if (squad.isSquadReady()) {
-      switch (squad.getOrders().shift()) {
+      const currentOrder = squad.getOrders().shift()
+      switch (currentOrder) {
         case SQUAD_ORDER.DEFEND_CASTLE:
           squad.getFootmans().forEach((footman) => footman.addOrder(FOOTMAN_ORDER.DEFEND_CASTLE))
           break
         case SQUAD_ORDER.PREPARE_FOR_ATTACK:
           squad.getFootmans().forEach((footman) => footman.addOrder(FOOTMAN_ORDER.PREPARE_FOR_ATTACK))
+          squad.addOrder(SQUAD_ORDER.LOCK_FOR_ATTACK)
+          break
+        case SQUAD_ORDER.LOCK_FOR_ATTACK:
+          squad.addOrder(SQUAD_ORDER.ATTACK_CASTLE)
+          break
+        default:
+          currentOrder && squad.returnOrder(currentOrder)
+          break
+      }
+    }
+
+    if (!squad.isSquadBusy()) {
+      const currentOrder = squad.getOrders().shift()
+      switch (currentOrder) {
+        case SQUAD_ORDER.ATTACK_CASTLE:
+          squad.getFootmans().forEach((footman) => footman.addOrder(FOOTMAN_ORDER.ATTACK_CASTLE))
+          break
+        default:
+          currentOrder && squad.returnOrder(currentOrder)
           break
       }
     }

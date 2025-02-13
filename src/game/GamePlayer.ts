@@ -73,6 +73,8 @@ export class GamePlayer {
     return Point.create(pointX, pointY)
   }
 
+  public getEnemyCastle = (enemy: number) => this.currentEnemies[enemy].getCastle()
+
   public getCastle = () => this.castle
 
   public getMine = () => this.mine

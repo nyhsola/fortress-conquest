@@ -18,8 +18,8 @@ export class SquadManager {
     this.player = player
     this.squadBehaviour = new SquadBehaviour(player)
 
-    const defSquad = new Squad(player)
-    const attackSquad = new Squad(player)
+    const defSquad = new Squad(player, 6)
+    const attackSquad = new Squad(player, 3)
 
     defSquad.addOrder(SQUAD_ORDER.DEFEND_CASTLE)
     attackSquad.addOrder(SQUAD_ORDER.PREPARE_FOR_ATTACK)

@@ -32,8 +32,8 @@ export class TableManager {
     MultiboardSetItemStyle(MultiboardGetItem(this.board, 1, 1)!!, true, false)
 
     // item width
-    MultiboardSetItemWidth(MultiboardGetItem(this.board, 0, 0)!!, 0.05)
-    MultiboardSetItemWidth(MultiboardGetItem(this.board, 1, 0)!!, 0.05)
+    MultiboardSetItemWidth(MultiboardGetItem(this.board, 0, 0)!!, 0.07)
+    MultiboardSetItemWidth(MultiboardGetItem(this.board, 1, 0)!!, 0.07)
 
     MultiboardSetItemWidth(MultiboardGetItem(this.board, 0, 1)!!, 0.05)
     MultiboardSetItemWidth(MultiboardGetItem(this.board, 1, 1)!!, 0.05)
@@ -41,6 +41,9 @@ export class TableManager {
     forLocalPlayer(() => {
       MultiboardDisplay(this.board, true)
     }, this.player.playerId)
+
+    this.setItemText(TABLE_ITEM.GPM, "0")
+    this.setItemText(TABLE_ITEM.TOTAL_GOLD, "0")
   }
 
   public setItemText(tableItem: TABLE_ITEM_KEY, value: string) {

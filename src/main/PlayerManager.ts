@@ -1,5 +1,6 @@
 import { MapPlayer, Unit } from "w3ts"
 
+import { AbilityManager } from "./AbilityManager"
 import { IncomeManager } from "./IncomeManager"
 import { SquadManager } from "./SquadManager"
 import { TABLE_ITEM, TableManager } from "./TableManager"
@@ -16,6 +17,7 @@ export class PlayerManager {
   private readonly incomeManager: IncomeManager
   private readonly squadManager: SquadManager
   private readonly uiManager: UIManager
+  private readonly abilityManager: AbilityManager
   private readonly tableManager: TableManager
 
   constructor(player: GamePlayer) {
@@ -24,10 +26,14 @@ export class PlayerManager {
     this.incomeManager = new IncomeManager(this.player)
     this.squadManager = new SquadManager(this.player)
     this.uiManager = new UIManager(this.player)
+    this.abilityManager = new AbilityManager(this.player)
     this.tableManager = new TableManager(this.player)
 
-    this.tableManager.setItemText(TABLE_ITEM.GPM, "999")
-    this.tableManager.setItemText(TABLE_ITEM.TOTAL_GOLD, "999")
+    this.abilityManager.updateTooltip(ABILITY.FOOTMAN_PASSIVE, TooltipService.footmanAbilityText)
+    this.abilityManager.updateTooltipExtended(ABILITY.FOOTMAN_PASSIVE, TooltipService.footmanAbilityExtendedText)
+
+    this.abilityManager.updateTooltip(ABILITY.INCOME, TooltipService.incomeAbilityText)
+    this.abilityManager.updateTooltipExtended(ABILITY.INCOME, TooltipService.incomeAbilityExtendedText)
   }
 
   public init(enemies: Array<GamePlayer>) {
@@ -71,8 +77,6 @@ export class PlayerManager {
     this.incomeManager.update(delta)
     this.squadManager.update(delta)
 
-    this.uiManager.updateIconTooltip(UI_ICON.WORKER, this.workerManager.stats())
-    this.uiManager.updateIconTooltip(UI_ICON.FOOTMAN, this.squadManager.stats())
-    this.uiManager.updateIconTooltip(UI_ICON.GOLD_CHEST, this.incomeManager.stats())
+    this.tableManager.setItemText(TABLE_ITEM.TOTAL_GOLD, this.incomeManager.getTotalGold())
   }
 }

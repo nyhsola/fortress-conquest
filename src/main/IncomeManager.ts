@@ -2,7 +2,6 @@ import { MapPlayer } from "w3ts"
 
 import { GamePlayer } from "game/GamePlayer"
 import { Task } from "global/Task"
-import { TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
 import { createFloatingTextOnUnit, F_COLOR } from "util/FloatTextUtil"
 
@@ -15,13 +14,11 @@ export class IncomeManager {
     this.income = createTask(() => this.onIncome(player), 10)
   }
 
+  public getTotalGold = () => this.totalGold.toFixed(0)
+
   public update(delta: number) {
     this.income.update(delta)
     this.totalTime = this.totalTime + delta
-  }
-
-  public stats(): string {
-    return TooltipService.incomeText(this.totalGold, this.totalGold / this.totalTime / 60)
   }
 
   private onIncome(player: GamePlayer) {
