@@ -5,7 +5,7 @@ import { getPolarPoint } from "util/CommonUtil"
 const TOWER_DISTANCE = 1200
 const FOOTMAN_DISTANCE = 990
 
-export class BaseFormation {
+export class Positions {
   static ANIMALS_SPAWN_POINT = (point: Point) => getPolarPoint(point, GetRandomDirectionDeg(), 1800)
 
   static MINE = (point: Point, direction: number) => getPolarPoint(point, direction + 20, 700)
@@ -28,14 +28,5 @@ export class BaseFormation {
     4: (point: Point, direction: number) => getPolarPoint(point, direction + 210, FOOTMAN_DISTANCE),
     5: (point: Point, direction: number) => getPolarPoint(point, direction + 270, FOOTMAN_DISTANCE),
     6: (point: Point, direction: number) => getPolarPoint(point, direction + 330, FOOTMAN_DISTANCE),
-  }
-
-  static FOOTMAN_WAR: Record<number, (point: Point, direction: number) => Point | undefined> = {
-    1: (point: Point, direction: number) => getPolarPoint(point, direction + 30, 600),
-    2: (point: Point, direction: number) => getPolarPoint(point, direction + 90, 600),
-    3: (point: Point, direction: number) => getPolarPoint(point, direction + 150, 600),
-    4: (point: Point, direction: number) => getPolarPoint(point, direction + 210, 600),
-    5: (point: Point, direction: number) => getPolarPoint(point, direction + 270, 600),
-    6: (point: Point, direction: number) => getPolarPoint(point, direction + 330, 600),
   }
 }

@@ -1,8 +1,8 @@
 import { MapPlayer, TextTag, Unit } from "w3ts"
 
-export class FloatTextUtil {
-  static readonly GOLD = new FloatTextUtil(225, 204, 0)
-  static readonly RED = new FloatTextUtil(255, 0, 0)
+export class F_COLOR {
+  static readonly GOLD = new F_COLOR(225, 204, 0)
+  static readonly RED = new F_COLOR(255, 0, 0)
 
   private constructor(
     public readonly red: number,
@@ -11,20 +11,20 @@ export class FloatTextUtil {
   ) {}
 }
 
-export function createFloatingTextOnUnitRandom(text: string, unit: Unit, player: MapPlayer, size: number, fcolor: FloatTextUtil) {
+export function createFloatingTextOnUnitRandom(text: string, unit: Unit, player: MapPlayer, size: number, fcolor: F_COLOR) {
   const x = unit.point.x + GetRandomInt(-50, 50)
   const y = unit.point.y + GetRandomInt(-50, 50)
   createFloatingText(text, x, y, player, size, fcolor)
 }
 
-export function createFloatingTextOnUnit(text: string, unit: Unit, player: MapPlayer, size: number, fcolor: FloatTextUtil) {
+export function createFloatingTextOnUnit(text: string, unit: Unit, player: MapPlayer, size: number, fcolor: F_COLOR) {
   const x = unit.point.x
   const y = unit.point.y
   createFloatingText(text, x, y, player, size, fcolor)
 }
 
-export function createFloatingText(text: string, posX: number, posY: number, player: MapPlayer, size: number, fcolor: FloatTextUtil) {
-  let textTag = TextTag.create()
+export function createFloatingText(text: string, posX: number, posY: number, player: MapPlayer, size: number, fcolor: F_COLOR) {
+  const textTag = TextTag.create()
   textTag?.setVisible(true)
   textTag?.setText(text, size, true)
   textTag?.setPos(posX, posY, 10)
@@ -34,9 +34,9 @@ export function createFloatingText(text: string, posX: number, posY: number, pla
   textTag?.setFadepoint(1.0)
   textTag?.setVelocityAngle(64, 90)
 
-  let textTagHandle = textTag?.handle
-  let allPlayers = GetPlayersAll()
-  let playerToShow = GetForceOfPlayer(player.handle)
+  const textTagHandle = textTag?.handle
+  const allPlayers = GetPlayersAll()
+  const playerToShow = GetForceOfPlayer(player.handle)
   textTagHandle && allPlayers && ShowTextTagForceBJ(false, textTagHandle, allPlayers)
   textTagHandle && playerToShow && ShowTextTagForceBJ(true, textTagHandle, playerToShow)
 }

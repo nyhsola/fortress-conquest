@@ -2,8 +2,8 @@ import { Point } from "w3ts"
 
 import { GamePlayer } from "game/GamePlayer"
 import { Worker, WORKER_STATE } from "game/Worker"
-import { BaseFormation } from "global/BaseFormation"
 import { UNIT } from "global/Config"
+import { Positions } from "global/Positions"
 
 export enum WORKER_ORDER {
   BUILD_STOCK,
@@ -49,7 +49,7 @@ export class WorkerBehaviour {
 
     switch (this.orders.shift()) {
       case WORKER_ORDER.BUILD_STOCK:
-        this.onBuildOrder(worker, UNIT.STOCK, (point: Point, direction: number) => BaseFormation.STOCK(point, direction))
+        this.onBuildOrder(worker, UNIT.STOCK, (point: Point, direction: number) => Positions.STOCK(point, direction))
         this.addOrder(WORKER_ORDER.BUILD_BARRACKS)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_1)
         this.addOrder(WORKER_ORDER.BUILD_TOWER_2)
@@ -60,31 +60,31 @@ export class WorkerBehaviour {
         break
 
       case WORKER_ORDER.BUILD_BARRACKS:
-        this.onBuildOrder(worker, UNIT.BARRACKS, (point: Point, direction: number) => BaseFormation.BARRACKS(point, direction))
+        this.onBuildOrder(worker, UNIT.BARRACKS, (point: Point, direction: number) => Positions.BARRACKS(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_1:
-        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => BaseFormation.TOWER_1(point, direction))
+        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => Positions.TOWER_1(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_2:
-        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => BaseFormation.TOWER_2(point, direction))
+        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => Positions.TOWER_2(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_3:
-        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => BaseFormation.TOWER_3(point, direction))
+        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => Positions.TOWER_3(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_4:
-        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => BaseFormation.TOWER_4(point, direction))
+        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => Positions.TOWER_4(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_5:
-        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => BaseFormation.TOWER_5(point, direction))
+        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => Positions.TOWER_5(point, direction))
         break
 
       case WORKER_ORDER.BUILD_TOWER_6:
-        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => BaseFormation.TOWER_6(point, direction))
+        this.onBuildOrder(worker, UNIT.TOWER, (point: Point, direction: number) => Positions.TOWER_6(point, direction))
         break
     }
 

@@ -1,5 +1,4 @@
 import { FOOTMAN_STATE } from "game/Footman"
-import { GamePlayer } from "game/GamePlayer"
 import { Squad } from "game/Squad"
 
 export enum FOOTMAN_ORDER {
@@ -18,12 +17,16 @@ export class FootmanBehaviour {
     this.globalOrders.push(GLOBAL_ORDER.RESET)
   }
 
-  public updateState(squad: Squad) {
+  public updateState(squads: Array<Squad>) {
     switch (this.globalOrders.shift()) {
       case GLOBAL_ORDER.RESET:
-        squad.reset()
+        squads.forEach((it) => it.reset())
     }
 
+    squads.forEach((it) => this.proceedSquad(it))
+  }
+
+  private proceedSquad(squad: Squad) {
     for (const footman of squad.getFootmans()) {
       switch (footman.getState()) {
         case FOOTMAN_STATE.LOCKED:

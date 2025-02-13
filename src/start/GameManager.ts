@@ -7,7 +7,9 @@ import { Config, Mode, Zones } from "global/Config"
 import { ALLY_SHIFT } from "global/Globals"
 import { BorderService } from "service/BorderService"
 import { EventService, EventType } from "service/EventService"
+import { AllyUtil } from "util/AllyUtil"
 import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance, setEnemies } from "util/CommonUtil"
+import { StartUtil } from "util/StartUtil"
 
 export class GameManager {
   private readonly players: Record<number, PlayerManager> = {}
@@ -15,8 +17,6 @@ export class GameManager {
   private readonly eventService: EventService
   private readonly borderService: BorderService
   private readonly enemyManager: EnemyManager
-
-  private isGameStarted: boolean = false
 
   constructor(config: Config) {
     this.startGame(config)
@@ -35,11 +35,7 @@ export class GameManager {
       FogMaskEnableOff()
     }
 
-    setAliance(Player(0), Player(12))
-    setAliance(Player(1), Player(13))
-    setAliance(Player(2), Player(14))
-    setAliance(Player(3), Player(15))
-    setAliance(Player(4), Player(16))
+    AllyUtil.setAllyInit()
   }
 
   private startGame(config: Config) {
@@ -72,45 +68,20 @@ export class GameManager {
 
   private onBuild(building: Unit) {
     this.players[ifAllyGetOwner(building.owner.id)].onBuild(building)
-
-    if (!this.isGameStarted) {
-      let isStarted = true
-      for (const player in this.players) {
-        isStarted = isStarted && !(this.players[player].player.getCastle() === undefined)
-      }
-      this.isGameStarted = isStarted
-
-      if (this.isGameStarted) {
-        sendChatMessageToAllPlayers("Game started!")
-        this.init()
-      }
-    }
+    StartUtil.startWhenAllCastlesAreBuilt(this.playersArr, () => this.init())
   }
 
   private init() {
     this.enemyManager.init()
     this.borderService.init()
+    AllyUtil.setEnemies()
 
     for (const player in this.players) {
       const playerManager = this.players[player]
       const playerId = playerManager.player.playerId
       const enemies = this.borderService.neighbors.get(playerId) ?? new Set()
-      playerManager.init(enemies)
-    }
-
-    for (let i = 0; i <= 4; i++) {
-      const player = i
-      const ally = i + ALLY_SHIFT
-      for (let j = 0; j <= 4; j++) {
-        const allyEnemy = j + ALLY_SHIFT
-        if (player != j) {
-          setEnemies(Player(player), Player(j))
-          setEnemies(Player(ally), Player(j))
-
-          setEnemies(Player(player), Player(allyEnemy))
-          setEnemies(Player(ally), Player(allyEnemy))
-        }
-      }
+      const mapPlayers: Array<GamePlayer> = [...enemies].map((it: number) => this.players[it].player)
+      playerManager.init(mapPlayers)
     }
 
     this.eventService.subscribe(EventType.PER_SECOND, () => this.update(1))

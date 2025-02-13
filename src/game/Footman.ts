@@ -1,7 +1,7 @@
 import { Point, Unit } from "w3ts"
 
 import { UNIT } from "global/Config"
-import { createUnitAtPoint, issueBuildOrder, issueOrder, issuePointOrder } from "util/CommonUtil"
+import { createUnitAtPoint, issuePointOrder } from "util/CommonUtil"
 
 export enum FOOTMAN_STATE {
   FREE,
@@ -18,7 +18,9 @@ export class Footman {
     this.footman = createUnitAtPoint(point, allyId, UNIT.FOOTMAN)
   }
 
-  public move(location: location) {
+  public instantMove(location: location) {
+    const unit = this.footman?.handle
+    unit && RemoveGuardPosition(unit)
     this.footman && issuePointOrder(this.footman, "move", location)
   }
 

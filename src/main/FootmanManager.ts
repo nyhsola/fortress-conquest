@@ -2,7 +2,6 @@ import { FOOTMAN_ORDER, FootmanBehaviour } from "behaviour/FootmanBehaviour"
 import { Footman } from "game/Footman"
 import { GamePlayer } from "game/GamePlayer"
 import { Squad } from "game/Squad"
-import { BaseFormation } from "global/BaseFormation"
 import { Task } from "global/Task"
 import { TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
@@ -13,12 +12,20 @@ export class FootmanManager {
   private readonly behaviourTask: Task = createTask(() => this.updateBehavior(), 3)
   private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), 5)
 
-  private squad: Squad
+  private squads: Array<Squad> = []
 
   constructor(player: GamePlayer) {
     this.player = player
     this.behaviour = new FootmanBehaviour()
-    this.squad = new Squad(player)
+
+    const defSquad = new Squad(player)
+    const attackSquad = new Squad(player)
+
+    defSquad.setOrderForSquad(FOOTMAN_ORDER.DEFEND)
+    attackSquad.setOrderForSquad(FOOTMAN_ORDER.WAR)
+
+    this.squads.push(defSquad)
+    this.squads.push(attackSquad)
   }
 
   public init() {
@@ -35,17 +42,16 @@ export class FootmanManager {
   }
 
   private updateBehavior() {
-    this.behaviour.updateState(this.squad)
+    this.behaviour.updateState(this.squads)
   }
 
   private onFootmanCast() {
     const barracks = this.player.getBarracks()
     const point = barracks?.getPoint()
 
-    if (!barracks) return
+    if (!barracks || !point) return
 
-    if (this.squad.isSquadFree() && point) {
-      this.squad.addUnit(new Footman(point, this.player.allyId))
-    }
+    const freeSquad = this.squads.filter((it) => it.isSquadFree())
+    freeSquad[0]?.addUnit(new Footman(point, this.player.allyId))
   }
 }

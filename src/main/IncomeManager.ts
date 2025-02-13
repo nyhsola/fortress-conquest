@@ -4,7 +4,7 @@ import { GamePlayer } from "game/GamePlayer"
 import { Task } from "global/Task"
 import { TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
-import { createFloatingTextOnUnit, FloatTextUtil } from "util/FloatTextUtil"
+import { createFloatingTextOnUnit, F_COLOR } from "util/FloatTextUtil"
 
 export class IncomeManager {
   private readonly income: Task
@@ -33,7 +33,7 @@ export class IncomeManager {
       mapAlly?.setState(PLAYER_STATE_RESOURCE_GOLD, 0)
       mapPlayer?.setState(PLAYER_STATE_RESOURCE_GOLD, playerGold + allyGold)
       const castle = player.getCastle()
-      castle && mapPlayer && createFloatingTextOnUnit("+" + allyGold, castle, mapPlayer, 12, FloatTextUtil.GOLD)
+      castle && mapPlayer && createFloatingTextOnUnit("+" + allyGold, castle, mapPlayer, 12, F_COLOR.GOLD)
       this.totalGold = this.totalGold + allyGold
     }
   }

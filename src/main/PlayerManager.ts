@@ -2,6 +2,7 @@ import { MapPlayer, Unit } from "w3ts"
 
 import { FootmanManager } from "./FootmanManager"
 import { IncomeManager } from "./IncomeManager"
+import { TABLE_ITEM, TableManager } from "./TableManager"
 import { UI_ICON, UIManager } from "./UIManager"
 import { WorkerManager } from "./WorkerManager"
 import { GamePlayer } from "game/GamePlayer"
@@ -15,6 +16,7 @@ export class PlayerManager {
   private readonly incomeManager: IncomeManager
   private readonly footmanManager: FootmanManager
   private readonly uiManager: UIManager
+  private readonly tableManager: TableManager
 
   constructor(player: GamePlayer) {
     this.player = player
@@ -22,10 +24,15 @@ export class PlayerManager {
     this.incomeManager = new IncomeManager(this.player)
     this.footmanManager = new FootmanManager(this.player)
     this.uiManager = new UIManager(this.player)
+    this.tableManager = new TableManager(this.player)
+
+    this.tableManager.setItemText(TABLE_ITEM.GPM, "999")
+    this.tableManager.setItemText(TABLE_ITEM.TOTAL_GOLD, "999")
   }
 
-  public init(enemies: Set<number>) {
-    this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, TooltipService.enemiesText(enemies.size))
+  public init(enemies: Array<GamePlayer>) {
+    this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, TooltipService.enemiesText(enemies.length))
+    this.player.onEnemiesFound(enemies)
   }
 
   public onBuild(building: Unit) {
