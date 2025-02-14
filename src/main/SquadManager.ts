@@ -3,10 +3,9 @@ import { Footman } from "game/Footman"
 import { GamePlayer } from "game/GamePlayer"
 import { Squad } from "game/Squad"
 import { Task } from "global/Task"
-import { TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
 
-export const FOOTMAN_SPAWN_TIME = 5
+export const FOOTMAN_SPAWN_TIME = 10
 
 export class SquadManager {
   private readonly player: GamePlayer
@@ -46,10 +45,6 @@ export class SquadManager {
 
     this.behaviourTask.update(delta)
     this.footmanAbility.update(delta)
-  }
-
-  public stats(): string {
-    return TooltipService.footmanText(0, 0)
   }
 
   private updateBehavior() {

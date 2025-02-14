@@ -47,7 +47,9 @@ export class Footman {
 
   public isWaiting = () => this.state == FOOTMAN_STATE.WAITING && !this.isBusy()
 
-  public isBusy = () => !(this.footman?.currentOrder == 0 && this.orders.length == 0)
+  public isCreated = () => this.state == FOOTMAN_STATE.CREATED
+
+  public isBusy = () => this.footman?.currentOrder != 0 || this.orders.length != 0
 
   public isDead = () => this.footman?.isAlive() == false
 }

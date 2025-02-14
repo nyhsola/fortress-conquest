@@ -30,10 +30,6 @@ export class WorkerManager {
     this.workerAbility.update(delta)
   }
 
-  public stats(): string {
-    return TooltipService.workerText(this.workers.length, this.workerLimit)
-  }
-
   private updateWorker() {
     this.behaviour.updateState(this.workers)
   }

@@ -5,7 +5,7 @@ import { LOCAL_COLOR, withColor } from "util/TextUtil"
 export type TABLE_ITEM_KEY = { x: number; y: number }
 
 export const TABLE_ITEM = {
-  GPM: { x: 0, y: 1 },
+  PLAYER: { x: 0, y: 1 },
   TOTAL_GOLD: { x: 1, y: 1 },
 } as const
 
@@ -21,7 +21,7 @@ export class TableManager {
     MultiboardSetColumnCount(this.board, 2)
     MultiboardSetRowCount(this.board, 2)
 
-    MultiboardSetItemValue(MultiboardGetItem(this.board, 0, 0)!!, withColor("GPM:", LOCAL_COLOR.GREY))
+    MultiboardSetItemValue(MultiboardGetItem(this.board, 0, 0)!!, withColor("Player:", LOCAL_COLOR.GREY))
     MultiboardSetItemValue(MultiboardGetItem(this.board, 1, 0)!!, withColor("Total Gold:", LOCAL_COLOR.GREY))
 
     // remove icon
@@ -41,9 +41,6 @@ export class TableManager {
     forLocalPlayer(() => {
       MultiboardDisplay(this.board, true)
     }, this.player.playerId)
-
-    this.setItemText(TABLE_ITEM.GPM, "0")
-    this.setItemText(TABLE_ITEM.TOTAL_GOLD, "0")
   }
 
   public setItemText(tableItem: TABLE_ITEM_KEY, value: string) {

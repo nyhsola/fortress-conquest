@@ -44,7 +44,7 @@ export class Squad {
 
   public isSquadFull = () => this.footmans.length == this.squadCount
 
-  public isWaitingOrders = () => this.isSquadFull() && this.footmans.every((it) => it.isWaiting())
+  public isWaitingOrders = () => this.isSquadFull() && this.footmans.every((it) => it.isWaiting() && !it.isCreated())
 
   public isAllDead = () => this.isSquadFull() && this.footmans.every((it) => it.isDead())
 

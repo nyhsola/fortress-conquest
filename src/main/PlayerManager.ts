@@ -34,6 +34,11 @@ export class PlayerManager {
 
     this.abilityManager.updateTooltip(ABILITY.INCOME, TooltipService.incomeAbilityText)
     this.abilityManager.updateTooltipExtended(ABILITY.INCOME, TooltipService.incomeAbilityExtendedText)
+
+    this.abilityManager.updateTooltip(ABILITY.WORKERS, TooltipService.workerAbilityText)
+    this.abilityManager.updateTooltipExtended(ABILITY.WORKERS, TooltipService.workerAbilityExtendedText)
+
+    this.tableManager.setItemText(TABLE_ITEM.PLAYER, MapPlayer.fromIndex(this.player.playerId)!!.name)
   }
 
   public init(enemies: Array<GamePlayer>) {

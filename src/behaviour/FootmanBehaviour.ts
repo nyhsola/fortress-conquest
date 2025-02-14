@@ -17,6 +17,10 @@ export class FootmanBehaviour {
   }
 
   public updateState(footman: Footman) {
+    if (!footman.isBusy() && footman.state != FOOTMAN_STATE.DEFEND) {
+      footman.state = FOOTMAN_STATE.WAITING
+    }
+
     if (footman.getOrders().length != 0) {
       const order = footman.getOrders()[0]
       switch (order) {
@@ -41,10 +45,6 @@ export class FootmanBehaviour {
           footman.state = FOOTMAN_STATE.PREPARE
           break
       }
-    }
-
-    if (footman.isBusy() == false && footman.state != FOOTMAN_STATE.DEFEND) {
-      footman.state = FOOTMAN_STATE.WAITING
     }
   }
 
