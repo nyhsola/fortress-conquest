@@ -6,11 +6,13 @@ import { Task } from "global/Task"
 import { TooltipService } from "service/TooltipService"
 import { createTask } from "util/CommonUtil"
 
+export const FOOTMAN_SPAWN_TIME = 5
+
 export class SquadManager {
   private readonly player: GamePlayer
   private readonly squadBehaviour: SquadBehaviour
   private readonly behaviourTask: Task = createTask(() => this.updateBehavior(), 3)
-  private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), 5)
+  private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), FOOTMAN_SPAWN_TIME)
 
   private squads: Array<Squad> = []
   private defSquad: Squad
@@ -60,7 +62,24 @@ export class SquadManager {
 
     if (!barracks || !point) return
 
+    const footman = new Footman(point, this.player.allyId)
     const freeSquad = this.squads.filter((it) => it.isSquadFree())
-    freeSquad[0]?.addUnit(new Footman(point, this.player.allyId))
+    const addSquad = freeSquad.length > 0 ? freeSquad[0] : this.createAttackSquad()
+
+    addSquad.addUnit(footman)
+
+    this.squads
+      .filter((it) => it.isAllDead())
+      .forEach((it) => {
+        const index = this.squads.indexOf(it)
+        this.squads.splice(index, 1)
+      })
+  }
+
+  private createAttackSquad(): Squad {
+    const newSquad = new Squad(this.player, 3)
+    newSquad.addOrder(SQUAD_ORDER.PREPARE_FOR_ATTACK)
+    this.squads.push(newSquad)
+    return newSquad
   }
 }

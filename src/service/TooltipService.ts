@@ -1,3 +1,4 @@
+import { FOOTMAN_SPAWN_TIME } from "main/SquadManager"
 import { LOCAL_COLOR, withColor } from "util/TextUtil"
 
 const workerTemplate = (workerCount: number, workerLimit: number): string => "Workers (" + workerCount + "/" + workerLimit + ")"
@@ -13,7 +14,8 @@ export class TooltipService {
   static readonly footmanAbilityText = "Footman|n"
   static readonly footmanAbilityExtendedText =
     withColor("By default, you have 1 defense squad consisting of 6 footmen, which are replenished as a priority as new ones are trained.|n|n", LOCAL_COLOR.GREY) +
-    "Footman trains every 5 sec"
+    withColor("Attack squads consist of 3 footmen.|n|n" + FOOTMAN_SPAWN_TIME, LOCAL_COLOR.GREY) +
+    `Footman trains every ${FOOTMAN_SPAWN_TIME} sec`
 
   static readonly incomeAbilityText = "Income|n"
   static readonly incomeAbilityExtendedText = withColor("Every 10 sec, your allies' gold is transferred to you", LOCAL_COLOR.GREY)

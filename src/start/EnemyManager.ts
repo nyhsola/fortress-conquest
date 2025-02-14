@@ -15,7 +15,7 @@ export class EnemyManager {
 
   constructor(players: Array<GamePlayer>) {
     this.players = players
-    this.spawn = createTask(() => this.spawnEnemy(), 60)
+    this.spawn = createTask(() => this.spawnEnemy(), 120)
   }
 
   public init() {
