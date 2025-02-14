@@ -5,9 +5,12 @@ import { UNIT } from "global/Config"
 import { createUnitAtPoint, issuePointOrder } from "util/CommonUtil"
 
 export enum FOOTMAN_STATE {
-  IDLE,
+  CREATED,
   PREPARE_FOR_ATTACK,
+  PREPARE,
   ATTACK,
+  DEFEND,
+  WAITING,
 }
 
 export class Footman {
@@ -15,7 +18,7 @@ export class Footman {
   private orders: Array<FOOTMAN_ORDER> = []
   private index: number = 0
 
-  public state: FOOTMAN_STATE = FOOTMAN_STATE.IDLE
+  public state: FOOTMAN_STATE = FOOTMAN_STATE.CREATED
 
   constructor(point: Point, allyId: number) {
     this.footman = createUnitAtPoint(point, allyId, UNIT.FOOTMAN)

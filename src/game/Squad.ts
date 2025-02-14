@@ -4,12 +4,21 @@ import { FOOTMAN_ORDER } from "behaviour/FootmanBehaviour"
 import { SQUAD_ORDER } from "behaviour/SquadBehaviour"
 import { Positions } from "global/Positions"
 
+export enum SQUAD_STATE {
+  INITITAL,
+  ATTACK,
+  OPERATIONAL,
+}
+
 export class Squad {
   private readonly player: GamePlayer
   private readonly footmans: Array<Footman> = []
   private readonly positions: Array<number> = []
+  private readonly ordersPool: Array<FOOTMAN_ORDER> = []
   private readonly orders: Array<SQUAD_ORDER> = []
   private squadCount: number
+
+  public state: SQUAD_STATE = SQUAD_STATE.INITITAL
 
   constructor(player: GamePlayer, squadCount: number) {
     this.player = player
@@ -19,11 +28,17 @@ export class Squad {
 
   public addOrder = (order: SQUAD_ORDER) => this.orders.push(order)
 
-  public returnOrder = (order: SQUAD_ORDER) => this.orders.unshift(order)
+  public pushOrderForAll(order: FOOTMAN_ORDER) {
+    for (let i = 0; i < this.squadCount; i++) {
+      this.ordersPool.push(order)
+    }
+  }
 
   public getFootmans = () => this.footmans
 
   public getOrders = () => this.orders
+
+  public getOrdersPool = () => this.ordersPool
 
   public isSquadFree = () => this.footmans.length < this.squadCount
 
@@ -33,7 +48,7 @@ export class Squad {
 
   public addUnit(footman: Footman) {
     this.footmans.push(footman)
-    footman.addOrder(FOOTMAN_ORDER.GO_TO_BANNER)
+    footman.addOrder(FOOTMAN_ORDER.PREPARE)
     footman.setIndex(this.footmans.length)
   }
 }

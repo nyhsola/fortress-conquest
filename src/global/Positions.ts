@@ -2,15 +2,15 @@ import { Point } from "w3ts"
 
 import { getPolarPoint } from "util/CommonUtil"
 
-const TOWER_DISTANCE = 1200
-const FOOTMAN_DISTANCE = 990
+const TOWER_DISTANCE = 1100
+const FOOTMAN_DISTANCE = 950
 
 export class Positions {
   static ANIMALS_SPAWN_POINT = (point: Point) => getPolarPoint(point, GetRandomDirectionDeg(), 1800)
 
-  static MINE = (point: Point, direction: number) => getPolarPoint(point, direction + 20, 700)
+  static MINE = (point: Point, direction: number) => getPolarPoint(point, direction + 20, 600)
   static STOCK = (point: Point, direction: number) => getPolarPoint(point, direction + 90, 800)
-  static BARRACKS = (point: Point, direction: number) => getPolarPoint(point, direction + 210, 700)
+  static BARRACKS = (point: Point, direction: number) => getPolarPoint(point, direction + 210, 800)
 
   static BANNER = (point: Point, direction: number) => getPolarPoint(point, direction + 250, 700)
 

@@ -6,7 +6,7 @@ export enum FOOTMAN_ORDER {
   DEFEND_CASTLE,
   PREPARE_FOR_ATTACK,
   ATTACK_CASTLE,
-  GO_TO_BANNER,
+  PREPARE,
 }
 
 export class FootmanBehaviour {
@@ -17,21 +17,34 @@ export class FootmanBehaviour {
   }
 
   public updateState(footman: Footman) {
-    switch (footman.getOrders().shift()) {
-      case FOOTMAN_ORDER.DEFEND_CASTLE:
-        this.onDefendOrder(footman)
-        break
-      case FOOTMAN_ORDER.PREPARE_FOR_ATTACK:
-        this.onPrepareAttackOrder(footman)
-        footman.state = FOOTMAN_STATE.PREPARE_FOR_ATTACK
-        break
-      case FOOTMAN_ORDER.ATTACK_CASTLE:
-        this.onAttackOrder(footman)
-        footman.state = FOOTMAN_STATE.ATTACK
-        break
-      case FOOTMAN_ORDER.GO_TO_BANNER:
-        this.onBanner(footman)
-        break
+    if (footman.getOrders().length != 0) {
+      const order = footman.getOrders()[0]
+      switch (order) {
+        case FOOTMAN_ORDER.DEFEND_CASTLE:
+          this.onDefendOrder(footman)
+          footman.getOrders().shift()
+          footman.state = FOOTMAN_STATE.DEFEND
+          break
+        case FOOTMAN_ORDER.PREPARE_FOR_ATTACK:
+          this.onPrepareAttackOrder(footman)
+          footman.getOrders().shift()
+          footman.state = FOOTMAN_STATE.PREPARE_FOR_ATTACK
+          break
+        case FOOTMAN_ORDER.ATTACK_CASTLE:
+          this.onAttackOrder(footman)
+          footman.getOrders().shift()
+          footman.state = FOOTMAN_STATE.ATTACK
+          break
+        case FOOTMAN_ORDER.PREPARE:
+          this.onBanner(footman)
+          footman.getOrders().shift()
+          footman.state = FOOTMAN_STATE.PREPARE
+          break
+      }
+    }
+
+    if (footman.getOrders().length == 0 && footman.isBusy() == false && footman.state != FOOTMAN_STATE.DEFEND) {
+      footman.state = FOOTMAN_STATE.WAITING
     }
   }
 

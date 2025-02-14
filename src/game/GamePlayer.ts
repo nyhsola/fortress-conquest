@@ -52,7 +52,7 @@ export class GamePlayer {
 
     for (const enemy of this.currentEnemies) {
       const attackPoint = this.getAttackPoint(enemy.playerId)
-      createDestructableAtPoint(attackPoint, 0.5, UNIT.BANNER_HUMAN)
+      createDestructableAtPoint(attackPoint, 1.4, UNIT.BANNER_HUMAN)
     }
   }
 
@@ -73,8 +73,8 @@ export class GamePlayer {
     const normalizedX = vectorX / length
     const normalizedY = vectorY / length
 
-    const pointX = castleX + normalizedX * 1500
-    const pointY = castleY + normalizedY * 1500
+    const pointX = castleX + normalizedX * 1600
+    const pointY = castleY + normalizedY * 1600
 
     return Point.create(pointX, pointY)
   }
