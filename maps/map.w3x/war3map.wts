@@ -208,12 +208,6 @@ STRING 95
 Wait...
 }
 
-STRING 96
-// Destructibles: B001 (Banner), Name (Name)
-{
-Banner
-}
-
 STRING 97
 // Units: h005 (Footman), Name (Name)
 {
@@ -308,5 +302,11 @@ STRING 121
 // Destructibles: B002 (Banner Human), Name (Name)
 {
 Banner Human
+}
+
+STRING 122
+// Destructibles: B003 (Campfire), Name (Name)
+{
+Campfire
 }
 

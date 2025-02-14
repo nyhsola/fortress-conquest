@@ -40,7 +40,7 @@ export class GamePlayer {
     this.mine = minePoint && createUnitAtPoint(minePoint, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
 
     const bannerPoint = this.point && Positions.BANNER(this.point, this.direction)
-    bannerPoint && createDestructableAtPoint(bannerPoint, 1, UNIT.BANNER_HUMAN)
+    bannerPoint && createDestructableAtPoint(bannerPoint, 1, UNIT.CAMPFIRE)
   }
 
   public onBarracksBuild(barracks: Unit | undefined) {
@@ -49,20 +49,26 @@ export class GamePlayer {
 
   public onEnemiesFound(enemies: Array<GamePlayer>) {
     this.currentEnemies = enemies
+
+    for (const enemy of this.currentEnemies) {
+      const attackPoint = this.getAttackPoint(enemy.playerId)
+      createDestructableAtPoint(attackPoint, 0.5, UNIT.BANNER_HUMAN)
+    }
   }
 
   public getAttackPoint(enemy: number): Point {
-    const enemyCastle = this.currentEnemies[enemy].getCastle()?.getPoint()
+    const enemyCastle = this.currentEnemies[enemy]?.getCastle()?.getPoint()
     const enemyX = enemyCastle?.x ?? 0
     const enemyY = enemyCastle?.y ?? 0
 
-    const castleX = this.castle?.point.x ?? 0
-    const castleY = this.castle?.point.y ?? 0
+    const castleX = this.castle?.point?.x ?? 0
+    const castleY = this.castle?.point?.y ?? 0
 
     const vectorX = enemyX - castleX
     const vectorY = enemyY - castleY
 
-    const length = Math.sqrt(vectorX * vectorX + vectorY * vectorY)
+    const sqrt = Math.sqrt(vectorX * vectorX + vectorY * vectorY)
+    const length = sqrt == 0 ? 1 : sqrt
 
     const normalizedX = vectorX / length
     const normalizedY = vectorY / length
