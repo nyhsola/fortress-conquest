@@ -45,5 +45,9 @@ export class Footman {
 
   public setIndex = (index: number) => (this.index = index)
 
-  public isBusy = () => this.footman?.currentOrder != 0
+  public isWaiting = () => this.state == FOOTMAN_STATE.WAITING && !this.isBusy()
+
+  public isBusy = () => !(this.footman?.currentOrder == 0 && this.orders.length == 0)
+
+  public isDead = () => this.footman?.isAlive() == false
 }

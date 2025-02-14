@@ -16,7 +16,7 @@ export class Squad {
   private readonly positions: Array<number> = []
   private readonly ordersPool: Array<FOOTMAN_ORDER> = []
   private readonly orders: Array<SQUAD_ORDER> = []
-  private squadCount: number
+  public squadCount: number = 0
 
   public state: SQUAD_STATE = SQUAD_STATE.INITITAL
 
@@ -42,9 +42,11 @@ export class Squad {
 
   public isSquadFree = () => this.footmans.length < this.squadCount
 
-  public isSquadReady = () => this.footmans.length == this.squadCount
+  public isSquadFull = () => this.footmans.length == this.squadCount
 
-  public isSquadBusy = () => this.isSquadReady() && this.footmans.some((it) => it.isBusy())
+  public isWaitingOrders = () => this.isSquadFull() && this.footmans.every((it) => it.isWaiting())
+
+  public isAllDead = () => this.isSquadFull() && this.footmans.every((it) => it.isDead())
 
   public addUnit(footman: Footman) {
     this.footmans.push(footman)

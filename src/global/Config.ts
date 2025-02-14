@@ -3,6 +3,7 @@ export const ABILITY = {
   WORKERS: FourCC("A003"),
   FOOTMAN: FourCC("A008"),
   INCOME: FourCC("A002"),
+  BLINK: FourCC("A001"),
   ABILITY_1: FourCC("A005"),
   ABILITY_2: FourCC("A004"),
   ABILITY_3: FourCC("A007"),

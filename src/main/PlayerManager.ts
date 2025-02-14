@@ -37,7 +37,7 @@ export class PlayerManager {
   }
 
   public init(enemies: Array<GamePlayer>) {
-    this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, TooltipService.enemiesText(enemies.length))
+    // this.uiManager.updateIconTooltip(UI_ICON.DEADLORD, TooltipService.enemiesText(enemies.length))
     this.player.onEnemiesFound(enemies)
   }
 

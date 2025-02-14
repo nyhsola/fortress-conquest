@@ -45,7 +45,7 @@ export class SquadBehaviour {
         case SQUAD_STATE.ATTACK:
           switch (order) {
             case SQUAD_ORDER.ATTACK_CASTLE:
-              if (!squad.isSquadBusy()) {
+              if (squad.isWaitingOrders()) {
                 squad.pushOrderForAll(FOOTMAN_ORDER.ATTACK_CASTLE)
                 squad.getOrders().shift()
                 squad.state = SQUAD_STATE.OPERATIONAL

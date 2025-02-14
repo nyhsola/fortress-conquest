@@ -43,7 +43,7 @@ export class FootmanBehaviour {
       }
     }
 
-    if (footman.getOrders().length == 0 && footman.isBusy() == false && footman.state != FOOTMAN_STATE.DEFEND) {
+    if (footman.isBusy() == false && footman.state != FOOTMAN_STATE.DEFEND) {
       footman.state = FOOTMAN_STATE.WAITING
     }
   }

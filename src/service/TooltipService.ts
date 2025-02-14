@@ -11,7 +11,9 @@ const enemiesTemplateExtended = (): string => withColor("Nearby enemies", LOCAL_
 
 export class TooltipService {
   static readonly footmanAbilityText = "Footman|n"
-  static readonly footmanAbilityExtendedText = withColor("By default, you have one defense squad consisting of six footmen", LOCAL_COLOR.GREY)
+  static readonly footmanAbilityExtendedText =
+    withColor("By default, you have 1 defense squad consisting of 6 footmen, which are replenished as a priority as new ones are trained.|n|n", LOCAL_COLOR.GREY) +
+    "Footman trains every 5 sec"
 
   static readonly incomeAbilityText = "Income|n"
   static readonly incomeAbilityExtendedText = withColor("Every 10 sec, your allies' gold is transferred to you", LOCAL_COLOR.GREY)

@@ -13,19 +13,20 @@ export class SquadManager {
   private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), 5)
 
   private squads: Array<Squad> = []
+  private defSquad: Squad
+  private attackSquad: Squad
 
   constructor(player: GamePlayer) {
     this.player = player
     this.squadBehaviour = new SquadBehaviour(player)
 
-    const defSquad = new Squad(player, 6)
-    const attackSquad = new Squad(player, 3)
+    this.defSquad = new Squad(player, 6)
+    this.attackSquad = new Squad(player, 3)
+    this.defSquad.addOrder(SQUAD_ORDER.DEFEND_CASTLE)
+    this.attackSquad.addOrder(SQUAD_ORDER.PREPARE_FOR_ATTACK)
 
-    defSquad.addOrder(SQUAD_ORDER.DEFEND_CASTLE)
-    attackSquad.addOrder(SQUAD_ORDER.PREPARE_FOR_ATTACK)
-
-    this.squads.push(defSquad)
-    this.squads.push(attackSquad)
+    this.squads.push(this.defSquad)
+    this.squads.push(this.attackSquad)
   }
 
   public init() {
@@ -33,6 +34,14 @@ export class SquadManager {
   }
 
   public update(delta: number) {
+    if (this.attackSquad.isAllDead()) {
+      const index = this.squads.indexOf(this.attackSquad)
+      this.squads.splice(index, 1)
+      this.attackSquad = new Squad(this.player, 3)
+      this.attackSquad.addOrder(SQUAD_ORDER.PREPARE_FOR_ATTACK)
+      this.squads.push(this.attackSquad)
+    }
+
     this.behaviourTask.update(delta)
     this.footmanAbility.update(delta)
   }

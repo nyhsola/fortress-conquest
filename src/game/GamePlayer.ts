@@ -1,11 +1,21 @@
-import { Point, Unit } from "w3ts"
+import { Point, sleep, Unit } from "w3ts"
 
 import { Positions } from "../global/Positions"
-import { Config, Mode, UNIT, Zones } from "global/Config"
-import { createDestructableAtPoint, createUnitAtCenter, createUnitAtPoint, issueBuildOrder, withTimedLife } from "util/CommonUtil"
+import { ABILITY, Config, Mode, UNIT, Zones } from "global/Config"
+import { Task } from "global/Task"
+import {
+  createDestructableAtPoint,
+  createTask,
+  createUnitAtCenter,
+  createUnitAtPoint,
+  issueBuildOrder,
+  issueOrder,
+  issuePointOrder,
+  withTimedLife,
+} from "util/CommonUtil"
 
 export class GamePlayer {
-  private readonly config: Zones
+  private readonly config: Config
 
   public readonly playerId: number
   public readonly allyId: number
@@ -21,14 +31,17 @@ export class GamePlayer {
   private currentEnemies: Array<GamePlayer> = []
 
   constructor(config: Config, playerId: number, allyId: number) {
-    this.config = config.zones
+    this.config = config
     this.playerId = playerId
     this.allyId = allyId
 
-    this.timedUnit = withTimedLife(createUnitAtCenter(this.config.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
+    this.timedUnit = withTimedLife(createUnitAtCenter(this.config.zones.zone[this.playerId], this.playerId, UNIT.START_WORKER), 60)
 
     if (config.mode == Mode.DEBUG && this.playerId == 4) {
-      this.timedUnit && issueBuildOrder(this.timedUnit, UNIT.CASTLE, Location(3000, -4000))
+      sleep(1)
+        .then(() => this.timedUnit && IssuePointOrderLoc(this.timedUnit.handle, "blink", Location(3000, -4000)))
+        .then(() => sleep(1))
+        .then(() => this.timedUnit && issueBuildOrder(this.timedUnit, UNIT.CASTLE, Location(3000, -4000)))
     }
   }
 
@@ -50,14 +63,13 @@ export class GamePlayer {
   public onEnemiesFound(enemies: Array<GamePlayer>) {
     this.currentEnemies = enemies
 
-    for (const enemy of this.currentEnemies) {
-      const attackPoint = this.getAttackPoint(enemy.playerId)
-      createDestructableAtPoint(attackPoint, 1.4, UNIT.BANNER_HUMAN)
+    for (let i = 0; i < this.currentEnemies.length; i++) {
+      createDestructableAtPoint(this.getAttackPoint(i), 1.4, UNIT.BANNER_HUMAN)
     }
   }
 
-  public getAttackPoint(enemy: number): Point {
-    const enemyCastle = this.currentEnemies[enemy]?.getCastle()?.getPoint()
+  public getAttackPoint(positionNumber: number): Point {
+    const enemyCastle = this.currentEnemies[positionNumber]?.getCastle()?.getPoint()
     const enemyX = enemyCastle?.x ?? 0
     const enemyY = enemyCastle?.y ?? 0
 
