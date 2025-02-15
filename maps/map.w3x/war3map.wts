@@ -310,3 +310,153 @@ STRING 122
 Campfire
 }
 
+STRING 123
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 124
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 125
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 126
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 127
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 128
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 129
+// Upgrades: R003 (Грубая сила), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 130
+// Upgrades: R003 (Грубая сила), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 131
+// Upgrades: R003 (Грубая сила), EditorSuffix (Editor Suffix)
+{
+[Game]
+}
+
+STRING 138
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points [Lvl 2]
+}
+
+STRING 139
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points [Lvl 3]
+}
+
+STRING 140
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++10
+}
+
+STRING 141
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++15
+}
+
+STRING 142
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points [Lvl 1]
+}
+
+STRING 143
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++5
+}
+
+STRING 144
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 145
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 146
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 147
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 148
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 149
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Hotkey (Hotkey)
+{
+W
+}
+
+STRING 150
+// Upgrades: R003 (Грубая сила), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 151
+// Upgrades: R003 (Грубая сила), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 152
+// Upgrades: R003 (Грубая сила), Hotkey (Hotkey)
+{
+E
+}
+
+STRING 153
+// Upgrades: R003 (Грубая сила), Name (Name)
+{
+Hit points
+}
+

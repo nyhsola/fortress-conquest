@@ -63,6 +63,14 @@ export class PlayerManager {
     }
   }
 
+  public update(delta: number) {
+    this.workerManager.update(delta)
+    this.incomeManager.update(delta)
+    this.squadManager.update(delta)
+
+    this.tableManager.setItemText(TABLE_ITEM.TOTAL_GOLD, this.incomeManager.getTotalGold())
+  }
+
   public onCast(castingUnit: Unit, spellId: number) {}
 
   public onFinishCast(castingUnit: Unit, spellId: number) {
@@ -77,11 +85,10 @@ export class PlayerManager {
     }
   }
 
-  public update(delta: number) {
-    this.workerManager.update(delta)
-    this.incomeManager.update(delta)
-    this.squadManager.update(delta)
-
-    this.tableManager.setItemText(TABLE_ITEM.TOTAL_GOLD, this.incomeManager.getTotalGold())
+  public onResearchFinished(techId: number) {
+    const allyPlayer = MapPlayer.fromIndex(this.player.allyId)!!.handle
+    const mapPlayer = MapPlayer.fromIndex(this.player.playerId)!!.handle
+    const level = GetPlayerTechCount(mapPlayer, techId, true)
+    SetPlayerTechResearched(allyPlayer, techId, level)
   }
 }

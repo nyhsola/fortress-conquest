@@ -8,7 +8,7 @@ import { ALLY_SHIFT } from "global/Globals"
 import { BorderService } from "service/BorderService"
 import { EventService, EventType } from "service/EventService"
 import { AllyUtil } from "util/AllyUtil"
-import { forEachPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance, setEnemies } from "util/CommonUtil"
+import { forEachPlayingPlayer, ifAllyGetOwner, sendChatMessageToAllPlayers, setAliance, setEnemies } from "util/CommonUtil"
 import { StartUtil } from "util/StartUtil"
 
 export class GameManager {
@@ -39,21 +39,19 @@ export class GameManager {
   }
 
   private startGame(config: Config) {
-    forEachPlayer((mapPlayer: MapPlayer) => {
-      if (mapPlayer.slotState == PLAYER_SLOT_STATE_PLAYING && mapPlayer.controller == MAP_CONTROL_USER) {
-        const playerId = mapPlayer.id
-        const allyId = playerId + ALLY_SHIFT
-        const player = new GamePlayer(config, playerId, allyId)
-        this.players[playerId] = new PlayerManager(player)
-        const mapPlayerAlly = MapPlayer.fromIndex(allyId)
-        mapPlayerAlly && (mapPlayerAlly.name = mapPlayer.name)
+    forEachPlayingPlayer((mapPlayer: MapPlayer) => {
+      const playerId = mapPlayer.id
+      const allyId = playerId + ALLY_SHIFT
+      const player = new GamePlayer(config, playerId, allyId)
+      this.players[playerId] = new PlayerManager(player)
+      const mapPlayerAlly = MapPlayer.fromIndex(allyId)
+      mapPlayerAlly && (mapPlayerAlly.name = mapPlayer.name)
 
-        const point = player.timedUnit && player.timedUnit.getPoint()
-        const location = point && Location(point.x, point.y)
-        const camDistance = GetCameraField(CAMERA_FIELD_ZOFFSET)
+      const point = player.timedUnit && player.timedUnit.getPoint()
+      const location = point && Location(point.x, point.y)
+      const camDistance = GetCameraField(CAMERA_FIELD_ZOFFSET)
 
-        player.timedUnit && location && PanCameraToTimedLocWithZForPlayer(mapPlayer.handle, location, camDistance, 0.75)
-      }
+      player.timedUnit && location && PanCameraToTimedLocWithZForPlayer(mapPlayer.handle, location, camDistance, 0.75)
     })
 
     if (config.mode == Mode.DEBUG) {
@@ -64,11 +62,6 @@ export class GameManager {
       const mapPlayer = MapPlayer.fromIndex(4)
       mapPlayer && (mapPlayer.name = "DEBUG")
     }
-  }
-
-  private onBuild(building: Unit) {
-    this.players[ifAllyGetOwner(building.owner.id)].onBuild(building)
-    StartUtil.startWhenAllCastlesAreBuilt(this.playersArr, () => this.init())
   }
 
   private init() {
@@ -88,6 +81,19 @@ export class GameManager {
     this.eventService.subscribe(EventType.CASTING_STARTED, (castingUnit: Unit, spellId: number) => this.onCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.UNIT_DEATH, (deathUnit: Unit, killingUnit: Unit) => this.onUnitDeath(deathUnit, killingUnit))
+    this.eventService.subscribe(EventType.UPGRADING_FINISHED, (player: MapPlayer, techId: number) => this.onResearchFinished(player, techId))
+  }
+
+  private onBuild(building: Unit) {
+    this.players[ifAllyGetOwner(building.owner.id)].onBuild(building)
+    StartUtil.startWhenAllCastlesAreBuilt(this.playersArr, () => this.init())
+  }
+
+  private update(delta: number) {
+    for (const player in this.players) {
+      this.players[player].update(delta)
+    }
+    this.enemyManager.update(delta)
   }
 
   private onCast(castingUnit: Unit, spellId: number) {
@@ -102,10 +108,7 @@ export class GameManager {
     this.enemyManager.onUnitDeath(deathUnit, killingUnit)
   }
 
-  private update(delta: number) {
-    for (const player in this.players) {
-      this.players[player].update(delta)
-    }
-    this.enemyManager.update(delta)
+  private onResearchFinished(player: MapPlayer, techId: number) {
+    this.players[player.id].onResearchFinished(techId)
   }
 }

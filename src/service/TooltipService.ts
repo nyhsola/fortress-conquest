@@ -2,7 +2,7 @@ import { FOOTMAN_SPAWN_TIME } from "main/SquadManager"
 import { LOCAL_COLOR, withColor } from "util/TextUtil"
 
 export class TooltipService {
-  static readonly footmanAbilityText = "Footmans|n"
+  static readonly footmanAbilityText = "Footmen|n"
   static readonly footmanAbilityExtendedText =
     withColor("By default, you have 1 defense squad consisting of 6 footmen, which are replenished as a priority as new ones are trained.|n|n", LOCAL_COLOR.GREY) +
     withColor("Attack squads consist of 3 footmen.|n|n", LOCAL_COLOR.GREY) +

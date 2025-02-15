@@ -8,19 +8,21 @@ import { Task } from "global/Task"
 const allies = [12, 13, 14, 15, 16]
 
 export function forLocalPlayer(action: () => void, playerId: number) {
-  forEachPlayer((player: MapPlayer) => {
+  forEachPlayingPlayer((player: MapPlayer) => {
     if (player.id == playerId && GetLocalPlayer() == player.handle) {
       action()
     }
   })
 }
 
-export function forEachPlayer(action: (player: MapPlayer) => void) {
-  let players = GetPlayersAll()
+export function forEachPlayingPlayer(action: (player: MapPlayer) => void) {
+  const players = GetPlayersAll()
   players &&
     ForForce(players, () => {
-      let player = MapPlayer.fromEnum()
-      player && action(player)
+      const player = MapPlayer.fromEnum()!!
+      if (player.slotState == PLAYER_SLOT_STATE_PLAYING && player.controller == MAP_CONTROL_USER) {
+        player && action(player)
+      }
     })
 }
 
@@ -108,7 +110,7 @@ export function createTask(customAction: () => void, interval: number): Task {
 }
 
 export function sendChatMessageToAllPlayers(message: string) {
-  forEachPlayer((player: MapPlayer) => {
+  forEachPlayingPlayer((player: MapPlayer) => {
     const playerHandler = player.handle
     DisplayTextToPlayer(playerHandler, 0, 0, message)
   })
