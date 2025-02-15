@@ -364,42 +364,6 @@ STRING 131
 [Game]
 }
 
-STRING 138
-// Upgrades: R003 (Грубая сила), Tip (Tooltip)
-{
-Hit points [Lvl 2]
-}
-
-STRING 139
-// Upgrades: R003 (Грубая сила), Tip (Tooltip)
-{
-Hit points [Lvl 3]
-}
-
-STRING 140
-// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
-{
-+10
-}
-
-STRING 141
-// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
-{
-+15
-}
-
-STRING 142
-// Upgrades: R003 (Грубая сила), Tip (Tooltip)
-{
-Hit points [Lvl 1]
-}
-
-STRING 143
-// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
-{
-+5
-}
-
 STRING 144
 // Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
 {
@@ -458,5 +422,113 @@ STRING 153
 // Upgrades: R003 (Грубая сила), Name (Name)
 {
 Hit points
+}
+
+STRING 154
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points |cffffffff[Lvl 1]|r
+}
+
+STRING 155
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points |cffffffff[Lvl 2]|r
+}
+
+STRING 156
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points |cffffffff[Lvl 3]|r
+}
+
+STRING 157
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
+{
+Armor |cffffffff[Lvl 1]|r
+}
+
+STRING 158
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
+{
+Armor |cffffffff[Lvl 2]|r
+}
+
+STRING 159
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
+{
+Armor |cffffffff[Lvl 3]|r
+}
+
+STRING 163
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+Attack |cffffffff[Lvl 1]|r
+}
+
+STRING 164
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+Attack |cffffffff[Lvl 2]|r
+}
+
+STRING 165
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+Attack |cffffffff[Lvl 3]|r
+}
+
+STRING 166
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++10 hp footman
+}
+
+STRING 167
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++15 hp footman
+}
+
+STRING 168
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++5 hp footman
+}
+
+STRING 169
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
++1 attack footman
+}
+
+STRING 170
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
++1 attack footman
+}
+
+STRING 171
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
++1 attack footman
+}
+
+STRING 172
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Ubertip (Tooltip - Extended)
+{
++1 armor footman
+}
+
+STRING 173
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Ubertip (Tooltip - Extended)
+{
++1 armor footman
+}
+
+STRING 174
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Ubertip (Tooltip - Extended)
+{
++1 armor footman
 }
 
