@@ -478,40 +478,10 @@ STRING 165
 Attack |cffffffff[Lvl 3]|r
 }
 
-STRING 166
-// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
-{
-+10 hp footman
-}
-
-STRING 167
-// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
-{
-+15 hp footman
-}
-
 STRING 168
 // Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
 {
 +5 hp footman
-}
-
-STRING 169
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
-{
-+1 attack footman
-}
-
-STRING 170
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
-{
-+1 attack footman
-}
-
-STRING 171
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
-{
-+1 attack footman
 }
 
 STRING 172
@@ -530,5 +500,35 @@ STRING 174
 // Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Ubertip (Tooltip - Extended)
 {
 +1 armor footman
+}
+
+STRING 175
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++5 hp footman
+}
+
+STRING 176
+// Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
+{
++5 hp footman
+}
+
+STRING 177
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
++1-3 attack footman
+}
+
+STRING 178
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
++1-3 attack footman
+}
+
+STRING 179
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
++1-3 attack footman
 }
 
