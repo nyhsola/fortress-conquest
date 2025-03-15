@@ -1,4 +1,4 @@
-import { Point } from "w3ts"
+import { Point, Unit } from "w3ts"
 
 import { getPolarPoint } from "util/CommonUtil"
 
@@ -12,7 +12,9 @@ export class Positions {
   static STOCK = (point: Point, direction: number) => getPolarPoint(point, direction + 90, 800)
   static BARRACKS = (point: Point, direction: number) => getPolarPoint(point, direction + 210, 800)
 
-  static BANNER = (point: Point, direction: number) => getPolarPoint(point, direction + 250, 700)
+  static CAMPFIRE = (point: Point, direction: number) => getPolarPoint(point, direction + 250, 700)
+
+  static ATTACK_POINT = (playerCastle: Unit, enemyCastle: Unit) => getAttackPoint(playerCastle.getPoint(), enemyCastle.getPoint(), 1600)
 
   static TOWER_1 = (point: Point, direction: number) => getPolarPoint(point, direction + 60, TOWER_DISTANCE)
   static TOWER_2 = (point: Point, direction: number) => getPolarPoint(point, direction + 120, TOWER_DISTANCE)
@@ -29,4 +31,26 @@ export class Positions {
     5: (point: Point, direction: number) => getPolarPoint(point, direction + 270, FOOTMAN_DISTANCE),
     6: (point: Point, direction: number) => getPolarPoint(point, direction + 330, FOOTMAN_DISTANCE),
   }
+}
+
+function getAttackPoint(playerCastle: Point | undefined, enemyCastle: Point | undefined, distance: number): Point {
+  const enemyX = enemyCastle?.x ?? 0
+  const enemyY = enemyCastle?.y ?? 0
+
+  const castleX = playerCastle?.x ?? 0
+  const castleY = playerCastle?.y ?? 0
+
+  const vectorX = enemyX - castleX
+  const vectorY = enemyY - castleY
+
+  const sqrt = Math.sqrt(vectorX * vectorX + vectorY * vectorY)
+  const length = sqrt == 0 ? 1 : sqrt
+
+  const normalizedX = vectorX / length
+  const normalizedY = vectorY / length
+
+  const pointX = castleX + normalizedX * distance
+  const pointY = castleY + normalizedY * distance
+
+  return Point.create(pointX, pointY)
 }

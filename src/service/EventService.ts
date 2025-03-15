@@ -9,6 +9,7 @@ export const enum EventType {
   CASTING_STARTED,
   CASTING_FINISHED,
   UNIT_DEATH,
+  UNIT_SELL,
   UPGRADING_FINISHED,
 }
 
@@ -20,6 +21,7 @@ export class EventService {
     [EventType.CASTING_FINISHED]: new EventHandler<() => void>(),
     [EventType.UNIT_DEATH]: new EventHandler<(deathUnit: Unit | undefined, killingUnit: Unit | undefined) => void>(),
     [EventType.UPGRADING_FINISHED]: new EventHandler<(player: MapPlayer, techId: number) => void>(),
+    [EventType.UNIT_SELL]: new EventHandler<(player: MapPlayer, unit: Unit | undefined) => void>(),
   }
 
   constructor() {
@@ -42,6 +44,10 @@ export class EventService {
     const unitDeath = Trigger.create()
     unitDeath.registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     unitDeath.addAction(() => this.handlers[EventType.UNIT_DEATH].fire(Unit.fromHandle(GetTriggerUnit()), Unit.fromHandle(GetKillingUnit())))
+
+    const unitSell = Trigger.create()
+    unitSell.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELL)
+    unitSell.addAction(() => this.handlers[EventType.UNIT_SELL].fire(MapPlayer.fromHandle(GetTriggerPlayer()), Unit.fromHandle(GetSoldUnit())))
 
     forEachPlayingPlayer((mapPlayer: MapPlayer) => {
       const upgradeFinished = Trigger.create()

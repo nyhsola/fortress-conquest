@@ -11,7 +11,7 @@ export class SquadManager {
   private readonly player: GamePlayer
   private readonly squadBehaviour: SquadBehaviour
   private readonly behaviourTask: Task = createTask(() => this.updateBehavior(), 3)
-  private readonly footmanAbility: Task = createTask(() => this.onFootmanCast(), FOOTMAN_SPAWN_TIME)
+  private readonly footmanAbility: Task = createTask(() => this.addUnit(new Footman(this.player)), FOOTMAN_SPAWN_TIME)
 
   private squads: Array<Squad> = []
   private defSquad: Squad
@@ -47,15 +47,11 @@ export class SquadManager {
     this.footmanAbility.update(delta)
   }
 
-  private updateBehavior() {
-    this.squadBehaviour.updateState(this.squads)
-  }
-
-  private onFootmanCast() {
+  public addUnit(unit: Footman) {
     const freeSquad = this.squads.filter((it) => it.isSquadFree())
     const addSquad = freeSquad.length > 0 ? freeSquad[0] : this.createAttackSquad()
 
-    addSquad.addUnit(new Footman(this.player))
+    addSquad.addUnit(unit)
 
     this.squads
       .filter((it) => it.isAllDead())
@@ -63,6 +59,10 @@ export class SquadManager {
         const index = this.squads.indexOf(it)
         this.squads.splice(index, 1)
       })
+  }
+
+  private updateBehavior() {
+    this.squadBehaviour.updateState(this.squads)
   }
 
   private createAttackSquad(): Squad {

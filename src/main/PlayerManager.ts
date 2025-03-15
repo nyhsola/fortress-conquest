@@ -6,6 +6,7 @@ import { SquadManager } from "./SquadManager"
 import { TABLE_ITEM, TableManager } from "./TableManager"
 import { UI_ICON, UIManager } from "./UIManager"
 import { WorkerManager } from "./WorkerManager"
+import { Footman } from "game/Footman"
 import { GamePlayer } from "game/GamePlayer"
 import { ABILITY, UNIT } from "global/Config"
 import { TooltipService } from "service/TooltipService"
@@ -90,5 +91,10 @@ export class PlayerManager {
     const mapPlayer = MapPlayer.fromIndex(this.player.playerId)!!.handle
     const level = GetPlayerTechCount(mapPlayer, techId, true)
     SetPlayerTechResearched(allyPlayer, techId, level)
+  }
+
+  public onUnitSell(unit: Unit) {
+    unit.setOwner(MapPlayer.fromIndex(this.player.allyId)!!, true)
+    this.squadManager.addUnit(new Footman(this.player, unit))
   }
 }

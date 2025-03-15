@@ -32,13 +32,13 @@ export class Footman {
 
   public state: FOOTMAN_STATE = FOOTMAN_STATE.CREATED
 
-  constructor(player: GamePlayer) {
+  constructor(player: GamePlayer, unit: Unit | undefined = undefined) {
     this.player = player
 
     const barracks = this.player?.getBarracks()!!
     const point = barracks?.getPoint()!!
 
-    this.footman = createUnitAtPoint(point, this.player.allyId, UNIT.FOOTMAN)
+    this.footman = unit || createUnitAtPoint(point, this.player.allyId, UNIT.FOOTMAN)
   }
 
   public addOrder = (order: FOOTMAN_ORDER) => this.orders.push(order)
@@ -108,7 +108,7 @@ export class Footman {
   }
 
   private onPrepareAttackOrder() {
-    const point = this.player.getAttackPoint(0)
+    const point = Positions.ATTACK_POINT(this.player.getCastle()!!, this.player.getEnemyCastle(0)!!)
     const location = Location(point?.x, point?.y)
     location && this.orderMove(location)
   }
@@ -122,7 +122,7 @@ export class Footman {
   private onBanner() {
     const point = this.player.getPoint()
     const direction = this.player.getDirection()
-    const pointBanner = point && direction && Positions.BANNER(point, direction)
+    const pointBanner = point && direction && Positions.CAMPFIRE(point, direction)
     this.removeGuardPosition()
     pointBanner && this.orderMove(Location(pointBanner.x, pointBanner.y))
   }

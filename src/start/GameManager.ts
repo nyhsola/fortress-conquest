@@ -82,6 +82,7 @@ export class GameManager {
     this.eventService.subscribe(EventType.CASTING_FINISHED, (castingUnit: Unit, spellId: number) => this.onFinishCast(castingUnit, spellId))
     this.eventService.subscribe(EventType.UNIT_DEATH, (deathUnit: Unit, killingUnit: Unit) => this.onUnitDeath(deathUnit, killingUnit))
     this.eventService.subscribe(EventType.UPGRADING_FINISHED, (player: MapPlayer, techId: number) => this.onResearchFinished(player, techId))
+    this.eventService.subscribe(EventType.UNIT_SELL, (player: MapPlayer, unit: Unit) => this.onUnitSell(player, unit))
   }
 
   private onBuild(building: Unit) {
@@ -110,5 +111,9 @@ export class GameManager {
 
   private onResearchFinished(player: MapPlayer, techId: number) {
     this.players[player.id].onResearchFinished(techId)
+  }
+
+  private onUnitSell(player: MapPlayer, unit: Unit) {
+    this.players[player.id].onUnitSell(unit)
   }
 }

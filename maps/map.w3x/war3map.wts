@@ -114,13 +114,13 @@ Teleports to any position on map
 }
 
 STRING 31
-// Abilities: A001 (Скачок), Hotkey (Hotkey - Normal)
+// Units: h005 (Footman), Hotkey (Hotkey)
 {
 Q
 }
 
 STRING 34
-// Abilities: A005 (Ability 1), Hotkey (Hotkey - Normal)
+// Abilities: A001 (Скачок), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -215,7 +215,7 @@ Footman
 }
 
 STRING 98
-// Abilities: A000 (Footman), Name (Name)
+// Units: h005 (Footman), Tip (Tooltip - Basic)
 {
 Footman
 }
@@ -227,7 +227,7 @@ Wait...
 }
 
 STRING 100
-// Abilities: A000 (Footman), Tip (Tooltip - Normal)
+// Abilities: A000 (Footman), Name (Name)
 {
 Footman
 }
@@ -293,7 +293,7 @@ Barracks
 }
 
 STRING 119
-// Abilities: A008 (Footman (Defence)), Hotkey (Hotkey - Normal)
+// Abilities: A005 (Ability 1), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -365,7 +365,7 @@ STRING 131
 }
 
 STRING 144
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+// Abilities: A008 (Footman (Defence)), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -424,60 +424,6 @@ STRING 153
 Hit points
 }
 
-STRING 154
-// Upgrades: R003 (Грубая сила), Tip (Tooltip)
-{
-Hit points |cffffffff[Lvl 1]|r
-}
-
-STRING 155
-// Upgrades: R003 (Грубая сила), Tip (Tooltip)
-{
-Hit points |cffffffff[Lvl 2]|r
-}
-
-STRING 156
-// Upgrades: R003 (Грубая сила), Tip (Tooltip)
-{
-Hit points |cffffffff[Lvl 3]|r
-}
-
-STRING 157
-// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
-{
-Armor |cffffffff[Lvl 1]|r
-}
-
-STRING 158
-// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
-{
-Armor |cffffffff[Lvl 2]|r
-}
-
-STRING 159
-// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
-{
-Armor |cffffffff[Lvl 3]|r
-}
-
-STRING 163
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
-{
-Attack |cffffffff[Lvl 1]|r
-}
-
-STRING 164
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
-{
-Attack |cffffffff[Lvl 2]|r
-}
-
-STRING 165
-// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
-{
-Attack |cffffffff[Lvl 3]|r
-}
-
 STRING 168
 // Upgrades: R003 (Грубая сила), Ubertip (Tooltip - Extended)
 {
@@ -530,5 +476,107 @@ STRING 179
 // Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
 {
 +1-3 attack footman
+}
+
+STRING 180
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+Attack |cff00ff00[Lvl 1]|r
+}
+
+STRING 181
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+Attack |cffffff00[Lvl 2]|r
+}
+
+STRING 182
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+Attack |cffff0000[Lvl 3]|r
+}
+
+STRING 183
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
+{
+Armor |cff00ff00[Lvl 1]|r
+}
+
+STRING 184
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
+{
+Armor |cffffff00[Lvl 2]|r
+}
+
+STRING 185
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Tip (Tooltip)
+{
+Armor |cffff0000[Lvl 3]|r
+}
+
+STRING 186
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points |cff00ff00[Lvl 1]|r
+}
+
+STRING 187
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points |cffffff00[Lvl 2]|r
+}
+
+STRING 188
+// Upgrades: R003 (Грубая сила), Tip (Tooltip)
+{
+Hit points |cffff0000[Lvl 3]|r
+}
+
+STRING 189
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Attack
+}
+
+STRING 190
+// Upgrades: R002 (Железная броня,Стальная броня,Мифриловая б), Name (Name)
+{
+Armor
+}
+
+STRING 191
+// Units: h006 (Keep), Name (Name)
+{
+Keep
+}
+
+STRING 192
+// Upgrades: R000 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+Q
+}
+
+STRING 193
+// Units: h006 (Keep), Tip (Tooltip - Basic)
+{
+Keep |cffffff00[Lvl 2]|r
+}
+
+STRING 194
+// Units: h006 (Keep), Ubertip (Tooltip - Extended)
+{
+Extends upgrades
+}
+
+STRING 195
+// Abilities: A000 (Footman), Tip (Tooltip - Normal)
+{
+Footman
+}
+
+STRING 196
+// Units: h006 (Keep), Hotkey (Hotkey)
+{
+F
 }
 

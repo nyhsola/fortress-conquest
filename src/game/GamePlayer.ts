@@ -28,7 +28,7 @@ export class GamePlayer {
   private point: Point | undefined
   private direction: number | undefined
 
-  private currentEnemies: Array<GamePlayer> = []
+  public currentEnemies: Array<GamePlayer> = []
 
   constructor(config: Config, playerId: number, allyId: number) {
     this.config = config
@@ -52,8 +52,8 @@ export class GamePlayer {
     const minePoint = this.point && Positions.MINE(this.point, this.direction)
     this.mine = minePoint && createUnitAtPoint(minePoint, PLAYER_NEUTRAL_PASSIVE, UNIT.MINE)
 
-    const bannerPoint = this.point && Positions.BANNER(this.point, this.direction)
-    bannerPoint && createDestructableAtPoint(bannerPoint, 1, UNIT.CAMPFIRE)
+    const campfirePoint = this.point && Positions.CAMPFIRE(this.point, this.direction)
+    campfirePoint && createDestructableAtPoint(campfirePoint, 1, UNIT.CAMPFIRE)
   }
 
   public onBarracksBuild(barracks: Unit | undefined) {
@@ -64,31 +64,8 @@ export class GamePlayer {
     this.currentEnemies = enemies
 
     for (let i = 0; i < this.currentEnemies.length; i++) {
-      createDestructableAtPoint(this.getAttackPoint(i), 1.4, UNIT.BANNER_HUMAN)
+      createDestructableAtPoint(Positions.ATTACK_POINT(this.castle!!, this.currentEnemies[i]?.getCastle()!!), 1.4, UNIT.BANNER_HUMAN)
     }
-  }
-
-  public getAttackPoint(positionNumber: number): Point {
-    const enemyCastle = this.currentEnemies[positionNumber]?.getCastle()?.getPoint()
-    const enemyX = enemyCastle?.x ?? 0
-    const enemyY = enemyCastle?.y ?? 0
-
-    const castleX = this.castle?.point?.x ?? 0
-    const castleY = this.castle?.point?.y ?? 0
-
-    const vectorX = enemyX - castleX
-    const vectorY = enemyY - castleY
-
-    const sqrt = Math.sqrt(vectorX * vectorX + vectorY * vectorY)
-    const length = sqrt == 0 ? 1 : sqrt
-
-    const normalizedX = vectorX / length
-    const normalizedY = vectorY / length
-
-    const pointX = castleX + normalizedX * 1600
-    const pointY = castleY + normalizedY * 1600
-
-    return Point.create(pointX, pointY)
   }
 
   public getEnemyCastle = (enemy: number) => this.currentEnemies[enemy].getCastle()
